@@ -1,0 +1,302 @@
+.line-top {
+  @include d-flex-row(center);
+  background: $color-primary;
+  height: 34px;
+  font-size: 0.75rem;
+  color: #ffffff;
+  font-family: $font-quicksand;
+}
+
+.header {
+  @include d-flex-column($gap: 0);
+  &-top {
+    width: 100%;
+    height: 90px;
+    @include d-flex-row(space-between);
+  }
+  &-search {
+    flex: 0 0 16.67%;
+    max-width: 16.67%;
+  }
+  &-logo {
+    flex: 0 0 66.66%;
+    max-width: 66.66%;
+    @include d-flex-row(center);
+    position: relative;
+    &:before {
+      content: "";
+      width: 35%;
+      height: 1px;
+      background-color: #d3d1d1;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
+    &:after {
+      content: "";
+      width: 35%;
+      height: 1px;
+      background-color: #d3d1d1;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+  }
+  &-action {
+    flex: 0 0 16.67%;
+    max-width: 16.67%;
+    @include d-flex-row();
+  }
+  &-cart {
+    padding-right: 15px;
+    border-right: 1px solid #e2dfdf;
+  }
+  &-language {
+    padding-left: 15px;
+  }
+}
+
+.main-menu {
+  height: 50px;
+  ul {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    @include d-flex-row(center, $gap: 50px);
+    > li {
+      position: relative;
+      > a {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        display: inline-block;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-decoration: none;
+        &:hover {
+          color: $color-primary;
+        }
+      }
+      .sub-menu {
+        pointer-events: none;
+        opacity: 0;
+        position: absolute;
+      }
+    }
+  }
+}
+
+.banner-home {
+  img {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+main {
+  @include d-flex-column($gap: 40px);
+  padding-top: 40px;
+}
+.home {
+  &-section {
+    &_wrapper {
+      margin: auto;
+      width: 66.67%;
+    }
+    &_top {
+      width: 100%;
+      @include d-flex-column(center, $gap: 18px);
+    }
+    &_icon {
+      height: 60px;
+    }
+    &_title {
+      text-align: center;
+      @include reset-spacing;
+      font-size: 2.5rem;
+      color: $color-primary;
+      font-weight: 700;
+    }
+    &_desc * {
+      text-align: center;
+      @include reset-spacing;
+    }
+  }
+}
+
+.home-about {
+  &_body {
+    padding-top: 1.25rem;
+    flex: 0 0 83.33%;
+    max-width: 83.33%;
+    margin: auto;
+    @include d-flex-row(space-between, $gap: 70px);
+  }
+  &_item {
+    @include d-flex-column($gap: 6px);
+    &__thumbnail {
+      img {
+        max-width: 100%;
+      }
+    }
+    &__title {
+      h4 {
+        @include reset-spacing;
+        font-weight: 700;
+      }
+    }
+    &__desc {
+      padding-top: 10px;
+      text-align: center;
+      p {
+        @include reset-spacing;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+.home-about--item {
+  width: 100%;
+  @include d-flex-column($gap: 40px);
+  &_wrapper {
+    flex: 0 0 91.667%;
+    max-width: 91.667%;
+    @include d-flex-row;
+  }
+  &_right {
+    @include d-flex-row(right);
+    margin-left: auto;
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-left: 3px solid $color-primary;
+      border-top: 3px solid $color-primary;
+      left: 0;
+      top: 0;
+    }
+    .template-thumbnail {
+      text-align: right;
+    }
+  }
+  &_left {
+    @include d-flex-row;
+    position: relative;
+    margin-right: auto;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-right: 3px solid $color-primary;
+      border-top: 3px solid $color-primary;
+      right: 0;
+      top: 0;
+    }
+  }
+  &_content {
+    flex: 0 0 60%;
+    max-width: 60%;
+  }
+  &_thumbnail {
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+}
+
+.home-product {
+  padding-bottom: 2.5rem;
+  &_body {
+    margin-top: 2.25rem;
+    @include d-flex-row($gap: 1.375rem);
+  }
+}
+
+.template {
+  width: 100%;
+  &-content {
+    &--wrapper {
+      @include d-flex-column;
+      width: 425px;
+      margin: auto;
+    }
+  }
+  &-title {
+    font-size: 1.625rem;
+    font-weight: 700;
+    padding-bottom: 2rem;
+  }
+  &-desc {
+    padding-bottom: 1fr;
+  }
+  &-action {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.card_one {
+  @include d-flex-column($gap: 0);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  &__thumbnail {
+    width: 100%;
+    img {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+  &__content {
+    padding: 30px;
+    @include d-flex-column(left, flex-start, $gap: 0.875rem);
+  }
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #000000;
+    > * {
+      @include reset-spacing;
+    }
+    &:hover {
+      color: $color-primary;
+    }
+  }
+  &__desc {
+    @include reset-spacing;
+  }
+  &__action {
+    a {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.btn {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  &-outline {
+    border-radius: 8px;
+    border: 2px solid $color-primary;
+    text-transform: uppercase;
+    color: $color-primary;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 12px;
+  }
+  &-default {
+    border-radius: 8px;
+    border: 2px solid $color-primary;
+    background-color: $color-primary;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 12px;
+  }
+}

@@ -1,0 +1,24 @@
+@mixin d-flex($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+}
+
+@mixin d-flex-row($align: left, $vehicle: center, $gap: 10px) {
+  justify-content: $align;
+  align-items: $vehicle;
+  gap: $gap;
+  @include d-flex(row);
+}
+
+@mixin d-flex-column($align: left, $vehicle: center, $gap: 10px) {
+  justify-content: $align;
+  align-items: $vehicle;
+  gap: $gap;
+  @include d-flex(column);
+}
+
+@mixin reset-spacing() {
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+}
