@@ -1,0 +1,76 @@
+/*-variable*/
+$err:#FF9494;
+
+.form-contact {
+    margin-top: 30px;
+    text-align: center;
+    @include MQ(L){
+        text-align:left;
+    }
+    @include MQ(L) {
+        margin-top: 0;
+    }
+
+    .form-group {
+        @include flex();
+        flex-wrap: wrap;
+        @include MQ(L){
+            flex-wrap:nowrap;
+        }
+        label {
+            color: #545252;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+
+            @include MQ(L) {
+                width: 25%;
+                margin-right: 25px;
+                margin-top: 10px;
+                text-align: right;
+                margin-bottom: 0;
+            }
+        }
+
+        .input {
+            width: 100%;
+            position: relative;
+
+            @include MQ(L) {
+                width: 80%;
+            }
+
+            .form-control {
+                @include size(100%,42px);
+                border-radius: 1px;
+                @include transition(all .3s ease-in-out);
+
+                &:focus {
+                    -webkit-box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.35);
+                    box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.35);
+                    border: none;
+                    border-bottom: 1px solid #545252;
+                }
+            }
+
+            textarea.form-control {
+                min-height: 300px;
+            }
+
+            .err {
+                @include text(16px $font-second);
+                color: $err;
+                margin-top: 5px;
+            }
+        }
+    }
+
+    .btn-submit {
+        margin:auto;
+        text-align:center;
+        @include MQ(L) {
+            margin-left: calc(25% + 10px);
+            text-align:left;
+        }
+    }
+}

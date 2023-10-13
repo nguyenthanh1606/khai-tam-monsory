@@ -1,0 +1,224 @@
+﻿@model Frontend.Models.AccountInfo
+
+@using Frontend.Infrastructure.ExtensionMethod
+
+@{
+    ViewBag.Title = Resource.AccountInformation;
+}
+@section css{
+    <link href="~/Themes/NganHoa/css/userpage.css" rel="stylesheet" />
+}
+
+<div class="bg-gray" style="min-height: 500px;">
+    <div class="wrapper userpage" id="divAccountInfo">
+        <div class="userpage-sidebar">
+            <div class="userpage-brief">
+                <a class="userpage-brief__avatar none-hover" href="/Account/Info">
+                    <div class="avatar">
+                        <div class="avatar__placeholder">
+                            <img class="avatar__img" src="~/Themes/NganHoa/Images/logo.jpg" />
+                            @*<i class="far fa-user" style="font-size: 1.5rem; line-height: 44px"></i>*@
+                        </div>
+                    </div>
+                </a>
+                <div class="userpage-brief__right">
+                    <div class="userpage-brief__username">@User.Identity.Name</div>
+                    <div>
+                        <p class="userpage-brief__edit" v-show="!isEdited" v-on:click="StartEdit">
+                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;"><path d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48" fill="#9B9B9B" fill-rule="evenodd"></path></svg>Sửa hồ sơ
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="userpage-sidebar-menu">
+                @Html.Partial("_AccountLayoutMenu")
+            </div>
+        </div>
+        <div class="userpage__content">
+            <div role="main">
+                <div class="myaccount__wrapper">
+                    <div class="myaccount-section" style="min-height: 400px">
+                        <div class="myaccount-section__header">
+                            <div class="myaccount-section__header-left">
+                                <div class="myaccount-section__header-title">Hồ sơ của tôi</div>
+                                <div class="myaccount-section__header-subtitle">Quản lý thông tin hồ sơ để bảo mật tài khoản</div>
+                            </div>
+                            <div class="myaccount-section__header-button">
+                                <button class="btn-button-solid btn-button-solid--primary btn-button-solid--address-tab"  v-show="!isEdited" v-on:click="StartEdit">
+                                    <div class="button-with-icon">
+                                        <div class="button-with-icon__icon">
+                                            <svg class="shopee-svg-icon icon-plus-sign" enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"><polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5"></polygon></svg>
+                                        </div>
+                                        <div>Sửa hồ sơ</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="myaccount-profile">
+                            <div class="myaccount-profile__left">
+
+                                @using (Ajax.BeginForm("EditBasicInfo", "Account", new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    OnSuccess = "UpdateAccountInfoSuccess",
+                                    OnFailure = "UpdateAccountInfoFailed"
+                                }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="input-with-label">
+                                        <div class="input-with-label__wrapper">
+                                            <div class="input-with-label__label">
+                                                <label>@Html.DisplayNameFor(m => m.CustomerInfo.Fullname):</label>
+                                            </div>
+                                            <div class="input-with-label__content">
+                                                <div class="input-with-validator-wrapper">
+                                                    <div class="">
+                                                        @Html.TextBoxFor(m => m.CustomerInfo.Fullname, new { @class = "input-with-validator", v_if = "isEdited", v_model = "customerInfo.Fullname"})
+                                                        <span class="row_R" v-else>{{customerInfo.Fullname}}</span>
+                                                        @Html.ValidationMessageFor(m => m.CustomerInfo.Fullname)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-with-label">
+                                        <div class="input-with-label__wrapper">
+                                            <div class="input-with-label__label">
+                                                <label>@Html.DisplayNameFor(m => m.CustomerInfo.Phone):</label>
+                                            </div>
+                                            <div class="input-with-label__content">
+                                                <div class="input-with-validator-wrapper">
+                                                    <div class="">
+                                                        @Html.TextBoxFor(m => m.CustomerInfo.Phone, new { @class = "input-with-validator", v_if = "isEdited", v_model = "customerInfo.Phone" })
+                                                        <span class="row_R" v-else>{{customerInfo.Phone}}</span>
+                                                        @Html.ValidationMessageFor(m => m.CustomerInfo.Phone)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-with-label">
+                                        <div class="input-with-label__wrapper">
+                                            <div class="input-with-label__label">
+                                                <label>@Html.DisplayNameFor(m => m.CustomerInfo.Gender):</label>
+                                            </div>
+                                            <div class="input-with-label__content">
+                                                <div class="input-with-validator-wrapper">
+                                                    <div class="">
+                                                        <div v-if="isEdited">
+                                                            <label class="radio-inline mb-0 mr-3">
+                                                                <input class="" type="radio" name="@Html.NameFor(m => m.CustomerInfo.Gender)" value="0" v-model="customerInfo.Gender" /> @Resource.Male
+                                                            </label>
+                                                            <label class="radio-inline mb-0">
+                                                                <input class="" type="radio" name="@Html.NameFor(m => m.CustomerInfo.Gender)" value="1" v-model="customerInfo.Gender" /> @Resource.Female
+                                                            </label>
+                                                        </div>
+                                                        <span class="row_R" v-else>{{customerInfo.Gender | formatGender}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-with-label">
+                                        <div class="input-with-label__wrapper">
+                                            <div class="input-with-label__label">
+                                                <label>@Html.DisplayNameFor(m => m.CustomerInfo.Birthday):</label>
+                                            </div>
+                                            <div class="input-with-label__content">
+                                                <div class="input-with-validator-wrapper">
+                                                    <div class="">
+                                                        @Html.TextBoxFor(m => m.CustomerInfo.Birthday, new { @class = "input-with-validator", v_if = "isEdited", v_model = "customerInfo.Birthday" })
+                                                        <span class="row_R" v-else>{{customerInfo.Birthday}}</span>
+                                                        @Html.ValidationMessageFor(m => m.CustomerInfo.Birthday)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-with-label">
+                                        <div class="input-with-label__wrapper">
+                                            <div class="input-with-label__label">
+                                                <label>@Html.DisplayNameFor(m => m.CustomerInfo.Email):</label>
+                                            </div>
+                                            <div class="input-with-label__content">
+                                                <div class="input-with-validator-wrapper">
+                                                    <div class="">
+                                                        @Html.TextBoxFor(m => m.CustomerInfo.Email, new { @class = "input-with-validator", v_if = "isEdited", v_model = "customerInfo.Email", @readonly = "readonly" })
+                                                        <span class="row_R" v-else>{{customerInfo.Email}}</span>
+                                                        @Html.ValidationMessageFor(m => m.CustomerInfo.Email)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="myaccount__submit" v-show="isEdited">
+                                        <button type="submit" value='@Resource.Save' class="btn btn-solid-primary btn--m btn--inline">Lưu</button>
+                                        <button type="button" v-on:click="FormCancel" value='@Resource.Save' class="btn btn-solid-gray btn--m btn--inline">@Resource.Skip</button>
+                                    </div>
+
+
+
+                                }
+                            </div>
+                            <div class="myaccount-profile__right">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script>
+
+        var initCustomerInfo = @Html.Raw(Json.Encode(Model.CustomerInfo));
+
+        var vmInfo = new Vue({
+            el: '#divAccountInfo',
+            data: {
+                isEdited: false,
+                customerInfo: @Html.Raw(Json.Encode(Model.CustomerInfo)),
+            },
+            filters: {
+                formatGender: function (value) {
+                    switch(value){
+                        case 0:
+                            return '@Html.Raw(Resource.Male)';
+                        case 1:
+                            return '@Html.Raw(Resource.Female)';
+                        default:
+                            return '@Html.Raw(Resource.Unknown)';
+                    };
+                }
+            },
+            watch: {
+                isEdited: function(val){
+                    if(val === true){
+                        this.$nextTick(function(){
+                            $('#@Html.IdFor(m => m.CustomerInfo.Birthday)').datetimepicker({
+                                locale: 'vi',
+                                format: 'DD/MM/YYYY'
+                            });
+                        })
+                    }
+                }
+            },
+            methods:{
+                FormCancel: function () {
+                    this.customerInfo = initCustomerInfo;
+                    this.isEdited = false;
+                },
+                StartEdit: function(){
+                    this.isEdited = true;
+                },
+            }
+        });
+    </script>
+}

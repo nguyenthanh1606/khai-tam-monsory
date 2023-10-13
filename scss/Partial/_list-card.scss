@@ -1,0 +1,159 @@
+﻿.nav-tabs {
+    justify-content: center;
+    border: none;
+    margin: 20px auto;
+
+    .nav-item {
+        margin: 0;
+        position: relative;
+
+        &:before {
+            @include before('',null,50%,null,0);
+            @include size(0,0);
+            @include transform(translateY(90%));
+            border-top: 6px solid $color-cs6;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            visibility: hidden;
+        }
+    }
+    .nav-link {
+        border: 1px solid $color-border;
+        @include text(14px $font-custom_3);
+        @include border-radius(2px);
+        color: #646262;
+        max-width: 150px;
+        height: 33px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        @include MQ(L) {
+            max-width: none;
+            width: 270px;
+        }
+        &.active {
+            background-color: $color-cs6;
+            border-color: $color-cs6;
+            color: $color-white;
+        }
+    }
+}
+.list-block {
+    @include flex();
+    flex-wrap: wrap;
+    margin: 20px 0;
+
+    .card-item {
+        margin-bottom: 20px;
+        width:100%;
+        @include MQ(L) {
+            width: calc(100% / 4 - 15px);
+            margin-right: 20px;
+            margin-bottom:0;
+        }
+
+        &:nth-of-type(4n) {
+            margin-right: 0;
+        }
+    }
+}
+.tab-content{
+    padding-top:20px;
+}
+
+
+.list-card {
+    @include flex();
+    flex-wrap: wrap;
+    margin: 30px 0;
+
+    @include MQ(L) {
+        margin-top: 45px;
+        margin-bottom: 65px;
+    }
+
+    @include MQ(CS) {
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+
+    &.horizontal {
+        @include MQ(L) {
+            margin-top: 45px;
+            margin-bottom: 65px;
+        }
+
+        @include MQ(CS) {
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+    }
+
+    .card-cs {
+        width: 100%;
+        margin-bottom: 20px;
+
+
+        @include MQ(M) {
+            flex-direction: row;
+        }
+
+        .picture {
+
+
+            @include MQ(M) {
+                width: calc(100%/3);
+            }
+        }
+
+        .text {
+
+
+            @include MQ(M) {
+                width: calc(100% - 100%/3);
+            }
+        }
+
+        @include MQ(L) {
+            width: 100%;
+            margin-right: 15px;
+            margin-bottom: 25px;
+        }
+
+        @include MQ(CS) {
+            width: 100%;
+            margin-right: 15px;
+            margin-bottom: 25px;
+        }
+
+        &.horizontal {
+            @include MQ(L) {
+                width: 100%;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+
+            @include MQ(CS) {
+                width: 100%;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+.qc{
+    margin: 30px 0;
+
+    @include MQ(L) {
+        margin-top: 45px;
+        margin-bottom: 65px;
+    }
+
+    @include MQ(CS) {
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+}

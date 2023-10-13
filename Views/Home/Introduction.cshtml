@@ -1,0 +1,30 @@
+﻿@model Frontend.Models.HomePageGroupViewModel
+
+@if (Model.ListItem.Any())
+{
+    var item = Model.ListItem.FirstOrDefault();
+    <div class="about-wrapper row">
+        <div class="col-md-7">
+            @if (!Model.DefaultName.IsEmpty())
+            {
+                <h3 class="title">@Model.DefaultName</h3>
+            }
+            else
+            {
+                <h3 class="title">@Model.Group.Title</h3>
+            }
+            <div class="desc">
+                <p>@item.Summary.RemoveHtml().Truncate(280)</p>
+            </div>
+            <div class="readmore mt-4">
+                <a href="@item.Url" class="text-uppercase">@Resource.ReadMore</a>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="img-fit">
+                <img src="@item.IconUrl" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+
+}

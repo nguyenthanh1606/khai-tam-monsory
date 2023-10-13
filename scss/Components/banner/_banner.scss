@@ -1,0 +1,7 @@
+.banner{
+    position: relative;
+    img{
+        @include img-fit(100%,contain);
+        object-position:center center;
+    }
+}

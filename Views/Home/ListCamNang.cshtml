@@ -1,0 +1,37 @@
+﻿@model Frontend.Models.HomePageGroupViewModel
+@{
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+    int count = 0;
+}
+
+@if (Model.ListItem.Any())
+{
+    if (Model.DefaultName != "")
+    {
+        <h3 class="title" style="margin-bottom: 1.5rem">@Model.DefaultName</h3>
+    }
+    else
+    {
+        <h3 class="title" style="margin-bottom: 1.5rem">@Model.Group.Title</h3>
+    }
+    <div class="print-list row">
+        @foreach (var item in Model.ListItem)
+        {
+            <div class="col-md-6 print-item">
+                <a href="@item.Url" class="thumnails-template hover-ef-1">
+                    <div class="thumnails-content thumb-img">
+                        <img src="@item.PictureUrl" class="img-fluid" alt="@item.Headline">
+                    </div>
+                </a>
+                <div class="print-item--content">
+                    <h4>
+                        <a href="@item.Url" class="headline">@item.Headline</a>
+                    </h4>
+                    <div class="desc">@item.Summary.RemoveHtml()</div>
+                    <a href="@item.Url" class="link link-active text-decoration text-uppercase text-bold small">@Resource.ReadMore </a>
+                </div>
+            </div>
+        }
+
+    </div>
+}

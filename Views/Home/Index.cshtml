@@ -1,0 +1,194 @@
+﻿
+@{
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+}
+
+
+<main class="mainHome">
+
+    @{Html.RenderAction(MVC.Component.Display(2, "SliderBanner"));}
+    @{Html.RenderAction(MVC.Component.Display(5, "AvsNotify"));}
+    @{Html.RenderAction(MVC.Component.Display(6, "AvsPolicy"));}
+    <div class="wrapper mt-3">
+        <div class="row">
+            <div class="col-md-9 g-left">
+                @{Html.RenderAction(MVC.Component.GetProductForProductGroupID(string.Format(themeHomeViewPath, "ListProduct01"), ThemeConfig.GetComponent("GroupProduct01")));}
+                @{Html.RenderAction(MVC.Catalog.GetChildGroup(ThemeConfig.GetComponent("GroupProduct02").EntityID.GetValueOrDefault(1), "ListGroupCompoment", ThemeConfig.GetComponent("GroupProduct02").TotalItems));}
+
+                <h3 class="title" style="font-size: 2.5rem;">Khám phá thêm những thông tin thú vị</h3>
+
+                <div class="tab">
+                    <button type="button" class="tablinks" onclick="openTabs(event, 'ArtBlog')" id="defaultOpen">ART BLOG</button>
+                    <button type="button" class="tablinks" onclick="openTabs(event, 'News')">Tin tức</button>
+                </div>
+
+                <div id="ArtBlog" class="tabcontent">
+                    @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "ListNewsPartial"), ThemeConfig.GetComponent("GroupBlogs"), Store.Service.Service.DistributionOrder.Lastest, true, ""));}
+                </div>
+                <div id="News" class="tabcontent">
+                    @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "ListNewsPartial"), ThemeConfig.GetComponent("GroupNews"), Store.Service.Service.DistributionOrder.Lastest, true, ""));}
+                </div>
+            </div>
+            <div class="col-md-3 g-right border-left">
+                @{Html.RenderAction(MVC.Component.Display(7, "Reviews"));}
+                @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "ListNewsPartial2"), ThemeConfig.GetComponent("GroupBlogs2"), Store.Service.Service.DistributionOrder.Lastest, true, ""));}
+                <section class="tag">
+                    <h3 class="title draw-botLeft">Tag keywords</h3>
+                    <div class="tag-list">
+                        <ul>
+                            <li><a href="#!">Ceramic Mosaic</a></li>
+                            <li><a href="#!">Tranh Chúa Giesu</a></li>
+                            <li><a href="#!">Tranh hổ, Tranh trừu tượng</a></li>
+                            <li><a href="#!">Tranh phố cổ</a></li>
+                            <li><a href="#!">Tranh Quan âm</a></li>
+                            <li><a href="#!">Tranh Acrylic</a></li>
+                            <li><a href="#!">Tranh lãnh tựu</a></li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="contact-home">
+                    <h3 class="title draw-botLeft">Liên hệ</h3>
+                    <form action="" class="fContactHome">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Họ tên" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Điện thoại" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Email" />
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="8" type="text" class="form-control" placeholder="Nội dung"></textarea>
+                        </div>
+                        <div class="">
+                            <button type="submit" class="text-uppercase btn btn-1">Gửi cho chúng tôi</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    @*<section class="about">
+            @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "Introduction"), ThemeConfig.GetComponent("GroupIntroductionID"), Store.Service.Service.DistributionOrder.HighestPriority, true, ""));}
+        </section>
+        <section class="product01">
+            @{Html.RenderAction(MVC.Component.GetProductForProductGroupID(string.Format(themeHomeViewPath, "ListProduct01"), ThemeConfig.GetComponent("GroupProduct01")));}
+        </section>
+        <section class="product02">
+            @{Html.RenderAction(MVC.Component.GetProductForProductGroupID(string.Format(themeHomeViewPath, "ListProduct02"), ThemeConfig.GetComponent("GroupProduct02")));}
+        </section>
+        <section class="shops">
+            @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "ListShopCoffee"), ThemeConfig.GetComponent("GroupShops"), Store.Service.Service.DistributionOrder.HighestPriority, true, ""));}
+        </section>
+        <section class="blogs">
+            @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "ListNewsPartial"), ThemeConfig.GetComponent("GroupBlogs"), Store.Service.Service.DistributionOrder.Lastest, true, ""));}
+        </section>*@
+</main>
+@section js{
+    <script>
+        var swiper = new Swiper(".sw-BannerHome", {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+        });
+        var swiper = new Swiper(".sw-Policy", {
+            slidesPerView: 2,
+            spaceBetween: 20,
+            autoplay: {
+                delay: 5000,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                },
+            },
+        });
+        var swiper = new Swiper(".sw-Topic", {
+            slidesPerView: 1,
+            spaceBetween: 8,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+            },
+            navigation: {
+                nextEl: ".sw-Topic-button-next",
+                prevEl: ".sw-Topic-button-prev",
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 8,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 8,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 8,
+                },
+            },
+        });
+        var swiper = new Swiper(".sw-Blogs", {
+            slidesPerView: 1,
+            spaceBetween: 12,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+            },
+            navigation: {
+                nextEl: ".sw-Blogs-button-next",
+                prevEl: ".sw-Blogs-button-prev",
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 12,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 12,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 12,
+                },
+            },
+        });
+
+        function openTabs(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
+}

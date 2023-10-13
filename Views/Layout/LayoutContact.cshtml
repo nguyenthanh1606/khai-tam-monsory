@@ -1,0 +1,123 @@
+﻿@model Frontend.Models.LayoutContactViewModel
+@using PagedList.Mvc;
+@using PagedList;
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+@{
+    ViewBag.Title = Model.Group.Title;
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+}
+@{ var cookielang = Request.Cookies["lang"].Value;}
+
+
+<main class="main-wrapper">
+    <section class="banner">
+        @if (Model.Group.BannerUrl == null)
+            {
+            <div class="box-banner">
+                @Resource.Updating
+            </div>
+        }
+        else
+        {
+            <img class="img-fluid w-100" src="@Model.Group.BannerUrl" alt="" />
+        }
+    </section>
+    <section class="box-block">
+        <div class="container">
+            <h1 class="title text-center">@Model.Group.Title</h1>
+            <div class="description">
+                @Model.Group.Description.RemoveHtml()
+            </div>
+            <div class="contact">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-5">
+                        <div class="info">
+                            <div class="logo-contact">
+                                <a href="/">
+                                    @Html.BannerImage(1, Request.Cookies["lang"].Value, new { alt = "", title = "", @class = "img-fluid" })
+                                </a>
+                            </div>
+                            @*<h1 class="company-name">@Model.CompanyName</h1>*@
+                            <div class="text">
+                                <p>@Model.Address</p>
+                                <p>Điện thoại:  <a href="tel:@Model.Phone">@Model.Phone</a> Fax: <a href="tel:@Model.Fax">@Model.Fax</a></p>
+                                <p>E-mail: <a href="mailto:@Model.Email">@Model.Email</a></p>
+                                <p>Website: <a href="/">@Model.Website</a></p>
+                            </div>
+                            <div class="hotline">
+                                <h4 class="text">Hotline</h4>
+                                <h1 class="number"><a href="tel:@Model.Hotline">@Model.Hotline</a></h1>
+                            </div>
+                            <div class="social-contact">
+                                <p>Theo dõi chúng tôi trên</p>
+                                <ul class="nav nav-social__contact">
+                                    <li>
+                                        <a href="@Model.Facebook"><i class="fab fa-facebook-square"></i></a>
+                                    </li>
+                                    @*<li>
+                                        <a href="@Model.Instagram"><i class="fab fa-instagram"></i></a>
+                                    </li>*@
+                                    <li>
+                                        <a href="@Model.Youtube"><i class="fab fa-youtube"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-7">
+                        @*<div class="form">
+                            @using (Ajax.BeginForm(MVC.Home.Contact(), new AjaxOptions { HttpMethod = "POST", OnSuccess = "ContactSuccess" }, new { id = "contact-area-partial", @class = "form-contact" }))
+                                {
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    @Html.Label(Resource.Fullname)
+                                    <div class="input">
+                                        @Html.TextBoxFor(m => m.CustomerContact.CustomerName,
+                                             new
+                                                {
+                                                 @class = "form-control",
+                                                    @placeholder = Resource.Name,
+
+                                                })
+                                        <div class="err">@Html.ValidationMessageFor(m => m.CustomerContact.CustomerName)</div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label(Resource.Email)
+                                    <div class="input">
+                                        @Html.TextBoxFor(m => m.CustomerContact.Email, new { @class = "form-control", type = "email", @placeholder = Resource.Email, autocomplete = "off" })
+                                        <div class="err">@Html.ValidationMessageFor(m => m.CustomerContact.Email)</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label(Resource.Phone)
+                                    <div class="input">
+                                        @Html.TextBoxFor(m => m.CustomerContact.Phone, new { @class = "form-control", @placeholder = Resource.Phone, @autocomplete = "off" })
+                                        <div class="err">@Html.ValidationMessageFor(m => m.CustomerContact.Phone)</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label(Resource.Body)
+                                    <div class="input">
+                                        @Html.TextAreaFor(m => m.CustomerContact.Body, new { @class = "form-control", @rows = 10 })
+                                    </div>
+                                </div>
+                                <button class="btn-default btn-submit" type="submit">@Resource.Submit</button>
+                                }
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="maps">
+        <div class="container">
+            <h1 class="maps-title">Bản đồ vị trí</h1>
+        </div>
+        <div class="maps-source">
+            @Html.Raw(Model.Map)
+        </div>
+    </section>
+</main>

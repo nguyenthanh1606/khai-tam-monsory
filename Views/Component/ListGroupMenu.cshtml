@@ -1,0 +1,14 @@
+﻿@model Frontend.Models.GroupViewModel
+
+@if (@Model.ListGroup.Count > 0)
+{
+    <ul>
+
+        @foreach (var group in Model.ListGroup)
+        {
+            <li><a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, group.GroupID)" style="text-transform:uppercase;">@group.Title</a></li>
+        }
+    </ul>
+
+
+}

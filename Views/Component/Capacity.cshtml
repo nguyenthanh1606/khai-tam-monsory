@@ -1,0 +1,17 @@
+﻿@model List<Frontend.Models.BannerViewModel>
+
+<div class="capacity" style="background-image: url('Content/UserFiles/Images/nganhoa/content/banner-capacity.jpg')">
+    <div class="row wrapper">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="capacity-img">
+                    <img src="@item.ImageUrl" alt="@item.AdName">
+                </div>
+                <div class="content text-center">
+                    <p class="toUpper c-white">@item.Content.RemoveHtml()</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

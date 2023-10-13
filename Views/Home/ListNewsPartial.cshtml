@@ -1,0 +1,42 @@
+﻿@model Frontend.Models.HomePageGroupViewModel
+@{
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+    int count = 0;
+}
+
+@if (Model.ListItem.Any())
+{
+    <section class="news">
+        <div class="news-desc text-b">
+            <p>@Model.Group.Description.RemoveHtml().Truncate(400)</p>
+        </div>
+
+        <div class="swiper sw-Blogs news-list">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model.ListItem)
+                {
+                    <div class="swiper-slide news-item">
+                        <a href="@item.Url" class="thumnails-template hover-ef-1">
+                            <div class="thumnails-content thumb-img">
+                                <img src="@item.PictureUrl" class="w-100 img-fluid" alt="@item.Headline">
+                            </div>
+                        </a>
+                        <div class="news-item--content">
+                            <h4>
+                                <a href="@item.Url" class="headline">@item.Headline</a>
+                            </h4>
+                            <div class="desc">@item.Summary.RemoveHtml().Truncate(400)</div>
+                            <a href="@item.Url"
+                               class="link link-active text-decoration text-uppercase text-bold small">
+                                Xem
+                                tiếp
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="swiper-button-next sw-Blogs-button-next"></div>
+            <div class="swiper-button-prev sw-Blogs-button-prev"></div>
+        </div>
+    </section>
+}

@@ -1,0 +1,14 @@
+﻿@model Frontend.Models.ProductGroupViewModel
+
+@if (@Model.ChildGroup.Count > 0)
+{
+    <ul>
+
+        @foreach (var productgroup in Model.ChildGroup)
+        {
+            <li><a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.ProductGroup, productgroup.GroupID)" style="text-transform:uppercase;">@productgroup.Title</a></li>
+        }
+    </ul>
+
+
+}

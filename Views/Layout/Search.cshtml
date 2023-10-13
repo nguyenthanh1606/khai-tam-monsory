@@ -1,0 +1,92 @@
+﻿@model Frontend.Models.LayoutContentViewModel
+@using PagedList.Mvc;
+@using PagedList;
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+
+@{
+    ViewBag.Title = @Resource.SearchResult;
+}
+@{ string key = "?q=" + @ViewBag.Query + "&";}
+@section css{
+}
+<div class="home-banner">
+    <img src="~/Content/UserFiles/Images/Banner/banner-search.png" alt="" class="w-100 img-fluid">
+</div>
+<main class="page-about page-news">
+    <div class="wrapper pt-4 pb-5">
+        <div class="row">
+            <div class="col-md-4 nav-left">
+                <div class="row m-0 pt-4 pb-4 about-content">
+                    <div class="item-first b-before">
+                        <div class="box-2">
+                            <h3 class="title color-main">@Resource.Search</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row m-0 pt-4 pb-4 content-right">
+                    <h3 class="text-upper pl-4 title">
+                        @ViewBag.Title
+                    </h3>
+                    <div class="sumary pl-4 text-b" style="height: 80px">
+                        @if (Request.Cookies["lang"].Value == "vi-VN")
+                        {
+                            <p><i>Kết quả tìm kiếm trên trang cho từ khóa “@ViewBag.Query”</i></p>
+                        }
+                        else
+                        {
+                            <p>Search results for keywords "@ViewBag.Query"</p>
+                        }
+                    </div>
+                </div>
+                <div class="row m-0 pb-4 search-list">
+                    @if (Model.ListContent.Any())
+                    {
+                        
+                        string domain;
+                        Uri url = HttpContext.Current.Request.Url;
+                        domain = url.AbsoluteUri.Replace(url.PathAndQuery, string.Empty);
+                        
+                        foreach (var item in Model.ListContent)
+                        {
+                            <div class="item-search col-md-12">
+                                <div class="headline">
+                                    <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Content,@item.ContentID)">@item.Headline.RemoveHtml()</a>
+                                </div>
+                                <div class="sumary" style="margin-bottom: .25rem" id="text-s">
+                                    <p>@item.Summary.RemoveHtml().Truncate(150)</p>
+                                </div>
+                                <div class="link">
+                                    <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Content,@item.ContentID)">@domain@Url.CustomAction(Store.Service.SystemService.RoutingType.Content, @item.ContentID)</a>
+                                </div>
+                            </div>
+                        }
+                        <div class="row col-md-12 mt-3 justify-content-center">
+                            <nav aria-label="...">
+                                @Html.GetPageListSearch(key, Model.Page, Model.PageSize, Model.TotalItems, htmlAttributes: new { @class = "pagination" })
+                            </nav>
+                        </div>
+                    }
+                    else
+                    {
+                        if (Request.Cookies["lang"].Value == "vi-VN")
+                        {
+                            <p>Không tìm thấy kết quả</p>
+                        }
+                        else
+                        {
+                            <p>No search!</p>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+@{Html.RenderAction("PartialContact", "Component", new { viewname = "partialcontact2" });}
+
+
+@section js{
+}

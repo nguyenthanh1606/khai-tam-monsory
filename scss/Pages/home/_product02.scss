@@ -1,0 +1,76 @@
+$font-title: 'Dancing Script';
+$font-card: 'UTM Avo';
+
+.bread-title{
+    &:before{
+        content: url('../images/background/bg-section.png');
+        text-align: center;
+        margin: auto;
+        display: block;
+    }
+}
+.product02 {
+    margin-top: 40px;
+
+    .wrapper {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .list-products {
+        margin-top: 1.5rem;
+    }
+
+    .title {
+        font-family: $font-title;
+        font-size: 40px;
+    }
+
+    .readmore {
+        a {
+            color: $color-link;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    }
+
+    .thumnails-template {
+        @include thumnails-template(100%);
+        .thumnails-content{
+            background-color: transparent;
+            transition: .4s ease-in-out;
+
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .card-item-2{
+        .title, .title a{
+            font-family: 'UTM Libel KT';
+            color: $color-primary;
+            font-size: 28px;
+            &:hover{
+                color: $color-link;
+                text-decoration: none;
+            }
+        }
+        .desc{
+            font-size: 14px;
+        }
+        .btn-link a{
+            display: inline-block;
+            padding: 5px 1rem;
+            background-color: $color-link;
+            color: #fff;
+            text-transform: uppercase;
+            transition: .4s ease-in-out;
+            font-size: 14px;
+            &:hover{
+                box-shadow: 0 0 10px 1px #808080;
+                text-decoration: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,63 @@
+﻿@model Frontend.Models.HomePageGroupViewModel
+@{
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+    int count = 0;
+}
+
+@if (Model.ListItem.Any())
+{
+    <div class="bread-title"></div>
+    if (Model.DefaultName != "")
+    {
+        <h1 class="title text-center">@Model.DefaultName</h1>
+    }
+    else
+    {
+        <h1 class="title text-center">@Model.Group.Title</h1>
+    }
+    <div class="desc w-50 text-center m-auto" style="font-size: 16px;">
+        <i>@Model.Group.Description.Truncate(220)</i>
+    </div>
+    <div class="list-shops wrapper">
+        <div class="swiper-container gallery-top">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model.ListItem)
+                {
+                <div class="swiper-slide row wrapper">
+                    <div class="col-md-6 pr-5 text-right">
+                        <a href="@item.Url" class="title" title="@item.Headline">
+                            <h3 class="title">@item.Headline</h3>
+                        </a>
+                        <div class="desc">
+                            <p>@item.Summary.RemoveHtml().Truncate(200)</p>
+                        </div>
+                        <div class="btn-link text-right mb-3">
+                            <a href="@item.Url">@Resource.ReadMore</a>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="thumnails-template">
+                            <div class="thumnails-content">
+                                <a href="@item.Url" title="@item.Headline">
+                                    <img src="@item.PictureUrl" alt="@item.Headline" class="img-fluid" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        <div class="swiper-container gallery-thumbs">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model.ListItem)
+                {
+                    <div class="swiper-slide">
+                        <img src="@item.PictureUrl" class="img-thumb" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+

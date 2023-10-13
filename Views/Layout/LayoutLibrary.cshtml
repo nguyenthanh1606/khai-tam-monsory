@@ -1,0 +1,63 @@
+﻿@model Frontend.Models.LayoutContentViewModel
+@using PagedList.Mvc;
+@using PagedList;
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+
+@{
+    ViewBag.Title = Model.Group.Title;
+    ViewBag.Description = Model.Group.Description.RemoveHtml();
+    if (!string.IsNullOrEmpty(Model.Group.ImageUrl))
+    {
+        ViewBag.Image = Url.Content(Model.Group.ImageUrl, true);
+    }
+    string ComponentViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Component/{0}.cshtml";
+}
+
+<main class="main-wrapper">
+    <section class="banner">
+        @if (Model.Group.BannerUrl == null)
+        {
+            <div class="box-banner">
+                @Resource.Updating
+            </div>
+        }
+        else
+        {
+            <img class="img-fluid w-100" src="@Model.Group.BannerUrl" alt="" />
+        }
+    </section>
+    <section class="bread">
+        <div class="container wrapper breadcrumb-ds">
+            @Html.Breadcrumb(BreadcrumbType.Group, Model.Group.GroupID, new { @class = "" })
+        </div>
+    </section>
+    <section class="box-block">
+        <div class="container">
+            <h1 class="title text-center">@Model.Group.Title</h1>
+            <div class="description">
+                @Model.Group.Description.RemoveHtml()
+            </div>
+            @if (Model.ListContent.Count() > 0)
+            {
+                <div class="tiles-card">
+                    @foreach (var item in Model.ListContent)
+                    {
+                        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Content,item.ContentID)" class="post-item card-cs">
+                            <div class="picture">
+                                <img src="@item.PictureUrl" alt="@item.Headline" class="img-fluid" title="@item.Headline">
+                            </div>
+                        </a>
+                    }
+                </div>
+                    <div class="pagi text-center">
+                        @Html.GetPageList(Model.Page, Model.PageSize, Model.TotalItems, htmlAttributes: new { @class = "pagination justify-content-center" })
+                    </div>
+            }
+            else
+            {
+                <h3>@Resource.Updating</h3>
+            }
+        </div>
+    </section>
+</main>

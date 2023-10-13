@@ -1,0 +1,153 @@
+﻿@using Store.Service.Models
+@model Frontend.Models.HeaderViewModel
+
+<div class="avs-top text-center small">
+    <span>Liên hệ đặt hàng & hỗ trợ nhanh: <a href="tel:@Model.Hotline.Replace(",","")">@Model.Hotline</a></span>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23" height="21"
+         viewBox="0 0 23 21">
+        <image id="phone" width="23" height="21"
+               xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAVCAYAAACt4nWrAAAByklEQVQ4jZ3VT4hOURjH8c9Mg7Ihio3NpISNUKMwU5Jko0TyJ1lgYSmysLAgK6XJSjZTmqamZGFDmo0/2VGE12TDQkoi0ZSxoKfOrevMea/7zrdu59zzPOd3n/ucc57TN93paMkCHMdmLCpM+Y3XmMCXGBhoKbwRd7Gqhe8VHA3/NpEvx6cUeS9sqiI/gZWp/we38DG9X5yHcHAtxCdxMDOsxsnU35nZzmAIh3EKV/EWY7iBvuQ31F8QDvbW+nnUDzGd+g/wK6VtKvMbiJx/w9LCB4bxBLex/z8pKPEmIn/fxXgutZfnIRxcCvFXXYzV37zA6R6FYx0mQ/xewRg75VjtPRZqC8bxM/PtpCeCvIM9OB+GyHmctu/ZqYsddKhLVFO1HTSCx93C70+rPZqNxw7a0WXOcGq3NwlXkUe7GD/SxypmsQYfsjlH8BX3m4TVxGZSUaqzEM+xPhufaCMsi3Q8PXWWpYU6gCW4mcrDM1zAuibxUuF6VMtrnZmUvpyn2IfPTZFXjKRjnVMSDramWjSHkniwO6pa0y9nzPYiHpzFLrxsIV7UaRIP4sBsSDdLrEWJ2MJVlfyHXu7QYBDbsBYr0gG8jndzPPEXhslgTgdgXxsAAAAASUVORK5CYII=" />
+    </svg>
+</div>
+<header>
+    <div class="header-top">
+        @{Html.RenderAction(MVC.Component.Display(4, "AdsLogoTop"));}
+
+
+        <div class="wrapper">
+            <div class="row justify-end">
+                <div class="col top-menu">
+                    @if (Model.TopMenu.GetAllChilds().Count() > 0)
+                    {
+                        <ul>
+                            @foreach (var item in Model.TopMenu.GetAllChilds())
+                            {
+                                <li><a href="@item.Value.Url" class="text-uppercase small">@item.Value.MenuName</a></li>
+
+                            }
+                        </ul>
+                    }
+
+                </div>
+                <div class="col lang">
+                    <ul>
+                        <li class="active"><a href="#!" class="text-uppercase small">Vie</a></li>
+                        <li><a href="#!" class="text-uppercase small">Eng</a></li>
+                    </ul>
+                </div>
+                @*<div class="col barket">
+                    <a href="#!">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                             width="27" height="31" viewBox="0 0 27 31">
+                            <image id="add-to-basket" width="27" height="31"
+                                   xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAfCAYAAAAWRbZDAAAB40lEQVRIie2XzytEURTHP5gpUialKUs/FlYWFqTJwgYbK6ysUAorpeytTNn4B8aGBSUNG7KwFLKSDbHxqxQLkl9ldOvc6TS9mXl35j0r33rd+84953zvfffce87DJ6qAKWAXuAVepd0DpoGIX0fF0A9cAZkCzzUwUC7RWA7BEbAIzEp7lDM+VipRu3JiPttIHr1hGbe67aWQXYrxN9BSRLdF9DJi54SEmum4T8MJZZNwIUuK0Y3jJG/ELuk1GJFvPAfUKnmPtFFgDaj2QfQh+kigtKqxN2DJdDaKhHVQz4ZZ2aewvwAH0u8G4sADcOzwGTuBRuAROBRZL1BneVIy81NllBbZqgMRop8Re4tTkaUqlTCq+naPahzJrL7e46xfTVah+rU5rV942WX9VuZx8iXtuyOZ1f/yGsx3W88Ao8CKI5k5QudyXDxhA+TM0bFfnHkFSOj4JysHMbGN/QXZnbQXgRUqBTAkd+32X5DdA5uEvGcdQJsWhLWyJpVFYpK+QltZs+rHbSfolQ0C80CDkm0BT8AC6m48CYDssEAJkY6ofNPoULZZ/AD76ixNSsYwe9YnMpO1zX/BsnnZKbOgefaYhIlEO15vhWZl60CXpHLXgDHOzJ9NLkyhZFZrSjhTKQPwC2Nun5OVPFKLAAAAAElFTkSuQmCC" />
+                        </svg>
+                    </a>
+                </div>*@
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="logo">
+            <a href="/" title="@Model.SiteTitle">
+                @Html.BannerImage(1, Request.Cookies["lang"].Value, new { id = "site-logo", @alt = "MNShop" })
+            </a>
+        </div>
+        <div class="wrapper">
+            <div class="row justify-end">
+                <div class="main-menu">
+                    @if (Model.MainMenu.GetAllChilds().Any())
+                    {
+                        <ul class="mn-1">
+                            @foreach (var item in Model.MainMenu.GetAllChilds())
+                            {
+                                <li>
+                                    <a href="@item.Value.Url" class="text-uppercase">@item.Value.MenuName</a>
+                                    @if (item.GetAllChilds().Any())
+                                    {
+                                        <ul class="mn-2">
+                                            @foreach (var item2 in item.GetAllChilds())
+                                            {
+                                                <li>
+                                                    <a href="@item2.Value.Url" class="text-uppercase small">@item2.Value.MenuName</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+
+                </div>
+                <div class="form-search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm tranh">
+                        <button type="button" id="searchProduct" type="button" class="btn submit-search">
+                            <i class="far fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+@*<header class="header">
+        <div class="container main-header">
+            <div class="menu-wrapper">
+                @if (Model.MainMenu.GetAllChilds().Count() > 0)
+                {
+                    <ul class="menu">
+                        @foreach (var item in Model.MainMenu.GetAllChilds())
+                        {
+                            if (!item.Value.SelectedCss.IsEmpty())
+                            {
+                                <li class="@item.Value.SelectedCss">
+                                    <a href="@item.Value.Url"><img src="@item.Value.NormalCss" class="img-fluid" /></a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@item.Value.Url">@item.Value.MenuName</a>
+                                </li>
+                            }
+                        }
+
+                        <li class="icon">
+                            <a class="icon-cart" href="@Url.Action("List", "ShoppingCart")">
+                                <i class="fal fa-shopping-cart"></i>
+                                <div class="shopping-cart" id="cart">
+                                    <span class="ammout" id="cart_count_number">{{totalItems}}</span>
+                                </div>
+                            </a>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <a href="@Url.Action("Login", "Account")"><i class="fal fa-user"></i></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Info", "Account")"><i class="fal fa-user"></i></a>
+                            }
+                        </li>
+                    </ul>
+                }
+                <div class="btn-menu">
+                    <a href="#menu" class="btn-click"><span></span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav id="menu">
+        @if (Model.MainMenu.GetAllChilds().Count > 0)
+        {
+            <ul>
+                @foreach (var item1 in Model.MainMenu.GetAllChilds().OrderByDescending(m => m.Value.Priority))
+                {
+                    <li>
+                        <a href="@item1.Value.Url">@item1.Value.MenuName</a>
+                    </li>
+                }
+            </ul>
+        }
+    </nav>*@

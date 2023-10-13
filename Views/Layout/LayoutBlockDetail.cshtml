@@ -1,0 +1,134 @@
+﻿@model Frontend.Models.LayoutContentDetailViewModel
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+@{
+    ViewBag.Title = Model.Content.Headline;
+    ViewBag.Description = Model.Content.Summary.RemoveHtml();
+    if (!Model.Content.CustomizeTitle.IsEmpty())
+    {
+        ViewBag.Title = Model.Content.CustomizeTitle;
+    }
+    //if (!Model.Content.CustomizeDescription.IsEmpty())
+    //{
+    //    ViewBag.Description = Model.Content.CustomizeDescription.RemoveHtml();
+    //}
+    if (Model.Content.PictureUrl != "")
+    {
+        ViewBag.Image = Model.Content.PictureUrl;
+    }
+
+    string ComponentViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Component/{0}.cshtml";
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+}
+@{ string bannerUrl = Model.Group.BannerUrl;}
+@if (!Model.Content.BannerImages.IsEmpty())
+{
+    bannerUrl = Model.Content.BannerImages;
+}
+
+<main class="main-wrapper">
+    <section class="banner">
+        @if (Model.Group.BannerUrl == null)
+        {
+            <div class="box-banner">
+                @Resource.Updating
+            </div>
+        }
+        else
+        {
+            <img class="img-fluid w-100" src="@Model.Group.BannerUrl" alt="" />
+        }
+    </section>
+    <section class="bread">
+        <div class="container wrapper breadcrumb-ds">
+            @Html.Breadcrumb(BreadcrumbType.Group, Model.Group.GroupID, new { @class = "" })
+        </div>
+    </section>
+
+    <section class="box-block">
+        <div class="container">
+            <h1 class="title text-center">@Model.Content.Headline</h1>
+            @if (Model.Content.IntValue1 == 1)
+            {
+                <div class="summary">
+                    @Model.Content.Summary.RemoveHtml()
+                </div>
+            }            
+            <div class="content">
+                @Html.Raw(Model.Content.Body)
+            </div>
+        </div>
+    </section>
+    <section class="related">
+        <div class="container">
+            <div class="related-wrap">
+                @if (Model.AnotherNews.Any())
+                {
+                    <div class="tiles-card card-2">
+                        @foreach (var item in Model.AnotherNews.Take(4))
+                        {
+                            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Content,item.ContentID)" class="post-item card-cs horizontal">
+                                <div class="picture">
+                                    <img src="@item.PictureUrl" alt="@item.Headline" class="img-fluid" title="@item.Headline">
+                                </div>
+                                <div class="text">
+                                    <h3 class="name">
+                                        @item.Headline
+                                    </h3>
+                                    <div class="summary">
+                                        @item.Summary.RemoveHtml()
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</main>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<g:page href="https://plus.google.com/{pageId}"></g:page>
+<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+
+@helper Ext(string url)
+{
+    string ext = "";
+    if (url.EndsWith(".pdf"))
+    {
+        ext = "PDF";
+    }
+    else if (url.EndsWith(".doc"))
+    {
+        ext = "DOC";
+    }
+    else if (url.EndsWith(".docx"))
+    {
+        ext = "DOCX";
+    }
+    else if (url.EndsWith(".xls"))
+    {
+        ext = "XLS";
+    }
+    else if (url.EndsWith(".xlsx"))
+    {
+        ext = "XLSX";
+    }
+    else if (url.EndsWith(".ppt"))
+    {
+        ext = "PPT";
+    }
+    else if (url.EndsWith(".zip"))
+    {
+        ext = "ZIP";
+    }
+    else if (url.EndsWith(".rar"))
+    {
+        ext = "RAR";
+    }
+    else if (url.EndsWith(".txt"))
+    {
+        ext = "TXT";
+    }
+    <p>@ext</p>
+}

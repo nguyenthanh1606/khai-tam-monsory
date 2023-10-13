@@ -1,0 +1,14 @@
+﻿@model List<Frontend.Models.BannerViewModel>
+
+@if (Model.Count() > 0)
+{
+    var item = Model.FirstOrDefault();
+    <div class="parallax" style="background-image: url('@item.ImageUrl');">
+        <div class="caption text-center">
+            <p class="text">
+                @item.Content.RemoveHtml()
+            </p>
+            <p class="author pt-3">@item.Note.RemoveHtml()</p>
+        </div>
+    </div>
+}

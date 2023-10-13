@@ -1,0 +1,42 @@
+﻿.box-block{
+    padding:30px 0;
+    text-align:center;
+    @include MQ(L){
+        padding-bottom:70px;
+    }
+    @include MQ(CS){
+        padding-bottom:55px;
+    }
+    .title{
+        margin:auto;
+        margin-bottom:25px;
+    }
+    .summary{
+        font-size:16px;
+        color:$color-black;
+        margin-bottom:35px;
+        text-align:left;
+        font-weight:bold;
+    }
+    .content{
+        font-size:16px;
+        text-align:left;
+        img,iframe{
+            vertical-align:middle;
+            max-width:100%;
+            height:auto;
+            object-fit:cover;
+        }
+        table{
+            max-width:100%;
+            overflow:auto;
+            @include MQ(L){
+                max-width:100%;
+            }
+            @include MQ(CS){
+                max-width:100%;
+            }
+        }
+        
+    }
+}

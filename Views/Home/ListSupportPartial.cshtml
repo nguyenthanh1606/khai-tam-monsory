@@ -1,0 +1,48 @@
+﻿@model Frontend.Models.HomePageGroupViewModel
+
+<div class="content-list">
+    <div class="title">
+        @if (Model.DefaultName != "")
+            {
+            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, Model.Group.GroupID)"><span>@Model.DefaultName</span></a>
+        }
+        else
+        {
+            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, Model.Group.GroupID)">
+                <span>@Model.Group.Title</span>
+            </a>
+        }
+        <ul>
+            @if (@Model.Group.ListGroup.Any())
+            {
+                foreach (var group in @Model.Group.ListGroup)
+                {
+                    <li><a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, @group.GroupID)">@group.Title</a></li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="row" style="margin: 0;">
+        @if (Model.ListItem.Any())
+        {
+            foreach (var item in Model.ListItem)
+            {
+                <div class="content col-md-3">
+                    <div class="img-content">
+                        <a href="@item.Url">
+                            <figure>
+                                <img src="@item.PictureUrl" class="mx-auto d-block" width="100%" alt="content 1">
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="detail-content">
+                        <a href="@item.Url"><h5>@item.Headline</h5></a>
+                        <span class="user-create">@item.AuthorName</span>
+                        <span class="date-create">@item.PublishDate.Value.ToShortDateString()</span>
+                        <p class="detail">@item.Summary.RemoveHtml().Truncate(140)</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

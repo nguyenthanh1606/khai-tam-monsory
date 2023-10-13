@@ -1,0 +1,38 @@
+﻿@model Frontend.Models.ProductGroupViewModel
+@using System.Globalization
+@using System
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+@using Store.Service.SystemService;
+@using Store.Service.ProductServices
+
+<div class="cat wrapper">
+    <div class="headline text-center">
+        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.ProductGroup,  Model.GroupID)" class="toUpper c-black h3">@Model.Title</a>
+    </div>
+    <div class="list-product">
+        @foreach (var item in Model.ListProduct)
+        {
+            <div class="col-md-4 item">
+                <div class="box">
+                    <div class="thumb">
+                        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, @item.ProductID)" class="d-block w-100">
+                            <img src="@item.ImageUrl" alt="@item.Title">
+                        </a>
+                    </div>
+                    <div class="content">
+                        <div class="name text-center">
+                            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, @item.ProductID)" class="h4 text-b toUpper c-black">@item.Title</a>
+                        </div>
+                        <div class="price text-center">
+                            <p class="color-main h4 text-b">@string.Format("{0:n0}", @item.Price) Đ</p>
+                        </div>
+                        <div class="link">
+                            <button type="submit" onclick="AddToCartAjax(@item.ProductID, AddToCartSuccess);" class="buynow text-b c-white toUpper">@Resource.BuyNow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

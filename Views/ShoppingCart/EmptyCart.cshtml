@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = Resource.ShoppingCart;
+}
+<section class="banner">
+    @Html.BannerImage(4, Request.Cookies["lang"].Value, new { alt = "Coffee Bean", title = "Coffee Bean", @class = "w-100 img-fluid" })
+</section>
+
+<div class="content_checkout" id="cartPage">
+    <div class="container">
+        <div class="cart-page--empty">
+            <div class="cart-page--empty__image"></div>
+            <div class="cart-page--empty__text">@Resource.CartEmptyMsg</div>
+            <a class="bt-buy cart-page--empty__action mt-3" href="/">
+                @Resource.Back
+            </a>
+        </div>
+    </div>
+</div>

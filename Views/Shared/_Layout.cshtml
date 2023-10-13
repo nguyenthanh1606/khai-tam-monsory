@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@(!string.IsNullOrEmpty(ViewBag.Title) ? ViewBag.Title + " - " + ViewBag.SiteTitle : ViewBag.SiteTitle)</title>
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" content="@ViewBag.MetaKeywords" />
+    @if (!string.IsNullOrEmpty(ViewBag.Image))
+    {
+        <link rel="image_src" href="@Url.Content((string)ViewBag.Image, true)" />
+        <meta property="og:image" content="@Url.Content((string)ViewBag.Image, true)">
+        <meta name="image" content="@Url.Content((string)ViewBag.Image, true)" />
+
+    }
+    else if (ViewBag.HomeImage != null)
+    {
+        <link rel="image_src" href="@Url.Content((string)ViewBag.HomeImage, true)" />
+        <meta property="og:image" content="@Url.Content((string)ViewBag.HomeImage, true)">
+        <meta name="image" content="@Url.Content((string)ViewBag.HomeImage, true)" />
+    }
+    @*Facebook meta*@
+    <meta property="og:url" content="@Request.Url.GetLeftPart(UriPartial.Path)" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="@Html.Raw(ViewBag.Title)" />
+    <meta property="og:description" content="@Html.Raw(ViewBag.Description)" />
+
+    @*@Styles.Render("~/Content/css/common")*@
+
+    @Html.RenderDefaultThemeStyles("~/Themes/MNShop/css/all.css")
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+    @RenderSection("css", required: false)
+
+    <link href="~/Themes/MNShop/css/site.css?ver=0.1.4" rel="stylesheet" />
+    <link href="~/Themes/MNShop/css/site-fix.css" rel="stylesheet" />
+
+
+    @*<link href="~/Themes/CoffeeBean/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/Themes/CoffeeBean/css/all.css" rel="stylesheet" />
+        <link href="~/Themes/CoffeeBean/css/jquery.mmenu.all.css" rel="stylesheet" />
+        <link href="~/Themes/CoffeeBean/css/swiper.min.css" rel="stylesheet" />
+        <link href="~/Themes/CoffeeBean/css/aos.css" rel="stylesheet" />
+        <link href="~/Themes/CoffeeBean/css/sweetalert2.min.css" rel="stylesheet" />
+        <link href="~/Themes/CoffeeBean/css/site.min.css" rel="stylesheet" />
+        <link href="~/Themes/CoffeeBean/css/style.css" rel="stylesheet" />
+        <link href="~/Themes/CoffeeBean/css/userpage.css" rel="stylesheet" />*@
+
+    @{ Html.RenderAction(MVC.Component.GoogleAnalytics());}
+    @{Html.RenderAction(MVC.Component.HeaderScript());}
+
+
+</head>
+
+<body>
+    <div id="page">
+        @{Html.RenderAction(MVC.Component.Header());}
+
+
+        @RenderBody()
+
+        <!-- Page Footer-->
+        @{Html.RenderAction(MVC.Component.Footer());}
+    </div>
+
+    @*@Html.AlertModal("")*@
+
+    @*<div id="addToCartModal" class="modal" role="dialog">
+            <div class="modalOut">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h5 class="modal-title">@Resource.AddToCartSuccessfully</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div id="product_modal_info"></div>
+                        </div>
+                        <div class="modal-footer">
+                            @Html.ActionLink(Resource.ToShoppingCart, "List", "ShoppingCart", null, new { @class = "btn btn-default" })
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">@Resource.ContinueShopping</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>*@
+
+    @*@if (!User.Identity.IsAuthenticated)
+        {
+            @Html.Partial("_LoginPartial")
+        }*@
+
+    @{Html.RenderAction(MVC.Component.BodyScript());}
+
+    @*@Scripts.Render("~/bundles/common")*@
+
+    <script src="~/Themes/NganHoa/scripts/jquery-3.2.1.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="~/Themes/NganHoa/scripts/bootstrap.min.js"></script>
+        <script src="~/Themes/NganHoa/scripts/popper.min.js"></script>
+        <script src="~/Themes/NganHoa/scripts/plugins.js"></script>
+        <script src="~/Scripts/common.js"></script>
+        <script src="~/Themes/NganHoa/scripts/vue.js"></script>
+        <script src="~/Themes/NganHoa/scripts/swiper.min.js"></script>
+        <script src="~/Themes/NganHoa/scripts/script.js"></script>*@
+    @*@Html.RenderDefaultThemeScripts("~/Themes/NganHoa/scripts/bootstrap.min.js",
+        "~/Themes/NganHoa/scripts/popper.min.js",
+        "~/Themes/NganHoa/scripts/plugins.js",
+        "~/Scripts/common.js",
+        "~/Themes/NganHoa/scripts/vue.js",
+        "~/Themes/NganHoa/scripts/swiper.min.js",
+        "~/Themes/NganHoa/scripts/script.js")*@
+    <script src="~/Themes/MNShop/scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Themes/MNShop/scripts/jquery.min.js"></script>
+
+    @*<script src="~/Themes/CoffeeBean/scripts/bootstrap.min.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/all.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/popper.min.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/modernizr.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/swiper.min.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/jquery.mmenu.all.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/sweetalert2.min.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/aos.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/assets.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/swiper.js"></script>
+        <script src="~/Themes/CoffeeBean/scripts/menu.js"></script>
+        <script src="~/Scripts/common.js"></script>*@
+    <script src="~/Themes/MNShop/scripts/lightslider.js"></script>
+
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="~/Themes/MNShop/scripts/default.js"></script>
+    <script src="~/Themes/MNShop/scripts/main.js"></script>
+    <script src="~/Themes/MNShop/scripts/vue.js"></script>
+
+    <script>
+        function SignupNewsletterSuccess(data) {
+            $('#singup-newsletter-area').html('<p>' + data.message + '</p>')
+        }
+        function ContactSuccess(data) {
+            $('#contact-area').html('<p>' + data.msg + '</p>')
+        }
+
+        function ContactSuccess(result) {
+            $('#alert-contact').text(result.msg);
+        }
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            window.prettyPrint && prettyPrint()
+            $(document).on('click', '.navbar .dropdown-menu', function (e) {
+                e.stopPropagation()
+            })
+        })
+
+        $("button#searchProduct").click(function () {
+
+            var href = $("#productCatalog option:selected").val();
+            var query = $("#searchQuery").val();
+            if (query != "") {
+                window.location.href = href + "?query=" + query;
+            }
+            else {
+                window.location.href = href;
+            }
+        });
+
+
+        $(document).ready(function () {
+            UpdateWishlistNumber();
+
+
+        });
+
+        $(document).ready(function () {
+            var url = window.location;
+            // Will only work if string in href matches with location
+            $('ul.nav-child-menu a[href="' + url + '"]').closest("li").addClass('active');
+
+            //  Will also work for relative and absolute hrefs
+            //$('#mySidenav ul a').filter(function () {
+            //    return this.href == url;
+            //}).parents('li').addClass('sel');
+
+        });
+
+        $(document).ready(function () {
+            var vmMenuCart = new Vue({
+                mixins: [vmShoppingCart],
+                el: '#cart',
+                data: {
+                    cart: null,
+                    discountValue: 0,
+                },
+                filters: {
+                    formatMoney: function (value) {
+                        return value.toLocaleString("@Request.Cookies["lang"].Value", { minimumFractionDigits: 0 });
+                    }
+                },
+            });
+        });
+    </script>
+
+    @RenderSection("js", required: false)
+</body>
+</html>
+

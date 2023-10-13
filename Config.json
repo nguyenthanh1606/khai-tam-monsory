@@ -1,0 +1,89 @@
+[
+  {
+    "Language": "vi-VN",
+    "Component": [
+      {
+        "ComponentName": "GroupProduct01",
+        "EntityID": 1,
+        "TotalItems": 6,
+        "ComponentType": 5,
+        "Description": "Bộ sưu tập tranh ghép gốm APEC 2017"
+      },
+      {
+        "ComponentName": "GroupProduct02",
+        "EntityID": 17,
+        "TotalItems": 9,
+        "ComponentType": 4,
+        "Description": "Đa dạng chủ đề, phù hợp cho mọi không gian nội thất"
+      },
+      {
+        "ComponentName": "GroupBlogs",
+        "EntityID": 4,
+        "TotalItems": 6,
+        "ComponentType": 0,
+        "Description": ""
+      },
+      {
+        "ComponentName": "GroupNews",
+        "EntityID": 5,
+        "TotalItems": 6,
+        "ComponentType": 0,
+        "Description": ""
+      },
+      {
+        "ComponentName": "GroupBlogs2",
+        "EntityID": 8,
+        "TotalItems": 3,
+        "ComponentType": 0,
+        "Description": "Báo chí viết về chúng tôi"
+      },
+      {
+        "ComponentName": "GroupCamNang",
+        "EntityID": 23,
+        "TotalItems": 6,
+        "ComponentType": 0,
+        "Description": "Tìm hiểu về các cách in khác nhau"
+      }
+    ]
+  },
+  {
+    "Language": "en-US",
+    "Component": [
+      {
+        "ComponentName": "GroupProduct01",
+        "EntityID": 9,
+        "TotalItems": 6,
+        "ComponentType": 4,
+        "Description": "Bộ sưu tập tranh ghép gốm APEC 2017"
+      },
+      {
+        "ComponentName": "GroupProduct02",
+        "EntityID": 17,
+        "TotalItems": 9,
+        "ComponentType": 4,
+        "Description": "Đa dạng chủ đề, phù hợp cho mọi không gian nội thất"
+      },
+      {
+        "ComponentName": "GroupBlogs",
+        "EntityID": 4,
+        "TotalItems": 6,
+        "ComponentType": 0,
+        "Description": "Khám phá thêm những thông tin thú vị"
+      },
+      {
+        "ComponentName": "GroupBlogs2",
+        "EntityID": 8,
+        "TotalItems": 3,
+        "ComponentType": 0,
+        "Description": "Báo chí viết về chúng tôi"
+      },
+      {
+        "ComponentName": "GroupCamNang",
+        "EntityID": 23,
+        "TotalItems": 6,
+        "ComponentType": 0,
+        "Description": ""
+      }
+    ]
+  }
+]

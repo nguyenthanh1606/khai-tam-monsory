@@ -1,0 +1,109 @@
+﻿@using Microsoft.Owin.Security
+@using Frontend.Infrastructure.ExtensionMethod
+@model Frontend.Models.LoginViewModel
+@{
+    ViewBag.Title = @Resource.Login;
+}
+
+<main class="not-home">
+    <section class="row justify-content-md-center wrapper">
+        <div class="dangky col-md-7">
+            <div class="dangky-head text-center">
+                <p class="c-black toUpper">@Resource.Login</p>
+            </div>
+            <div class="row main justify-content-md-center">
+                <div class="dangky-main col-md-8 no-pd">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "form-customer", @class = "dangky-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-md-12 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-user"></i></div>
+                                </div>
+                                @Html.TextBoxFor(model => model.Email, new
+                           {
+                               @class = "form-control",
+                               @placeholder = Resource.Email
+                           })                                
+                            </div>
+                            <div class="pt-2 pl-3">
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                                </div>
+                                @Html.PasswordFor(model => model.Password, new
+                           {
+                               @class = "form-control",
+                               @placeholder = Resource.Password
+                           })
+                            </div>
+                            <div class="pt-2 pl-3">
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 input-group space-between">
+                                <div class="form-check form-check-inline">
+                                    <label>@Html.CheckBoxFor(m => m.RememberMe) Lưu thông tin đăng nhập</label>
+                                </div>
+                                <div class="link">
+                                    @Html.ActionLink(Resource.ForgetPassword, "ForgotPassword", "Account", new { @class = "color-main" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row link">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn toUpper sm-signUp">@Resource.Login</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 input-group">
+                                <span>Bạn chưa có tài khoản? </span>
+                                @Html.ActionLink(Resource.DontHaveAccount, "Register", "Account", new { @class = "color-main" })
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="dangky-bot">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-4 left">
+                        <p>Hoặc đăng nhập bằng</p>
+                    </div>
+                    <div class="col-md-6 no-pd right">
+                        @{
+                            var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+                            using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div id="socialLoginList" style="width:100%; float:left;">
+                                    @foreach (AuthenticationDescription p in loginProviders)
+                                    {
+                                        <button type="submit" class="@GetClass(@p.AuthenticationType)" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i class="@GetClass2(@p.AuthenticationType)"></i></button>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@functions{
+    public string GetClass(string type)
+    {
+        return type == "Google" ? "btn-google c-white" : type == "Facebook" ? "btn-fb c-white" : "";
+    }
+    public string GetClass2(string type)
+    {
+        return type == "Google" ? "fab fa-google-plus-g" : type == "Facebook" ? "fab fa-facebook-f" : "";
+    }
+}
+

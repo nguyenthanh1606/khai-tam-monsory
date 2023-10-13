@@ -1,0 +1,74 @@
+﻿@model Frontend.Models.LayoutContentViewModel
+@using PagedList.Mvc;
+@using PagedList;
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+
+@{
+    ViewBag.Title = Model.Group.Title;
+    ViewBag.Description = Model.Group.Description.RemoveHtml();
+    if (!string.IsNullOrEmpty(Model.Group.ImageUrl))
+    {
+        ViewBag.Image = Url.Content(Model.Group.ImageUrl, true);
+    }
+}
+<div class="wrapper inner-main-title" style="background-image:url('@Model.Group.BannerUrl');background-position: center 22px; background-attachment: fixed;">
+    <div class="container">
+        <div class="row">
+            <header class="entry-header col-md-6 init-animate fadeInDown1" style="visibility: visible; animation-name: fadeInDown1;">
+                <h1 class="page-title">@Model.Group.Title</h1>
+            </header>
+            <div class="breadcrumbs col-md-6 init-animate fadeInDown1" style="visibility: visible; animation-name: fadeInDown1;">
+                @Html.Breadcrumb(BreadcrumbType.Group, Model.Group.GroupID, new { @class = "breadcrumb" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="content" class="site-content container clearfix">
+    @if (Model.ListGroupInNews != null && Model.ListGroupInNews.Count > 1)
+    {
+        <div class="service-summary clearfix">
+
+            <div class="service-summary-description">
+                @Html.Raw(Model.Group.Description)
+            </div>
+        </div>
+        <h2 class="widget-title">@Resource.OurService</h2>
+        <div class="equal_list list-service">
+            @foreach (var group in Model.ListGroupInNews)
+            {
+                <div class="col-sm-6 col-xs-12 clearfix service-item">
+                    <div class="image_wrapper service-image col-sm-4 col-xs-12">
+                        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, group.GroupID)" class="image">
+                            <img src="@group.ImageUrl">
+                        </a>
+                    </div>
+                    <div class="service-description">
+                        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, group.GroupID)">
+                            <h4>@group.Title</h4>
+                        </a>
+                        <section>@group.Description.RemoveHtml().Truncate(200)</section>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div id="primary"  class="content-area">
+            <div class="service-detail">
+                @Html.Raw(Model.Group.Description)
+                @Html.Raw(Model.Group.Body)
+                @{Html.RenderAction("GetContentForGroupID", "Home", new { countItem = 20, groupID = Model.Group.GroupID, viewName = "ServiceListDetail", getTopGroupInfo = true });}
+            </div>
+        </div>
+        <div id="secondary-right" class="at-remove-width widget-area sidebar secondary-sidebar" role="complementary">
+            @{Html.RenderAction("GetChildGroup", "Home", new { id = 5, viewName = "ServiceSideBar" });}
+        </div>
+    }
+</div>
+
+@section scripts{
+   
+}

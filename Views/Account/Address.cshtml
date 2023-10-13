@@ -1,0 +1,169 @@
+﻿@model Frontend.Models.AccountInfo
+
+@using Frontend.Infrastructure.ExtensionMethod
+
+@{
+    ViewBag.Title = Resource.AccountInformation;
+}
+@section css{
+    <link href="~/Themes/NganHoa/css/userpage.css" rel="stylesheet" />
+}
+
+<div class="bg-gray" style="min-height: 500px;">
+    <div class="wrapper userpage" id="divAccountInfo">
+        <div class="userpage-sidebar">
+            <div class="userpage-brief">
+                <a class="userpage-brief__avatar none-hover" href="/Account/Info">
+                    <div class="avatar">
+                        <div class="avatar__placeholder">
+                            <img class="avatar__img" src="~/Themes/NganHoa/Images/logo.jpg" />
+                            @*<i class="far fa-user" style="font-size: 1.5rem; line-height: 44px"></i>*@
+                        </div>
+                    </div>
+                </a>
+                <div class="userpage-brief__right">
+                    <div class="userpage-brief__username">@User.Identity.Name</div>
+                    @*<div>
+                        <p class="userpage-brief__edit" v-show="!isEdited" v-on:click="StartEdit">
+                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;"><path d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48" fill="#9B9B9B" fill-rule="evenodd"></path></svg>Sửa hồ sơ
+                        </p>
+                    </div>*@
+                </div>
+            </div>
+            <div class="userpage-sidebar-menu">
+                @Html.Partial("_AccountLayoutMenu")
+            </div>
+        </div>
+        <div class="userpage__content">
+            <div role="main">
+                <div class="myaccount__wrapper">
+                    <div class="myaccount-section" style="min-height: 400px">
+                        <div class="myaccount-section__header">
+                            <div class="myaccount-section__header-left">
+                                <div class="myaccount-section__header-title">Địa chỉ của tôi</div>
+                                @*<div class="myaccount-section__header-subtitle">Quản lý thông tin hồ sơ để bảo mật tài khoản</div>*@
+                            </div>
+                            <div class="myaccount-section__header-button">
+                                <button class="btn-button-solid btn-button-solid--primary btn-button-solid--address-tab ">
+                                    <div class="button-with-icon" onclick="window.location.href='/Account/AddAddress'">
+                                        <div class="button-with-icon__icon">
+                                            <svg class="shopee-svg-icon icon-plus-sign" enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"><polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5"></polygon></svg>
+                                        </div>
+                                        <div>@string.Format(Resource.CreatePlaceholder, Resource.Address)</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="myaccount-profile" style="flex-direction: column;" id="customerAddress">
+                            @foreach (var address in Model.CustomerAddress)
+                            {
+                                <div class="address-card">
+                                    <div class="address-display__left">
+                                        <div class="input-with-label-m">
+                                            <div class="input-with-label__wrapper">
+                                                <div class="input-with-label__label">
+                                                    <label>@Resource.Fullname</label>
+                                                </div>
+                                                <div class="input-with-label__content">
+                                                    <div class="input-with-validator-wrapper">
+                                                        <div class="">
+                                                            <span>@address.CustomerName</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-with-label-m">
+                                            <div class="input-with-label__wrapper">
+                                                <div class="input-with-label__label">
+                                                    <label>@Resource.Phone</label>
+                                                </div>
+                                                <div class="input-with-label__content">
+                                                    <div class="input-with-validator-wrapper">
+                                                        <div class="">
+                                                            <span>@address.Phone</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-with-label-m">
+                                            <div class="input-with-label__wrapper">
+                                                <div class="input-with-label__label">
+                                                    <label>@Resource.Address</label>
+                                                </div>
+                                                <div class="input-with-label__content">
+                                                    <div class="input-with-validator-wrapper">
+                                                        <div class="">
+                                                            <span>@address.Address</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="address-display__right">
+                                        <div class="address-card__button-group">
+                                            <a href="@Url.Action("EditAddress", new { id = address.Id })" class="btn btn-default float-right">
+                                                <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;"><path d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48" fill="#9B9B9B" fill-rule="evenodd"></path></svg> @Resource.Edit
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script>
+
+        var initCustomerInfo = @Html.Raw(Json.Encode(Model.CustomerInfo));
+
+        var vmInfo = new Vue({
+            el: '#divAccountInfo',
+            data: {
+                isEdited: false,
+                customerInfo: @Html.Raw(Json.Encode(Model.CustomerInfo)),
+            },
+            filters: {
+                formatGender: function (value) {
+                    switch(value){
+                        case 0:
+                            return '@Html.Raw(Resource.Male)';
+                        case 1:
+                            return '@Html.Raw(Resource.Female)';
+                        default:
+                            return '@Html.Raw(Resource.Unknown)';
+                    };
+                }
+            },
+            watch: {
+                isEdited: function(val){
+                    if(val === true){
+                        this.$nextTick(function(){
+                            $('#@Html.IdFor(m => m.CustomerInfo.Birthday)').datetimepicker({
+                                locale: 'vi',
+                                format: 'DD/MM/YYYY'
+                            });
+                        })
+                    }
+                }
+            },
+            methods:{
+                FormCancel: function () {
+                    this.customerInfo = initCustomerInfo;
+                    this.isEdited = false;
+                },
+                StartEdit: function(){
+                    this.isEdited = true;
+                },
+            }
+        });
+    </script>
+}

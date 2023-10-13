@@ -1,0 +1,18 @@
+﻿@model Frontend.Models.ProductBoxViewModel
+
+<div class="col-md-4 topic-item">
+    <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, @Model.ProductID)" class="thumnails-template hover-ef-1">
+        <div class="thumnails-content thumb-img">
+            <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Title">
+        </div>
+    </a>
+    <div class="topic-item--content">
+        <div class="topic-item--name text-center">
+            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, @Model.ProductID)">@Model.Title</a>
+        </div>
+        <p class="topic-item--author text-center">@Model.Value1</p>
+        <p class="topic-item--type text-center">
+            Chất liệu tranh gốc: <span class="color-active">@Model.Value2.RemoveHtml()</span>
+        </p>
+    </div>
+</div>

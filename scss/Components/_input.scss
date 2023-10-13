@@ -1,0 +1,15 @@
+.form-control{
+    border-radius:2px;
+    font-size:14px;
+    &:focus{
+        outline:none;
+        border-color:$color-black;
+        @include box-shadow(0,12px,20px,-12px,rgba(0,0,0,.35))
+    }
+}
+.error {
+    font-size: 12px;
+    font-weight: 300;
+    font-style: italic;
+    color: #FF9494;
+}

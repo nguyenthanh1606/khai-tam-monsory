@@ -1,0 +1,208 @@
+﻿@model Frontend.Models.ShoppingCartViewModel
+
+@{
+    ViewBag.Title = Resource.ShoppingCart;
+}
+
+
+@section css{
+
+    <link rel="stylesheet" href="~/Themes/CoffeeBean/css/process-bar.css">
+
+}
+
+<script>
+    function UpdateCartSuccessful(data) {
+        if (data.result === "ok") {
+            vmCart.GetCart();
+            UpdateCartNumber();
+            location.reload();
+
+        }
+        else {
+            location.reload();
+        }
+    }
+</script>
+
+<section class="banner">
+    @Html.BannerImage(4, Request.Cookies["lang"].Value, new { alt = "Coffee Bean", title = "Coffee Bean", @class = "w-100 img-fluid" })
+</section>
+
+<div class="progress-payment justify-content-md-center wrapper">
+    <div id="step-title-checkout" class="checkout-wrap col-md-8">
+        <ul class="checkout-bar wizard_steps anchor">
+            <li class="first active"> <a href="javascript:void(0)" v-bind:class="classStep(1)"> Giỏ hàng</a> </li>
+
+            <li> <a href="javascript:void(0)" v-bind:class="classStep(2)">THông tin giao hàng</a> </li>
+
+            <li> <a href="javascript:void(0)" v-bind:class="classStep(3)">Thanh toán</a> </li>
+        </ul>
+    </div>
+</div>
+
+<main class="not-home">
+    <section class="card wrapper" id="cartPage">
+
+        @using (Ajax.BeginForm("UpdateCart", "ShoppingCart", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnFailure = "ShowAlertMessage()",
+                OnSuccess = "UpdateCartSuccessful"
+            }))
+            {
+            @*@Html.ActionLink("Xóa toàn bộ giỏ hàng", "DeleteAllCart", "ShoppingCart")*@
+            @Html.AntiForgeryToken()
+            <div class="card-head row">
+                <div class="col-md-6 left row">
+                    <div class="col-md-6">
+                        <p class="toUpper h4">Giỏ hàng</p>
+                    </div>
+                </div>
+                <div class="col-md-6 row right">
+                    <div class="col-md-4">
+                        <p class="toUpper h4">@Resource.Price</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="toUpper h4">@Resource.Quantity</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="toUpper h4">@Resource.Total</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-main ">
+                <div class="list ">
+                    <div class="item row" v-for="(item, index) in cart">
+                        <div class="col-md-6 left row">
+                            <div class="col-md-6">
+                                <div class="img-product">
+                                    <a v-bind:href="'/' + item.Url">
+                                        <img v-bind:src="item.ImageUrl" class="img-fluid m-auto d-block" />
+                                        <input type="hidden" v-bind:value="item.ProductVersionID" v-bind:name="'ListItems[' + index + '].ProductVersionID'" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 name-product">
+                                <div class="masp">
+                                    <p class="toUpper c-black">@Resource.IDProduct: #{{item.Id}}</p>
+                                </div>
+                                <div class="namesp">
+                                    <a v-bind:href="'/' + item.Url" class="toUpper c-black">{{item.Title}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 row right">
+                            <div class="price col-md-4">
+                                <p class="toUpper c-black">{{item.Price |formatMoney }} đ</p>
+                            </div>
+                            <div class="amount col-md-4">
+                                <div style="width: 120px; margin: auto;">
+                                    <div class="quantity">
+                                        <input v-model="item.Quantity" v-bind:value="item.Quantity" v-bind:name="'ListItems[' + index + '].Quantity'" class="form-control input-qty" type="number" min="1" max="100">
+                                    </div>
+                                    <div class="btnUpdateAndDelete" style="width: 100%; margin: auto;">
+                                        <span class="input-group-btn text-center" style="width: 100%; margin: auto; padding-top:10px;float:left;">
+                                            <button type="submit" data-toggle="tooltip" title="@Resource.Update" class="btn btn-primary"><i class="fas fa-sync-alt"></i></button>
+                                            <button type="submit" data-toggle="tooltip" title="Loại bỏ" class="btn btn-danger" name="deleteBtn" v-bind:value="item.ProductVersionID"><i class="fas fa-trash-alt"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="total col-md-4">
+                                <p class="toUpper c-black">{{item.Price * item.Quantity |formatMoney }} đ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="card-bot row space-between">
+            <div class="text">
+                <p class="toUpper">@Resource.Total</p>
+            </div>
+            <div class="number">
+                <p class="color-main toUpper">
+                    {{getTotalPrice | formatMoney}} đ
+                </p>
+            </div>
+        </div>
+        <div class="step row space-between">
+            <div class="back">
+                <a href="#" onclick="window.history.back()" class="c-gray">@Resource.Continue @Resource.AddToCart</a>
+            </div>
+            <div class="btn-buy">
+                <a href="@Url.Action("Checkout","ShoppingCart")" class="btn-ds toUpper">@Resource.Payment</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section js{
+    <script>
+        var vmCart = new Vue({
+            mixins: [vmShoppingCart],
+            el: '#cartPage',
+            data: {
+                cart: null,
+                discountValue: @Model.DiscountValue,
+            },
+            filters: {
+                formatMoney: function (value) {
+                    return value.toLocaleString("@Request.Cookies["lang"].Value", { minimumFractionDigits: 0 });
+                }
+            },
+        });
+
+        function checkCouponCode($this) {
+            $.post($this.attr('action'), $this.serialize(), function (response) {
+                if (response != null) {
+                    vmCart.discountValue = response.DiscountPrice;
+                    if (response.Message != null && response.Message != '') {
+                        $("#couponCodeMessage").text(response.Message);
+                    }
+                }
+            });
+
+            return false;
+        }
+
+    </script>
+    @*<script>
+            $(document).ready(function(){
+                jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+
+                jQuery('.quantity').each(function () {
+                    var spinner = jQuery(this),
+                      input = spinner.find('input[type="number"]'),
+                      btnUp = spinner.find('.quantity-up'),
+                      btnDown = spinner.find('.quantity-down'),
+                      min = input.attr('min'),
+                      max = input.attr('max');
+
+                    btnUp.click(function () {
+                        var oldValue = parseFloat(input.val());
+                        if (oldValue >= max) {
+                            var newVal = oldValue;
+                        } else {
+                            var newVal = oldValue + 1;
+                        }
+                        spinner.find("input").val(newVal);
+                        spinner.find("input").trigger("change");
+                    });
+
+                    btnDown.click(function () {
+                        var oldValue = parseFloat(input.val());
+                        if (oldValue <= min) {
+                            var newVal = oldValue;
+                        } else {
+                            var newVal = oldValue - 1;
+                        }
+                        spinner.find("input").val(newVal);
+                        spinner.find("input").trigger("change");
+                    });
+
+                });
+            });
+        </script>*@
+}

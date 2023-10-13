@@ -1,0 +1,30 @@
+﻿@model Frontend.Models.LayoutContactViewModel
+
+@{
+    ViewBag.Title = Model.Group.Title;
+}
+
+<main class="not-home">
+    <section class="row justify-content-md-center wrapper">
+        <div class="dathoa col-md-7">
+            <div class="dathoa-head text-center">
+                <p class="c-white toUpper">Đặt hoa theo yêu cầu</p>
+            </div>
+            <div class="row rs-row justify-content-md-center">
+                <div class="dathoa-main col-md-8 no-pd">
+                    @using (Ajax.BeginForm("Contact", "Home", new AjaxOptions { HttpMethod = "GET", OnSuccess = "ContactSuccess" }, new { @class = "dathoa-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.EditorFor(m => m.CustomerContact)
+
+                        <div class="row link">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn toUpper" value="@Resource.Submit">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

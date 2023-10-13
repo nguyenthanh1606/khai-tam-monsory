@@ -1,0 +1,10 @@
+.slideshow{
+    @include size(100%,auto);
+    a{
+        display: block;
+        img{
+            @include img-fit(100%,cover);
+            max-width: 100%;
+        }
+    }
+}

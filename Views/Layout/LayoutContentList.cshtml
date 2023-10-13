@@ -1,0 +1,109 @@
+﻿@model Frontend.Models.LayoutContentViewModel
+@using PagedList.Mvc;
+@using PagedList;
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+
+@{
+    ViewBag.Title = Model.Group.Title;
+    ViewBag.Description = Model.Group.Description.RemoveHtml();
+    if (!string.IsNullOrEmpty(Model.Group.ImageUrl))
+    {
+        ViewBag.Image = Url.Content(Model.Group.ImageUrl, true);
+    }
+    string ComponentViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Component/{0}.cshtml";
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+}
+
+
+<main class="pagenews">
+    @if (Model.Group.BannerUrl == null)
+    {
+        <div class="box-banner">
+        </div>
+    }
+    else
+    {
+        <div class="banner-page">
+            <div class="picture-page">
+                <img class="img-fluid w-100" src="@Model.Group.BannerUrl" alt="@Model.Group.Title" />
+            </div>
+            <div class="wrapper">
+                <div class="banner-page--content">
+                    <img src="~/Themes/MNShop/Images/MN_Fine_Arrt_Prints-white.png" alt="MN Shop">
+                    <h2 class="title">In lại các tác phẩm nghệ thuật đẹp như bản gốc</h2>
+                </div>
+            </div>
+        </div>
+    }
+
+    @{Html.RenderAction(MVC.Component.Display(5, "AvsNotify"));}
+    <div class="wrapper breadcrumb-ds">
+        @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Group, Model.Group.GroupID, new { @class = "breadcrumb" })
+    </div>
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-md-12 pagenews-head">
+                <h1 class="pagenews-title color-active">@Model.Group.Title</h1>
+                <div class="pagenews-desc mw-70">
+                    @Html.Raw(Model.Group.Description)
+                </div>
+            </div>
+            @if (Model.ListContent.Count() == 0)
+            {
+                <div class="pagenews-noContent">
+                    <div class="text-center">
+                        <h3> @Resource.Updating </h3>
+                        <img src="~/Themes/MNShop/Images/updates.gif" />
+                    </div>
+                </div>
+            }
+            else if (Model.ListContent.Count() == 1)
+            {
+                <div class="col-md-9 g-left">
+                    <div class="pagenews-detail">
+                        <div class="pagenews-detail--body">
+                            @Html.Raw(Model.ListContent.FirstOrDefault().Body)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 g-right border-left">
+                    @{Html.RenderAction(MVC.Component.Display(7, "Reviews"));}
+                    @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "ListNewsPartial2"), ThemeConfig.GetComponent("GroupBlogs2"), Store.Service.Service.DistributionOrder.Lastest, true, ""));}
+                </div>
+            }
+            else
+            {
+                <div class="col-md-12 pagenews-list">
+                    <div class="row">
+                        @foreach (var item in Model.ListContent)
+                        {
+                            <div class="col-md-4 pagenews-item">
+                                <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Content,item.ContentID)" class="thumnails-template hover-ef-1">
+                                    <div class="thumnails-content thumb-img">
+                                        <img src="@item.PictureUrl" class="img-fluid" alt="@item.Headline">
+                                    </div>
+                                </a>
+                                <div class="pagenews-item--name">
+                                    <h3>
+                                        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Content,item.ContentID)">
+                                            @item.Headline
+                                        </a>
+                                    </h3>
+                                    <div class="desc">@item.Summary.RemoveHtml()</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<g:page href="https://plus.google.com/{pageId}"></g:page>
+<script>
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }
+        (document, "script", "twitter-wjs");
+</script>

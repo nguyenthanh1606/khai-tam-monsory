@@ -1,0 +1,102 @@
+﻿@using Microsoft.Owin.Security
+@model Frontend.Models.AccountViewModel
+
+<div role="tabpanel" class="tab-pane active" id="loginForm">
+    @using (Ajax.BeginForm("LoginAjax", "Account", new AjaxOptions { HttpMethod = "POST", OnSuccess = "LoginDone" }, new { @class = "form-style" }))
+    {
+        <div class="main-form" style="padding:10px;">            
+            @Html.AntiForgeryToken()
+            <ul id="login_error_summary" class="validation-summary-errors"></ul>
+            <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" />
+            <div class="form-group">
+                @Html.ValidationMessageFor(model => model.LoginViewModel.Email)
+                @Html.TextBoxFor(model => model.LoginViewModel.Email, new
+           {
+               @class = "form-control",
+               @placeholder = Html.DisplayPlaceHolderFor(model => model.LoginViewModel.Email)
+           })
+            </div>
+            <div class="form-group">
+                @Html.ValidationMessageFor(model => model.LoginViewModel.Password)
+                @Html.TextBoxFor(model => model.LoginViewModel.Password, new
+           {
+               @class = "form-control",
+               @placeholder = Html.DisplayPlaceHolderFor(model => model.LoginViewModel.Password),
+               type = "password"
+           })
+            </div>
+            @*<div class="checkbox">
+                    <label>@Html.CheckBoxFor(m => m.LoginViewModel.RememberMe)<span>@Resource.RememberMe</span></label>
+
+                </div>*@
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-danger sm-signUp submit-style btn-default">@Resource.Login</button>
+                </div>
+                <div class="col-md-6" style="line-height: 38px;">
+                    <small>@Html.CheckBoxFor(m => m.LoginViewModel.RememberMe) Lưu thông tin đăng nhập</small>
+                </div>
+            </div>
+            
+            <div class="row user-more" style="margin-left: 0; margin-top: 1rem;">
+                <div class="text-right col-md-6" style="border-right: 1px solid #ccc;">@Html.ActionLink(Resource.ForgetPassword, "ForgotPassword", "Account")</div>
+                <div class="login col-md-6">@Html.ActionLink(Resource.DontHaveAccount, "Register", "Account")</div>
+            </div>
+        </div>
+    }
+
+    @*<h4 class="title_item1">Hoặc đăng nhập bằng</h4>
+        <div class="login_other">
+            @{
+                var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+                using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" />
+                    <div id="socialLoginList">
+                        <p>
+                            @foreach (AuthenticationDescription p in loginProviders)
+                            {
+                                <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                            }
+                        </p>
+                    </div>
+                }
+            }
+        </div>*@
+
+
+    <div class="row text-center" style="margin-left: 0; margin-right:0;">
+
+        @{
+            var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+            using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+            {
+                @Html.AntiForgeryToken()
+                <div id="socialLoginList" style="width:100%; float:left;padding:10px;">
+                    <span style="padding-right: 5px">Hoặc đăng nhập bằng các tài khoản</span>
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        <button type="submit" class="@GetClass(@p.AuthenticationType)" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i class="@GetClass2(@p.AuthenticationType)"></i></button>
+                    }
+                </div>
+            }
+        }
+    </div>
+
+
+
+</div>
+
+
+@functions{
+    public string GetClass(string type)
+    {
+        return type == "Google" ? "btn-google c-white" : type == "Facebook" ? "btn-fb c-white" : "";
+    }
+    public string GetClass2(string type)
+    {
+        return type == "Google" ? "fab fa-google-plus-g" : type == "Facebook" ? "fab fa-facebook-f" : "";
+    }
+}
+

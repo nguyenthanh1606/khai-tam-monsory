@@ -1,0 +1,141 @@
+﻿@model Frontend.Models.ProductGroupViewModel
+@{
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+}
+
+@if (Model.ListProduct.Any())
+{
+<section class="topic border-bot">
+    @if (Model.DefaultName.IsEmpty())
+    {
+        <h3 class="title">@Model.Title</h3>
+    }
+    else
+    {
+        <h3 class="title">@Model.DefaultName</h3>
+    }
+    <div class="topic-desc">
+        <p>@Model.Description.RemoveHtml().Truncate(400)</p>
+    </div>
+
+    <div class="swiper sw-Topic topic-list">
+        <div class="swiper-wrapper">
+            @foreach (var item in Model.ListProduct)
+            {
+            <div class="swiper-slide topic-item">
+                <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, item.ProductID)" class="thumnails-template hover-ef-1">
+                    <div class="thumnails-content thumb-img">
+                        <img src="@item.ImageUrl" class="img-fluid" alt="@item.Title">
+                    </div>
+                </a>
+                <div class="topic-item--name text-center">
+                    <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, item.ProductID)">@item.Title</a>
+                </div>
+                <p class="topic-item--author text-center">Họa sĩ Mai Nhơn</p>
+                @if (item.OriginalPrice == -1)
+                {
+                    <h3 class="topic-item--price text-center color-active">@Resource.Contact</h3>
+                }
+                else
+                {
+                    <h3 class="topic-item--price text-center color-active">@string.Format("{0:n0}", @item.OriginalPrice) VNĐ</h3>
+                }
+            </div>
+            }
+        </div>
+        <div class="swiper-button-next sw-Topic-button-next"></div>
+        <div class="swiper-button-prev sw-Topic-button-prev"></div>
+    </div>
+</section>
+
+}
+
+
+
+    @*<h1 class="title text-center">@Model.Title</h1>
+    <div class="desc w-50 text-center m-auto">
+        <i>@Model.Description.RemoveHtml().Truncate(220)</i>
+    </div>
+    <div class="list-products">
+        @foreach (var item in Model.ListProduct)
+        {
+            if (count % 2 == 0)
+            {
+                <div class="wrapper row mb-5">
+                    <div class="col-md-4 thumnails-template">
+                        <div class="thumnails-content">
+                            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, item.ProductID)">
+                                <img src="@item.IconUrl" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-8 item pl-5">
+                        <div class="card-item-2">
+                            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, item.ProductID)" class="title">
+                                <h3 class="text-uppercase">@item.Title</h3>
+                            </a>
+                            <div class="desc">
+                                <p>@item.Summary.RemoveHtml().Truncate(200)</p>
+                            </div>
+                            <div class="price">
+                                @if (item.OriginalPrice > 0)
+                                {
+                                    <span class="price-del">@string.Format("{0:n0}", @item.OriginalPrice) Đ</span>
+                                    <span class="color-main text-b">@string.Format("{0:n0}", @item.Price) Đ</span>
+                                }
+                                else
+                                {
+                                    <p class="color-main text-b">@string.Format("{0:n0}", @item.Price) Đ</p>
+
+                                }
+                            </div>
+                            <div class="mt-3">
+                                <button class="bt-buy" type="submit" onclick="AddToCartAjax(@item.ProductID, AddToCartSuccess);">@Resource.BuyNow</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="wrapper row mb-5">
+                    <div class="col-md-8 item pr-5">
+                        <div class="card-item-2">
+                            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, item.ProductID)" class="text-right title">
+                                <h3 class="text-uppercase">@item.Title</h3>
+                            </a>
+                            <div class="desc text-right">
+                                <p>@item.Summary.RemoveHtml().Truncate(200)</p>
+                            </div>
+                        </div>
+                        <div class="price text-right">
+                            @if (item.OriginalPrice > 0)
+                            {
+                                <span class="price-del">@string.Format("{0:n0}", @item.OriginalPrice) Đ</span>
+                                <span class="color-main text-b">@string.Format("{0:n0}", @item.Price) Đ</span>
+                            }
+                            else
+                            {
+                                <p class="color-main text-b">@string.Format("{0:n0}", @item.Price) Đ</p>
+
+                            }
+                        </div>
+                        <div class="mt-3 text-right">
+                            <button class="bt-buy" type="submit" onclick="AddToCartAjax(@item.ProductID, AddToCartSuccess);">@Resource.BuyNow</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 thumnails-template">
+                        <div class="thumnails-content">
+                            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, item.ProductID)">
+                                <img src="@item.IconUrl" class="img-fluid w-100" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+            count++;
+        }
+    </div>
+}*@
+

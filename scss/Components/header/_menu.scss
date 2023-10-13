@@ -1,0 +1,207 @@
+$font-menu: 'Dancing Script';
+$color-menu: #473326;
+
+.menu-wrapper {
+    max-width: 1027px;
+    margin: auto;
+}
+
+.menu {
+    width: 100%;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    vertical-align: middle;
+    background-color: #fff;
+    position: relative;
+    height: 106px;
+    margin-bottom: 0;
+
+    li {
+        display: flex;
+        align-self: center;
+        position: relative;
+
+        a {
+            font-family: $font-menu;
+            font-size: 22px;
+            display: inline-block;
+            padding: 3px 1rem;
+            color: $color-primary;
+        }
+
+        &.logo {
+            margin-top: -2rem;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            background-color: #fff;
+            height: 135px;
+
+            a {
+                padding: 1rem;
+            }
+        }
+        &.icon{
+            a{
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+        &:before {
+            content: '';
+            width: 0;
+            height: 1px;
+            background-color: $color-menu;
+            position: absolute;
+            left: 50%;
+            bottom: 4px;
+            transform: translateX(-50%);
+            transition: .4s ease-in-out;
+        }
+
+        &:after {
+            content: '';
+            width: 0;
+            height: 1px;
+            background-color: $color-menu;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            transition: .4s ease-in-out;
+        }
+
+        &:hover {
+            a {
+                color: $color-menu;
+                text-decoration: none;
+            }
+
+            &:not(.logo):after {
+                width: 80%;
+            }
+
+            &:not(.logo):before {
+                width: 50%;
+            }
+
+            &.icon:before {
+                width: 0;
+            }
+
+            &.icon:after {
+                width: 0;
+            }
+        }
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: -60px;
+        width: 0;
+        height: 0;
+        border-top: 53px solid #fff;
+        border-bottom: 53px solid #fff;
+        border-left: 60px solid transparent;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        right: -60px;
+        width: 0;
+        height: 0;
+        border-top: 53px solid #fff;
+        border-bottom: 53px solid #fff;
+        border-right: 60px solid transparent;
+    }
+}
+
+.btn-menu {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 1.5rem;
+    top: calc(50%);
+    transform: translateY(-50%);
+    display: none;
+    z-index: 111;
+
+    a {
+        &:before, &:after {
+            content: '';
+            display: block;
+            background: $color-link;
+            height: 2px;
+        }
+
+        span {
+            background: $color-link;
+            display: block;
+            height: 2px;
+            margin: 6px 0;
+        }
+    }
+}
+
+.mm-menu {
+    a {
+        font-family: $font-menu;
+    }
+}
+
+.is-fixed {
+    li {
+        &.logo {
+            margin-top: 0 !important;
+            background-color: #fff;
+
+            a {
+                padding: 1rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .header {
+        position: relative;
+        top: 0;
+        background-color: #fff;
+
+        .menu {
+            &:before, &:after {
+                content: none;
+            }
+
+            li {
+                align-self: auto;
+
+                &:not(.logo) {
+                    display: none;
+                }
+
+                &.logo {
+                    margin-top: 0;
+                    border-radius: 50%;
+
+                    a {
+                        padding-top: 5px;
+                        padding-bottom: 1.5rem;
+                    }
+                }
+            }
+        }
+
+        .btn-menu {
+            display: block;
+        }
+    }
+}
+//768px
+@include MQ(M) {
+}

@@ -1,0 +1,141 @@
+﻿@model Frontend.Models.LayoutGroupViewModel
+@using PagedList.Mvc;
+@using PagedList;
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+@using Frontend.Infrastructure.Helpers;
+
+@{
+    ViewBag.Title = Model.Group.Title;
+    ViewBag.Description = Model.Group.Description.RemoveHtml();
+    if (!string.IsNullOrEmpty(Model.Group.ImageUrl))
+    {
+        ViewBag.Image = Url.Content(Model.Group.ImageUrl, true);
+    }
+    string ComponentViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Component/{0}.cshtml";
+    string themeBannerViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Banner/{0}.cshtml";
+}
+
+<main class="news">
+    <div class="main-top">
+        <div class="banner-news">
+            <img src="@Model.ListContent.FirstOrDefault().PictureUrl" class="w-100" alt="@Model.ListContent.FirstOrDefault().Headline">
+        </div>
+    </div>
+    <div class="list-link-2">
+        <div class="row wrapper space-between">
+            <div class="left breadcrumb-ds">
+                @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Group, Model.Group.GroupID, new { @class = "" })
+            </div>
+            <div class="right">
+                <a href="#" onclick="window.history.go(-1);" class="toUpper c-white"><span>@Resource.Back</span></a>
+            </div>
+        </div>
+    </div>
+    @if (Model.ListGroup.Count > 1)
+    {        
+        <div class="title-news text-center">
+            <p class="h3 color-main toUpper">@Model.Group.Title</p>
+        </div>
+        <div class="containerr wrapper">
+            <div class="list-news row">
+                @foreach (var item in Model.ListGroup)
+                {
+                    <div class="col-md-6 item">
+                        <div class="thumb p-0">
+                            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, item.GroupID)"><img src="@item.ImageUrl" class="w-100 border-gray border-5" alt=""></a>
+                        </div>
+                        <div class="content-right">
+                            <div class="headline">
+                                <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, item.GroupID)" class="h4 color-main text-b">@item.Title</a>
+                            </div>
+                            <div class="sumary">
+                                <p>@item.Description.RemoveHtml().Truncate(150)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="pagination-ds row wrapper">
+            @Html.GetPageListCustom(Model.Page, Model.PageSize, Model.TotalItems, htmlAttributes: new { @class = "" })
+        </div>
+    }
+    else if (Model.ListContent.Count == 1)
+    {        
+        <div class="containerr wrapper row pb-3">
+            <div class="col-md-12">
+                <div class="title-news text-center">
+                    <p class="h3 color-main toUpper">@Model.ListGroup.FirstOrDefault().Title</p>
+                </div>
+                <div class="content-sumary pd-6">
+                    <p class="text-b c-black">@Model.ListGroup.FirstOrDefault().Description</p>
+                </div>
+                <div class="content-detail">
+                    @Html.Raw(Model.ListGroup.FirstOrDefault().Body)
+                </div>                
+            </div>
+        </div>
+    }
+    else if (Model.ListContent.Count == 0)
+    {
+        @Resource.Updating
+    }
+</main>
+
+@helper Ext(string url)
+{
+string ext = "";
+if (url.EndsWith(".pdf"))
+{
+    ext = "PDF";
+}
+else if (url.EndsWith(".doc"))
+{
+    ext = "DOC";
+}
+else if (url.EndsWith(".docx"))
+{
+    ext = "DOCX";
+}
+else if (url.EndsWith(".xls"))
+{
+    ext = "XLS";
+}
+else if (url.EndsWith(".xlsx"))
+{
+    ext = "XLSX";
+}
+else if (url.EndsWith(".ppt"))
+{
+    ext = "PPT";
+}
+else if (url.EndsWith(".zip"))
+{
+    ext = "ZIP";
+}
+else if (url.EndsWith(".rar"))
+{
+    ext = "RAR";
+}
+else if (url.EndsWith(".txt"))
+{
+    ext = "TXT";
+}
+    <p>@ext</p>
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var url = window.location;
+            // Will only work if string in href matches with location
+            $('.cat-child ul a[href="' + url + '"]').parents('li').addClass('active');
+
+            // Will also work for relative and absolute hrefs
+            $('.cat-child ul a').filter(function () {
+                return this.href == url;
+            }).parents('li').addClass('active');
+
+        });
+    </script>
+}

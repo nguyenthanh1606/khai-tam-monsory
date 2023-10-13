@@ -1,0 +1,42 @@
+﻿@model Frontend.Models.ShoppingCartViewModel
+@{var total = 0;
+  var quantity = 0;}
+@foreach(var item in Model.ListItems)
+{
+    quantity = quantity + item.Quantity;
+    total = total + item.Price * item.Quantity;
+}
+<div class="card-head-3 row">
+    <div class="col-md-12">
+        <h4 class="toUpper float-left">@Resource.Total</h4>
+        <p class="float-right m-0">@Html.ActionLink(Resource.Edit, "List", "ShoppingCart", null, new { @class = "pull-right btn-default" })</p>
+    </div>
+</div>
+<div class="card-main-2">
+    <div class="row space-between">
+        <p>@Resource.Quantity</p>
+        <p>@quantity</p>
+    </div>
+    <div class="row space-between">
+        <p>Tổng Tạm tính</p>
+        <p>@string.Format("{0:n0}", @total) đ</p>
+    </div>
+    <div class="row space-between">
+        <p>@Resource.Discount</p>
+        <p>@string.Format("{0:n0}", @Model.DiscountValue) đ</p>
+    </div>
+    <div class="row space-between">
+        <p>Phí giao hàng (?)</p>
+        <p>0 đ</p>
+    </div>
+    @*<div class="row space-between">
+        <p>Điểm sử dụng</p>
+        <p>0 đ</p>
+    </div>*@
+</div>
+<div class="card-bot-2">
+    <div class="row space-between">
+        <p>Tổng cộng</p>
+        <p class="color-main h4 total">@string.Format("{0:n0}", @total - @Model.DiscountValue) đ</p>
+    </div>
+</div>

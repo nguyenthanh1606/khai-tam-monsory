@@ -1,56 +1,200 @@
-@mixin d-flex($direction: row) {
+@mixin size($width: null, $height: null) {
+  width: $width;
+  height: $height;
+}
+
+@mixin img-fit($value1: null, $value2: null) {
+  @if ($value1 ==null) {
+    width: $value1;
+    object-fit: $value2;
+    -o-object-fit: $value2;
+  }
+
+  @else {
+    width: $value1;
+    object-fit: $value2;
+    -o-object-fit: $value2;
+  }
+}
+
+@mixin transform($pro...) {
+  transform: $pro;
+  -webkit-transform: $pro;
+  -moz-transform: $pro;
+}
+
+@mixin transition($pro...) {
+  transition: $pro;
+  -webkit-transition: $pro;
+  -moz-transition: $pro;
+}
+
+@mixin box-sizing($pro) {
+  box-sizing: $pro;
+  -webkit-box-sizing: $pro;
+  -moz-box-sizing: $pro;
+}
+
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+  @if $inset {
+    box-shadow: inset $top $left $blur $color;
+  }
+
+  @else {
+    box-shadow: $top $left $blur $color;
+  }
+}
+
+@mixin filter($val) {
+  filter: $val;
+  -webkit-filter: $val;
+}
+
+@mixin before($pro: null,
+  $top: null,
+  $left: null,
+  $right: null,
+  $bottom: null) {
+  content: $pro;
+  position: absolute;
+  top: $top;
+  left: $left;
+  right: $right;
+  bottom: $bottom;
+}
+
+@mixin text($value: null, $lh: null, $transform: null, $decor: null) {
+  font: $value;
+  line-height: $lh;
+  text-transform: $transform;
+  text-decoration: $decor;
+}
+
+@mixin flex($content: null, $item: null, $wrap: null) {
   display: flex;
-  flex-direction: $direction;
+  justify-content: $content;
+  align-items: $item;
+  flex-wrap: $wrap;
 }
 
-@mixin d-flex-row($align: left, $vehicle: center, $gap: 10px) {
-  justify-content: $align;
-  align-items: $vehicle;
-  gap: $gap;
-  @include d-flex(row);
+@mixin grid($value1, $value2, $value3: null, $value4: null, $gap: null) {
+  display: grid;
+  grid-template-columns: $value1;
+  grid-template-rows: $value2;
+  justify-content: $value3;
+  align-items: $value4;
+  grid-gap: $gap;
 }
 
-@mixin d-flex-column($align: left, $vehicle: center, $gap: 10px) {
-  justify-content: $align;
-  align-items: $vehicle;
-  gap: $gap;
-  @include d-flex(column);
+@mixin animation($animation, $duration, $timing, $delay: null, $count: null) {
+  -webkit-animation-name: $animation;
+  -webkit-animation-duration: $duration;
+  -webkit-animation-timing-function: $timing;
+  -webkit-animation-delay: $delay;
+  -webkit-animation-iteration-count: $count;
+
+  -moz-animation-name: $animation;
+  -moz-animation-duration: $duration;
+  -moz-animation-timing-function: $timing;
+  -moz-animation-delay: $delay;
+  -moz-animation-iteration-count: $count;
+
+  -o-animation-name: $animation;
+  -o-animation-duration: $duration;
+  -o-animation-timing-function: $timing;
+  -o-animation-delay: $delay;
+  -o-animation-iteration-count: $count;
+
+  animation-name: $animation;
+  animation-duration: $duration;
+  animation-timing-function: $timing;
+  animation-delay: $delay;
+  animation-iteration-count: $count;
 }
 
-@mixin reset-spacing() {
-  padding: 0;
-  margin: 0;
-  line-height: normal;
+// functions responsive
+$S: 480px;
+$M: 768px;
+$L: 1170px;
+$XL: 1440px;
+$CS_MAX: 1000px;
+$CS_MIN: 768px;
+
+@mixin MQ($canvas) {
+  @if $canvas ==S {
+    @media only screen and (max-width: $S) {
+      @content;
+    }
+  }
+
+  @else if $canvas ==M {
+    @media only screen and (max-width: $M) {
+      @content;
+    }
+  }
+
+  @else if $canvas ==L {
+    @media only screen and (max-width: $L) {
+      @content;
+    }
+  }
+
+  @else if $canvas ==XL {
+    @media only screen and (max-width: $XL) {
+      @content;
+    }
+  }
+
+  @else if $canvas ==CS {
+    @media only screen and (min-width:$CS_MIN) and (max-width:$CS_MAX) {
+      @content;
+    }
+  }
 }
 
-@mixin font-style(
-  $font-family: $font-default,
-  $font-size: 16px,
-  $font-style: normal,
-  $font-weight: normal,
-  $color: #000000,
-  $text-align: left
-) {
-  font-family: $font-family;
-  font-size: $font-size;
-  font-weight: $font-weight;
-  font-style: $font-style;
-  color: $color;
-  text-align: $text-align;
-}
+/* */
 
-@mixin max-line($line: 1) {
+@mixin thumnails-template($canvas) {
+  position: relative;
   overflow: hidden;
+  transition: .4s ease;
+  border: 1px solid;
+  border-color: transparent;
+  font-size: 0px;
+  display: block;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: $canvas;
+  }
+
+  .thumnails-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f1f1f1;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &:hover {
+    transition: 0.4s ease-in-out;
+  }
+}
+
+@mixin maxline($line, $lineHeight) {
+  overflow: hidden;
+  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: $line;
   line-clamp: $line;
   -webkit-box-orient: vertical;
-}
-
-@mixin reset-ul() {
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
+  line-height: $lineHeight;
 }

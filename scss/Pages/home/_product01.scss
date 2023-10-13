@@ -1,0 +1,57 @@
+$font-title: 'Dancing Script';
+$font-card: 'UTM Libel KT';
+
+.product01 {
+    margin-top: 40px;
+
+    .wrapper {
+        max-width: 1027px;
+        margin: auto;
+    }
+
+    .list-products {
+        margin-top: 1.5rem;
+    }
+
+    .title {
+        font-family: $font-title;
+        font-size: 40px;
+    }
+
+    .readmore {
+        a {
+            color: $color-link;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    }
+
+    .thumnails-template {
+        @include thumnails-template(66.7%);
+
+        .thumnails-content {
+            background-color: transparent;
+
+            &:hover {
+                box-shadow: 0 0 10px 1px #ccc;
+            }
+        }
+    }
+
+    .item {
+        align-self: center;
+    }
+
+    .card-item-2{
+        .title{
+            font-family: $font-card;
+            color: $color-primary;
+            &:hover{
+
+            }
+        }
+        .desc{
+
+        }
+    }
+}

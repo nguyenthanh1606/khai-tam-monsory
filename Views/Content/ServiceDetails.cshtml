@@ -1,0 +1,50 @@
+﻿@model Frontend.Models.LayoutNewsDetailViewModel
+@using Frontend.Infrastructure.ExtensionMethod;
+@using Frontend.Infrastructure.Utility;
+@{
+    ViewBag.Title = @Model.Content.Headline;
+}
+<div class="wrapper inner-main-title" style="background-image:url('/Themes/Mercantile/Images/UserImages/mercantile-slide-2.jpg');background-position: center 22px; background-attachment: fixed;">
+    <div class="container">
+        <div class="row">
+            <header class="entry-header col-md-6 init-animate fadeInDown1" style="visibility: visible; animation-name: fadeInDown1;">
+                <h1 class="entry-title">@Model.Content.Headline</h1>
+            </header><!-- .entry-header -->
+            <div class="breadcrumbs col-md-6 init-animate fadeInDown1" style="visibility: visible; animation-name: fadeInDown1;">
+                @Html.Breadcrumb(BreadcrumbType.Group, Model.Group.GroupID, new { @class = "breadcrumb" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="content" class="site-content container clearfix">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main" role="main">
+
+
+            <article class="post type-post status-publish format-standard has-post-thumbnail hentry category-corporate">
+                <div class="content-wrapper">
+                    <!--post thumbnal options-->
+                    <div class="entry-content">
+                        @Html.Raw(@Model.Content.Summary)
+                       @Html.Raw(@Model.Content.Body)
+                    </div><!-- .entry-content -->
+
+                    <footer class="entry-footer"></footer><!-- .entry-footer -->
+                </div>
+
+            </article><!-- #post-## -->
+           
+        
+        </main><!-- #main -->
+    </div><!-- #primary -->
+    <div id="secondary-right" class="at-remove-width widget-area sidebar secondary-sidebar" role="complementary">
+        @{Html.RenderAction("GetChildGroup", "Home", new { id = 5, viewName = "ServiceSideBar" });}
+    </div>
+
+</div>
+
+@section scripts{
+    
+
+}

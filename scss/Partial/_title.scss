@@ -1,0 +1,89 @@
+﻿/*-variable*/
+$desc: #7f7e7d;
+
+main:not(.mainHome) {
+    .title {
+        @include text(24px $font-custom,1.5);
+        color: $color-primary;
+        margin: 20px auto;
+        padding-bottom: 15px;
+        position: relative;
+        z-index: 1;
+
+        &:after {
+            @include before('',100%,50%);
+            @include size(50%,30px);
+            background-color: transparent;
+            background-image: url(../images/background/2.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            @include transform(translateX(-50%));
+            z-index: -1;
+        }
+
+        @include MQ(L) {
+            font-size: 30px;
+        }
+    }
+
+    .title-group {
+        @include text(24px $font-default,1.5,uppercase);
+        color: $color-secon;
+        position: relative;
+        padding-bottom: 7px;
+        margin-bottom: 35px;
+
+        @include MQ(L) {
+            padding-bottom: 40px;
+        }
+
+        &:before {
+            @include before('',100%,-12px);
+            @include transform(translate(-100%,-50%));
+            @include size(40px,40px);
+            background-image: url(../images/background/1.png);
+            background-size: 100%;
+
+            @include MQ(L) {
+                @include size(60px,60px);
+            }
+        }
+
+        &:after {
+            @include before('',100%,0);
+            background-color: $color-border;
+            @include size(100%,2px);
+        }
+    }
+
+    .desc {
+        @include text(16px $font-custom_2,1.4);
+        text-align: center;
+        margin: 20px 0;
+        margin-top: 35px;
+        color: $color-black;
+
+        @include MQ(L) {
+            width: 70%;
+            margin: 35px auto;
+            margin-top: 45px;
+        }
+    }
+
+    .description {
+        font-size: 14px;
+        color: $desc;
+
+        @include MQ(L) {
+            width: 70%;
+            margin: auto;
+            margin-bottom: 15px;
+        }
+
+        @include MQ(CS) {
+            width: 90%;
+            margin: auto;
+            margin-bottom: 15px;
+        }
+    }
+}

@@ -1,0 +1,196 @@
+﻿@using Microsoft.Owin.Security
+@using Frontend.Infrastructure.ExtensionMethod
+@model Frontend.Models.AccountViewModel
+@{
+    ViewBag.Title = @Resource.Register;
+}
+
+<main class="not-home">
+    <section class="row justify-content-md-center wrapper">
+        <div class="dangky col-md-7">
+            <div class="dangky-head text-center">
+                <p class="c-black toUpper">@Resource.Register</p>
+            </div>
+            <div class="main row justify-content-md-center">
+                <div class="dangky-main col-md-8 no-pd">
+                    @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "form-customer", @class = "dangky-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div>
+                            @Html.ValidationMessageFor(m => m.RegisterViewModel)
+                        </div>
+                        //email
+                        <div class="row">
+                            <label for="" class="require">Email</label>
+                            <div class="col-md-12 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-user"></i></div>
+                                </div>
+                                @Html.TextBoxFor(model => model.RegisterViewModel.Email, new
+                                {
+                                    @class = "form-control",
+                                    @placeholder = Resource.Email
+                                })
+                            </div>
+                            <div class="pt-3 pl-3">
+                                @Html.ValidationMessageFor(model => model.RegisterViewModel.Email)
+                            </div>
+                        </div>
+                        //password
+                        <div class="row">
+                            <label for="" class="require">@Resource.Password</label>
+                            <div class="col-md-12 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                                </div>
+                                @Html.PasswordFor(model => model.RegisterViewModel.Password, new
+                                {
+                                    @class = "form-control",
+                                    @placeholder = Resource.Password
+                                })
+                            </div>
+                            <div class="pt-3 pl-3">
+                                @Html.ValidationMessageFor(model => model.RegisterViewModel.Password)
+                            </div>
+                        </div>
+                        //confirm password
+                        <div class="row">
+                            <label for="" class="require">@Resource.ConfirmPassword</label>
+                            <div class="col-md-12 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                                </div>
+                                @Html.PasswordFor(model => model.RegisterViewModel.ConfirmPassword, new
+                               {
+                                   @class = "form-control",
+                                   @placeholder = Resource.ConfirmPassword
+                               })
+                            </div>
+                            <div class="pt-3 pl-3">
+                                @Html.ValidationMessageFor(model => model.RegisterViewModel.ConfirmPassword)
+                            </div>
+                        </div>
+                        //fullname
+                        <div class="row">
+                            <label for="" class="require">@Resource.Fullname</label>
+                            <div class="col-md-12 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-user"></i></div>
+                                </div>
+                                @Html.TextBoxFor(model => model.RegisterViewModel.Fullname, new
+                                {
+                                    @class = "form-control",
+                                    @placeholder = Resource.Name
+                                })
+                            </div>
+                            <div class="pd-3">
+                                @Html.ValidationMessageFor(model => model.RegisterViewModel.Fullname)
+                            </div>
+                        </div>
+                        //phone
+                        <div class="row">
+                            <label for="" class="require">@Resource.Phone</label>
+                            <div class="col-md-12 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-phone"></i></div>
+                                </div>
+                                @Html.TextBoxFor(model => model.RegisterViewModel.Phone, new
+                               {
+                                   @class = "form-control",
+                                   @placeholder = Resource.Phone
+                               })
+                            </div>
+                            <div class="pt-3 pl-3">
+                                @Html.ValidationMessageFor(model => model.RegisterViewModel.Phone)
+                            </div>
+                        </div>
+                        //birthday
+                        <div class="row">
+                            <label for="" class="require">@Resource.Birthday</label>
+                            <div class="col-md-12 input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                                </div>
+                                @Html.TextBoxFor(model => model.RegisterViewModel.Birthday, new
+                               {
+                                   type = "date",
+                                   @class = "form-control",
+                                   @placeholder = Html.DisplayPlaceHolderFor(model => model.RegisterViewModel.Birthday)
+                               })
+                            </div>
+                            <div class="pt-3 pl-3">
+                                @Html.ValidationMessageFor(model => model.RegisterViewModel.Birthday)
+                            </div>
+                        </div>
+                        //gender
+                        <div class="row">
+                            <label for="" class="require">@Resource.Gender</label>
+                            <div class="col-md-12 input-group">
+                                <div class="form-check form-check-inline">
+                                    @Html.RadioButtonFor(m => m.RegisterViewModel.Gender, 0, new { @class = "form-check-input", @for = "inlineRadioOptions", id = "inlineRadio1", @checked = "checked" })
+                                    <label class="form-check-label" for="inlineRadio1">@Resource.Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    @Html.RadioButtonFor(m => m.RegisterViewModel.Gender, 1, new { @class = "form-check-input", @for = "inlineRadioOptions", id = "inlineRadio2" })
+                                    <label class="form-check-label" for="inlineRadio1">@Resource.Female</label>
+                                </div>
+                            </div>
+                            <div class="pt-3 pl-3">
+                                @Html.ValidationMessageFor(model => model.RegisterViewModel.Gender)
+                            </div>
+                        </div>
+                        //submit
+                        <div class="row link">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn toUpper sm-signUp submit-style btn-default">@Resource.Register</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="dangky-bot">
+                <div class="row rs-row justify-content-md-center">
+                    <div class="col-md-4 left">
+                        <p>Hoặc đăng nhập bằng</p>
+                    </div>
+                    <div class="col-md-6 no-pd right">
+                        @{
+                            var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+                            using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div id="socialLoginList" style="width:100%; float:left;">
+                                    @foreach (AuthenticationDescription p in loginProviders)
+                                    {
+                                        <button type="submit" class="@GetClass(@p.AuthenticationType)" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i class="@GetClass2(@p.AuthenticationType)"></i></button>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@functions{
+    public string GetClass(string type)
+    {
+        return type == "Google" ? "btn-danger link-gg" : type == "Facebook" ? "btn-info link-fb" : "";
+    }
+    public string GetClass2(string type)
+    {
+        return type == "Google" ? "fab fa-google-plus-g" : type == "Facebook" ? "fab fa-facebook-f" : "";
+    }
+}
+
+
+@section scripts{
+    <script>
+        $('#@Html.IdFor(m => m.RegisterViewModel.Birthday)').datetimepicker({
+            locale: 'vi',
+            format: 'DD/MM/YYYY'
+        });
+    </script>
+}

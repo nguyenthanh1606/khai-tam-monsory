@@ -1,0 +1,14 @@
+#page{
+    overflow: hidden;
+}
+@include MQ(M){
+    .wrapper{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .desc.w-50{
+        width: 100% !important;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

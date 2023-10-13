@@ -1,0 +1,209 @@
+﻿@model Frontend.Models.FooterViewModel
+@{
+    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
+}
+<div class="lineCenter text-center">
+    <div class="lineCenter-button text-uppercase m-backtotop">
+        Lên đầu trang
+    </div>
+</div>
+<div class="wrapper border-bot" style="margin-top: 1rem; padding-bottom: 2rem; margin-bottom: 1rem;">
+    <div class="row align-items--center">
+        <div class="col-md-6 signInNews">
+            <div class="row justyfy-spaceBetween align-items--center">
+                <div class="col-md-6 signInNews-text">
+                    <h4 class="text-bold">Đăng ký nhận tin từ chúng tôi</h4>
+                    <p>
+                        Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
+                    </p>
+                </div>
+                <div class="col-md-6 signInNews-form">
+                    <form action="">
+                        <div class="form-group row">
+                            <input type="text" class="form-control" placeholder="E-mail của bạn">
+                            <button type="submit" class="text-uppercase btn btn-1">Đăng ký</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 followUs">
+            <div class="followUs-list">
+                <ul>
+                    <li>
+                        <h4 class="text-bold">Theo dõi chúng tôi tại</h4>
+                    </li>
+                    <li><a href="@Model.Facebook"><img src="~/Themes/MNShop/Images/icons/fb.png" alt=""></a></li>
+                    <li><a href="#"><img src="~/Themes/MNShop/Images/icons/ins.png" alt=""></a></li>
+                    <li><a href="#"><img src="~/Themes/MNShop/Images/icons/pri.png" alt=""></a></li>
+                    <li><a href="@Model.Youtube"><img src="~/Themes/MNShop/Images/icons/you.png" alt=""></a></li>
+                    <li><a href="#"><img src="~/Themes/MNShop/Images/icons/tik.png" alt=""></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="footer-logoList">
+                    @{Html.RenderAction(MVC.Component.Display(3, "footerLogo"));}
+                </div>
+                @*<div class="desc">
+                    @Model.Description.RemoveHtml()
+                </div>*@
+                <div class="footer-listContact">
+                    <ul>
+                        <li>
+                            <div class="footer-listContact--icon">
+                                <img src="~/Themes/MNShop/Images/icons/i-mess.png" alt="">
+                            </div>
+                            <div class="footer-listContact--text">
+                                <h5>Messenger</h5>
+                                <a href="@Model.Facebook">http://m.me/mnshop</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="footer-listContact--icon">
+                                <img src="~/Themes/MNShop/Images/icons/i-call.png" alt="">
+                            </div>
+                            <div class="footer-listContact--text">
+                                <h5>Call Center</h5>
+                                <a href="tel:@Model.Phone.Replace(".","")">@Model.Hotline</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="footer-listContact--icon">
+                                <img src="~/Themes/MNShop/Images/icons/i-mail.png" alt="">
+                            </div>
+                            <div class="footer-listContact--text">
+                                <h5>Mail Contact</h5>
+                                <a href="mailto:@Model.EmailContact">@Model.EmailContact</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8" style="padding-top: 1.5rem">
+                <div class="row footer-menuList">
+
+                    @if (Model.FooterMenu.GetAllChilds().Any())
+                    {
+                        foreach (var item in Model.FooterMenu.GetAllChilds())
+                        {
+                            <div class="col footer-menuItem">
+                                <h5 class="title">@item.Value.MenuName</h5>
+                                @if (item.GetAllChilds().Any())
+                                {
+                                    <ul>
+                                        @foreach (var item2 in item.GetAllChilds())
+                                        {
+                                            <li><a href="@item.Value.SelectedCss@item2.Value.Url">@item2.Value.MenuName</a></li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="avs-bot text-center">
+    <a href="/">@Model.Copyright</a>
+</div>
+
+<!--<footer class="footer">
+    <div class="wrapper img-footer">
+        <div class="row ft-top">
+            <div class="col-md-3 offset-md-2 follow text-right b-right">
+                <p>Theo dõi @Model.SiteTitle tại</p>
+                <ul class="list-follow">
+                    <li><a href="@Model.Facebook" target="_blank" title="@Model.Facebook"><i class="fab fa-facebook-f"></i></a></li>-->
+@*<li><a href="@Model.Instagram" target="_blank" title="@Model.Instagram"><i class="fab fa-instagram"></i></a></li>*@
+<!--<li><a href="@Model.Twitter" target="_blank" title="@Model.Twitter"><i class="fab fa-twitter"></i></a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 logo text-center b-right">
+                <a href="/">
+                    @Html.BannerImage(3, Request.Cookies["lang"].Value, new { alt = "Coffee Bean", title = "Coffee Bean", @class = "img-fluid" })
+                </a>
+            </div>
+            <div class="col-md-3 lastestNews">
+                <p>Đăng ký nhận tin từ @Model.SiteTitle</p>
+                <div class="newsletter-area" id="singup-newsletter-area">
+
+                    @using (Ajax.BeginForm("SignupNewsletter", "Component",
+        new AjaxOptions { HttpMethod = "POST", OnSuccess = "SignupNewsletterSuccess" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <input class="form-control input-lg newsletters-input text-email" type="email" name="email" required id="email" value="" placeholder="" />
+                        <button type="submit" class="btn btn-danger button-email">@Resource.Send</button>
+
+                    }
+                </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-center ft-bot mt-3">
+            <div class="col-md-6 text-center">
+                <h3 class="orgName"><strong>@Model.SiteTitle</strong></h3>
+                <p class="mb-0">@Model.Address</p>
+                <div>
+                    <span>Tel: <a href="tel:@Model.Phone">@Model.Phone</a></span>
+                    <span>E-mail: <a href="mailto:@Model.EmailContact">@Model.EmailContact</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>-->
+<!-- social_networks -->
+<!--<div class="social_networks">
+    <div class="social_item">
+        <a href="@Model.Facebook" title="@Model.Facebook">
+            <i class="fab fa-facebook-f"></i>
+            <span>
+                Facebook
+            </span>
+        </a>
+    </div>
+    <div class="social_item">
+        <a href="tel:@Model.Hotline" title="@Model.Hotline">
+            <i class="fas fa-phone"></i>
+            <span>@Model.Hotline</span>
+        </a>
+    </div>
+    <div class="social_item">
+        <a href="mailto:@Model.EmailContact" title="@Model.EmailContact">
+            <i class="far fa-envelope"></i>
+            <span>Mail</span>
+        </a>
+    </div>
+    <div class="social_item">
+        <a href="#">
+            <i class="fas fa-comments"></i>
+            <span>Messenger</span>
+        </a>
+    </div>
+</div>-->
+<!-- btn back top -->
+<!--<div class="m-backtotop" aria-hidden="true">
+    <div class="arrow">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+    <div class="text">
+        Back to top
+    </div>
+</div>-->
+<!-- preloader -->
+<!--<div class="preloader">
+    <div class="orbit-spinner">
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+    </div>
+</div>-->
