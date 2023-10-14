@@ -6,33 +6,68 @@
 @using Store.Service.SystemService;
 @using Store.Service.ProductServices
 
-<div class="cat wrapper">
-    <div class="headline text-center">
-        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.ProductGroup,  Model.GroupID)" class="toUpper c-black h3">@Model.Title</a>
+<div class="row">
+    <div class="col-md-3 img-banner" style="padding-right: 0">
+        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.ProductGroup,  Model.GroupID)">
+            <img class="img-fluid" style="height: 100%; object-fit: cover;" src="@Model.ImageUrl" alt="banner 1">
+        </a>
     </div>
-    <div class="list-product">
-        @foreach (var item in Model.ListProduct)
-        {
-            <div class="col-md-4 item">
-                <div class="box">
-                    <div class="thumb">
-                        <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, @item.ProductID)" class="d-block w-100">
-                            <img src="@item.ImageUrl" alt="@item.Title">
-                        </a>
-                    </div>
-                    <div class="content">
-                        <div class="name text-center">
-                            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, @item.ProductID)" class="h4 text-b toUpper c-black">@item.Title</a>
-                        </div>
-                        <div class="price text-center">
-                            <p class="color-main h4 text-b">@string.Format("{0:n0}", @item.Price) Đ</p>
-                        </div>
-                        <div class="link">
-                            <button type="submit" onclick="AddToCartAjax(@item.ProductID, AddToCartSuccess);" class="buynow text-b c-white toUpper">@Resource.BuyNow</button>
-                        </div>
-                    </div>
-                </div>
+    <div class="col-md-9">
+        <div class="product-list">
+            <div class="title">
+                <ul>
+                    <li class="active"><a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.ProductGroup,  Model.GroupID)">@Model.Title</a></li>
+                </ul>
+                <div class="read-more text-right"><a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.ProductGroup,  Model.GroupID)"><i>Xem tất cả >></i></a></div>
             </div>
-        }
+            <div class="row" style="margin:0;">
+                @if (Model.ListProduct.Count > 0)
+                {
+                    foreach (var product in Model.ListProduct)
+                    {
+                        <div class="product col-md-4">
+                            <div class="sup-img">
+                                <img src="@product.IconUrl" alt="">
+                            </div>
+                            <div class="show-product">
+                                <div class="img-product">
+                                    <img src="@product.ImageUrl" class="rounded mx-auto d-block" alt="product-1">
+                                </div>
+                                <div class="detail-product">
+                                    <p>@string.Format("{0:n0}", @product.Price) VNĐ</p>
+                                    <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, @product.ProductID)"><span>@product.Title</span></a>
+                                </div>
+                            </div>
+                            <div class="hide-product">
+                                <div class="content-product" style="line-height: 1">
+                                    <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Product, @product.ProductID)"><p class="name-product">@product.Title</p></a>
+                                    <span class="price-product">@string.Format("{0:n0}", @product.Price) VNĐ</span><br>
+                                    @if ((product.Value1 != null) && (product.Value1.Trim().RemoveHtml() != ""))
+                                    {
+                                        <span>Bảo hành:</span><span style="color: black">@product.Value1</span>
+                                    }
+                                    <div class="detai-content-product">
+                                        @if ((product.Summary != null) && (product.Summary.Trim().RemoveHtml() != ""))
+                                        {
+                                            <p style="margin-top:10px;"><b>MÔ TẢ NGẮN</b></p>
+                                            @Html.Raw(@product.Summary)
+                                        }
+                                    </div>
+                                </div>
+                                <div class="buy-product">
+                                    @if ((product.Value2 != null) && (product.Value2.Trim().RemoveHtml() != ""))
+                    {
+                                        <span><i>Khuyến mãi: </i></span>
+                                        <span style="color: #1370a0;">@product.Value2.Trim().RemoveHtml()</span>
+                                    }
+                                    <button type="submit" onclick="AddToCartAjax(@product.ProductID, AddToCartSuccess);" class="btn btn-danger button btn-cart"><strong>MUA NGAY</strong></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
     </div>
 </div>

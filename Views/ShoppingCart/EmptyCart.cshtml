@@ -2,18 +2,28 @@
 @{
     ViewBag.Title = Resource.ShoppingCart;
 }
-<section class="banner">
-    @Html.BannerImage(4, Request.Cookies["lang"].Value, new { alt = "Coffee Bean", title = "Coffee Bean", @class = "w-100 img-fluid" })
-</section>
+<link href="~/Themes/AnhNhan/css/checkout.css" rel="stylesheet" />
+<link href="~/Themes/AnhNhan/css/User.css" rel="stylesheet" />
 
-<div class="content_checkout" id="cartPage">
-    <div class="container">
-        <div class="cart-page--empty">
-            <div class="cart-page--empty__image"></div>
-            <div class="cart-page--empty__text">@Resource.CartEmptyMsg</div>
-            <a class="bt-buy cart-page--empty__action mt-3" href="/">
-                @Resource.Back
-            </a>
+<div class="container-fluid wrap-page pd-left pd-right">
+
+    <div class="title-link">
+        @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Custom, htmlAttributes: new { @class = "breadcrumb" }, customMenuName: Resource.ShoppingCart, customUrl: Url.Action("List", "ShoppingCart"))
+    </div>
+
+    <!-- main checkout -->
+    <div class="row" id="cartPage" style="margin: 0">
+        <div class="col-md-12 table-checkout" style="padding: 0">
+            <div class="title-form">
+                <span>GIỎ HÀNG CỦA BẠN</span>
+            </div>
+            <br/>
+            <div class="col-md-12">
+                <div class="titlepage">@Resource.CartEmptyMsg</div>
+                <a href="/">Tiếp tục mua hàng</a>
+            </div>
+            <br/>
         </div>
     </div>
+    <!-- end main checkout -->
 </div>

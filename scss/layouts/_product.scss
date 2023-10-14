@@ -1,0 +1,289 @@
+.breadcrumb {
+  @include reset-spacing;
+  margin-top: 1.125rem;
+  position: relative;
+  background-color: transparent;
+  &:before {
+    content: "";
+    position: absolute;
+    left: 30%;
+    top: 50%;
+    width: 70%;
+    height: 1px;
+    background-color: #dadada;
+  }
+  ul {
+    @include reset-spacing;
+    display: inline-block;
+    background: transparent;
+    z-index: 1;
+    position: relative;
+    padding-right: 2rem;
+    li {
+      &:not(:first-child) {
+        padding-left: 0.625rem;
+      }
+      &:not(:last-child) {
+        padding-right: 1rem;
+        position: relative;
+        &:after {
+          content: "";
+          position: absolute;
+          right: 0;
+          top: calc(50% - 6px);
+          background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="11" viewBox="0 0 6 11" fill="none"><path d="M6 5.5L0 10.2631L0 0.73686L6 5.5Z" fill="%23D3D1D1"/></svg>');
+          width: 6px;
+          height: 11px;
+        }
+      }
+    }
+  }
+  &-item,
+  &-home {
+    display: inline-block;
+  }
+  &-link {
+    color: #9b9898;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+.pr {
+  &-category {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    @include d-flex-row($vehicle: flex-start);
+    width: 100%;
+  }
+  &-sidebar {
+    flex: 0 0 25%;
+    max-width: 25%;
+    &--category {
+      margin-bottom: 40px;
+      &_title {
+        margin-bottom: 2.5rem;
+        h3 {
+          font-size: 1.25rem;
+          font-weight: 600;
+          @include reset-spacing;
+        }
+      }
+      &_body {
+        @include d-flex-column($vehicle: left, $gap: 1.125rem);
+      }
+      &_item {
+        @include d-flex-row($align: space-between);
+        padding-bottom: 10px;
+        &:not(:last-child) {
+          border-bottom: 1px solid #e7e7e7;
+        }
+        &:hover,
+        &.--active {
+          a {
+            font-weight: 700;
+          }
+        }
+        a {
+          color: black;
+          text-decoration: none;
+        }
+      }
+    }
+    &--filter {
+      &_title {
+        margin-bottom: 2.5rem;
+        h3 {
+          font-size: 1.25rem;
+          font-weight: 600;
+          @include reset-spacing;
+        }
+      }
+      &_body {
+        @include d-flex-column($vehicle: left, $gap: 1.25rem);
+      }
+      &_item {
+        position: relative;
+        label {
+          padding-left: 35px;
+          height: 22px;
+        }
+        input {
+          position: absolute;
+          left: 0;
+          width: 20px;
+          height: 20px;
+          border-radius: 2px;
+          border: 1px solid #323130;
+          &:checked {
+            background: $color-primary;
+          }
+        }
+      }
+    }
+  }
+  &-body {
+    flex: 0 0 75%;
+    max-width: 75%;
+    padding-left: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #c7c7c7;
+    margin-bottom: 3rem;
+    &--action {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dadada;
+      @include d-flex-row($align: space-between);
+      margin-bottom: 14px;
+      .action-sort {
+        border-radius: 2px;
+        border: 1px solid #d9d8d7;
+        box-sizing: border-box;
+        padding: 6px;
+        width: 204px;
+        font-size: 12px;
+        text-transform: uppercase;
+        &:focus {
+          box-shadow: none;
+          border-color: $color-primary;
+        }
+        option {
+          font-size: 12px;
+          text-transform: uppercase;
+        }
+      }
+      .pr-total {
+        color: $color-primary;
+      }
+    }
+    &--list {
+      margin-top: 2rem;
+      @include d-flex-row($gap: 20px);
+      flex-wrap: wrap;
+      margin-right: -20px;
+    }
+    &_item {
+      flex: 0 0 calc(33.33% - 20px);
+      max-width: calc(33.33% - 20px);
+    }
+    &--footer {
+      margin-top: 10px;
+      @include d-flex-row($align: space-between);
+    }
+  }
+}
+
+.page-product {
+  background-color: white;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  &--top {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+    @include d-flex-row($gap: 20px);
+    .pr-top {
+      &_thumbnail {
+        flex: 0 0 50%;
+        max-width: 50%;
+        text-align: center;
+      }
+      &_content {
+        flex: 0 0 50%;
+        max-width: 50%;
+        &__category {
+          font-weight: 600;
+          color: $color-primary;
+          margin-bottom: 1rem;
+        }
+        &__title {
+          font-size: 2.5rem;
+          font-weight: 600;
+          @include reset-spacing;
+          margin-bottom: 1rem;
+        }
+        &__sku {
+          strong {
+            color: $color-primary;
+            font-weight: 600;
+          }
+        }
+        &__desc {
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+        }
+        &__info {
+          strong {
+            color: $color-primary;
+            font-weight: 600;
+          }
+        }
+        &__price {
+          @include d-flex-row($gap: 24px);
+          .pr_price__old {
+            @include d-flex-row($gap: 4px);
+          }
+        }
+        &__action {
+          @include d-flex-row($gap: 24px);
+        }
+      }
+    }
+  }
+  &--detail {
+    &_title {
+      font-size: 1.875rem;
+      color: $color-primary;
+      font-weight: 600;
+      @include reset-spacing;
+      margin-bottom: 1.2rem;
+    }
+    p {
+      line-height: 1.5;
+    }
+  }
+}
+.product--other {
+  margin-top: 2.5rem;
+  margin-bottom: 3rem;
+  &_title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  &_list {
+    @include d-flex-row($gap: 20px);
+    margin-right: -20px;
+    flex-wrap: wrap;
+  }
+  &_item {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+  }
+}
+
+.pr-table {
+  width: 100%;
+  tr {
+    min-height: 54px;
+    display: inline-block;
+    width: 100%;
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+  tr:nth-child(odd) {
+    background-color: #f6f6f6;
+  }
+  th {
+    font-weight: 600;
+    width: 300px;
+    padding-left: 0.5rem;
+  }
+  td {
+    line-height: 1.5;
+  }
+}

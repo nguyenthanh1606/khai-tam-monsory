@@ -2,318 +2,472 @@
 @{
     ViewBag.Title = Resource.Checkout;
 }
-<link rel="stylesheet" href="~/Themes/CoffeeBean/css/process-bar.css">
-<link rel="stylesheet" href="~/Themes/CoffeeBean/css/jquery.bootstrap-touchspin.min.css">
 
-<section class="banner">
-    @Html.BannerImage(4, Request.Cookies["lang"].Value, new { alt = "Coffee Bean", title = "Coffee Bean", @class = "w-100 img-fluid" })
-</section>
-
-
-<div class="progress-payment justify-content-md-center wrapper">
-    <div id="step-title-checkout" class="checkout-wrap col-md-8">
-        <ul class="checkout-bar wizard_steps anchor">
-            <li class="first visited"> <a href='@Url.Action("List","ShoppingCart")' v-bind:class="classStep(1)"> Giỏ hàng</a> </li>
-
-            <li class="active"><a href="javascript:void(0)" v-bind:class="classStep(2)">THông tin giao hàng</a> </li>
-
-            <li> <a href="javascript:void(0)" v-bind:class="classStep(3)">Thanh toán</a> </li>
-        </ul>
+<link href="~/Themes/AnhNhan/css/User.css" rel="stylesheet" />
+<link href="~/Themes/AnhNhan/css/checkout.css" rel="stylesheet" />
+<div class="breadcum_main">
+    <div class="container">
+        @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Custom, htmlAttributes: new { @class = "breadcrumb" }, customMenuName: Resource.Checkout, customUrl: Url.Action("Checkout", "ShoppingCart"))
     </div>
 </div>
 
-@*<div class="bread">
-        <div id="step-title-checkout" class="wrap-page pd-left pd-right">
-            <ul class="wizard_steps anchor">
-                <li class="active"><a href="javascript:void(0)" v-bind:class="classStep(1)"><span class="rounded-circle circle">1</span><span>Đăng nhập</span></a></li>
-                <li><a href="javascript:void(0)" v-bind:class="classStep(2)"><span class="rounded-circle circle">2</span><span>Thông tin giao hàng</span></a></li>
-                <li><a href="javascript:void(0)" v-bind:class="classStep(3)"><span class="rounded-circle circle">3</span><span>Phương thức thanh toán</span></a></li>
-                <li><a href="javascript:void(0)" v-bind:class="classStep(4)"><span class="rounded-circle circle">4</span><span>Hoàn tất đơn hàng</span></a></li>
-                <li class="step-title-checkout-none"><a href="#"></a></li>
-            </ul>
+
+<div class="cartlayout" id=checkout_page>
+    <div class="form_wizard wizard_horizontal">
+        @*<ul class="wizard_steps anchor">
+                <li>
+                    <a href="javascript:void(0)" v-bind:class="classStep(1)">
+                        <span class="step_no">1</span>
+                        <span class="step_descr">
+                            @Resource.Login
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" v-bind:class="classStep(2)">
+                        <span class="step_no">2</span>
+                        <span class="step_descr">
+                            @Resource.ShippingAddress
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" v-bind:class="classStep(3)">
+                        <span class="step_no">3</span>
+                        <span class="step_descr">
+                            @Resource.Payment
+                        </span>
+                    </a>
+                </li>
+            </ul>*@
+
+        <div class="bread">
+            <div id="step-title-checkout" class="wrap-page pd-left pd-right">
+                <ul class="wizard_steps anchor">
+                    <li class="active"><a href="javascript:void(0)" v-bind:class="classStep(1)"><span class="rounded-circle circle">1</span><span>Đăng nhập</span></a></li>
+                    <li><a href="javascript:void(0)" v-bind:class="classStep(2)"><span class="rounded-circle circle">2</span><span>Thông tin giao hàng</span></a></li>
+                    <li><a href="javascript:void(0)" v-bind:class="classStep(3)"><span class="rounded-circle circle">3</span><span>Phương thức thanh toán</span></a></li>
+                    <li><a href="javascript:void(0)" v-bind:class="classStep(4)"><span class="rounded-circle circle">4</span><span>Hoàn tất đơn hàng</span></a></li>
+                    <li class="step-title-checkout-none"><a href="#"></a></li>
+                </ul>
+            </div>
         </div>
-    </div>*@
 
-<main class="not-home">
-    <div class="cartlayout row wrapper space-between" id="checkout_page">
-        <section class="left card col-md-8 p-0">
-            <div v-if="isOnStep(1)">
-                @if (!User.Identity.IsAuthenticated)
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-xs-12">
+                    <transition name="fade">
+                        <div class="padding-row" v-if="isOnStep(1)">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <div style="margin-bottom:15px;">
+                                    <div class="btn-group" style="width:100%; display:none;">
+                                        <label id="option_register_popup" style="width:50%" v-bind:class="[checkoutWithoutLogin===0? 'btn btn-primary' : 'btn btn-default']">
+                                            <input type="radio" name="account" value="0" v-model.number="checkoutWithoutLogin" class="hidden">
+                                            @Resource.Login
+                                        </label>
+                                        <!-- #option_guest_popup-->
+                                        <label id="option_guest_popup" style="width:50%" v-bind:class="[checkoutWithoutLogin===1? 'btn btn-primary' : 'btn btn-default']">
+                                            <input type="radio" name="account" value="1" v-model.number="checkoutWithoutLogin" class="hidden">
+                                            Khách Thanh Toán
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="panel panel-default row">
+                                        <div class="col-md-5 p1-checkout tabs" style="padding-right: 0">
+                                            <ul id="checkoutList1" class="nav nav-tabs" role="tablist">
+                                                <li class="active">
+                                                    <a href="#loginForm" role="tab" data-toggle="tab">
+                                                        <div class="text-center checkout-title">
+                                                            <p>ĐĂNG NHẬP</p>
+                                                            <span>Nếu bạn đã có tài khoản tại Anh Nhân</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li role="presentation">
+                                                    <a href="#registerForm" role="tab" data-toggle="tab">
+                                                        <div class="text-center checkout-title">
+                                                            <p>ĐĂNG KÝ</p>
+                                                            <span>Tạo nhanh tài khoản nếu bạn chưa có</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                        <div v-show="checkoutWithoutLogin === 0" class="col-md-7 table-checkout tab-content">
+                                            @{Html.RenderAction("LoginPartial", "Account");}
+                                        </div>
+                                        @*<div v-show="checkoutWithoutLogin === 1">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m.Order.Email, new { @class = "form-control", v_model = "email", placeholder = "Email" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary pull-right" v-on:click="ProceedWithoutLogin">@Resource.Continue</button>
+                                                </div>
+                                            </div>*@
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+
+                        <div id="shipping_address" v-if="isOnStep(2)" style="margin-top:10px;">
+                            <div class="panel panel-default row">
+                                <div class="col-md-5 p2-checkout tabs" style="padding-right: 0">
+                                    <ul id="checkoutList2" class="nav nav-tabs" role="tablist">
+                                        <li class="active">
+                                            <a href="#shippingForm" role="tab" data-toggle="tab">
+                                                <div class="text-center checkout-title">
+                                                    <p>ĐỊA CHỈ GIAO HÀNG</p>
+                                                    <span>Cung cấp địa chỉ giao hàng cho đơn hàng này</span>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                                <div class="panel-body col-md-7 table-checkout" id="shippingForm">
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <form class="form-horizontal" id="newAddressForm">
+                                            <div class="form-group">
+                                                <span class="control-label col-md-4 col-sm-5 col-xs-12">@Html.DisplayNameFor(m => m.Order.CustomerAddress.CustomerName)<font class="other_color_star">*</font>:</span>
+                                                <div class="col-md-8 col-sm-7 col-xs-12">
+                                                    @Html.TextBoxFor(m => m.Order.CustomerAddress.CustomerName, new { @class = "form-control", v_model = "customerAddress.CustomerName" })
+                                                    @Html.ValidationMessageFor(m => m.Order.CustomerAddress.CustomerName)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label col-md-4 col-sm-5 col-xs-12">@Html.DisplayNameFor(m => m.Order.CustomerAddress.Phone)<font class="other_color_star">*</font>:</span>
+                                                <div class="col-md-8 col-sm-7 col-xs-12">
+                                                    @Html.TextBoxFor(m => m.Order.CustomerAddress.Phone, new { @class = "form-control", v_model = "customerAddress.Phone" })
+                                                    @Html.ValidationMessageFor(m => m.Order.CustomerAddress.Phone)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label col-md-4 col-sm-5 col-xs-12">@Html.DisplayNameFor(m => m.Order.CustomerAddress.Province)<font class="other_color_star">*</font>:</span>
+                                                <div class="col-md-8 col-sm-7 col-xs-12">
+                                                    @Html.DropDownListFor(m => m.Order.CustomerAddress.Province, ViewBag.ListCity as SelectList,
+                                                string.Format(Resource.SelectPlaceHolder, Resource.City),
+                                                new { @class = "form-control", v_model = "customerAddress.Province", onChange = string.Format("ChangeSelectedCity(this,'#{0}','{1}')", Html.IdFor(m => m.Order.CustomerAddress.District), string.Format(Resource.SelectPlaceHolder, Resource.District)) })
+                                                    @Html.ValidationMessageFor(m => m.Order.CustomerAddress.Province)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label col-md-4 col-sm-5 col-xs-12">@Html.DisplayNameFor(m => m.Order.CustomerAddress.District)<font class="other_color_star">*</font>:</span>
+                                                <div class="col-md-8 col-sm-7 col-xs-12">
+                                                    @Html.DropDownListFor(m => m.Order.CustomerAddress.District, ViewBag.ListDistrict as SelectList,
+                                                string.Format(Resource.SelectPlaceHolder, Resource.District),
+                                                new { @class = "form-control", v_model = "customerAddress.District", onChange = string.Format("ChangeSelectedDistrict(this,'#{0}','{1}')", Html.IdFor(m => m.Order.CustomerAddress.Ward), string.Format(Resource.SelectPlaceHolder, Resource.Ward)) })
+                                                    @Html.ValidationMessageFor(m => m.Order.CustomerAddress.District)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label col-md-4 col-sm-5 col-xs-12">@Html.DisplayNameFor(m => m.Order.CustomerAddress.Ward)<font class="other_color_star">*</font>:</span>
+                                                <div class="col-md-8 col-sm-7 col-xs-12">
+                                                    @Html.DropDownListFor(m => m.Order.CustomerAddress.Ward, ViewBag.ListWard as SelectList,
+                                                string.Format(Resource.SelectPlaceHolder, Resource.Ward), new { @class = "form-control", v_model = "customerAddress.Ward" })
+                                                    @Html.ValidationMessageFor(m => m.Order.CustomerAddress.Ward)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label col-md-4 col-sm-5 col-xs-12">@Html.DisplayNameFor(m => m.Order.CustomerAddress.Address)<font class="other_color_star">*</font>:</span>
+                                                <div class="col-md-8 col-sm-7 col-xs-12">
+                                                    @Html.TextBoxFor(m => m.Order.CustomerAddress.Address, new { @class = "form-control", v_model = "customerAddress.Address" })
+                                                    @Html.ValidationMessageFor(m => m.Order.CustomerAddress.Address)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-label col-md-4 col-sm-5 col-xs-12">@Html.DisplayNameFor(m => m.Order.CustomerAddress.AddressType)<font class="other_color_star">*</font>:</span>
+                                                <div class="col-md-8 col-sm-7 col-xs-12">
+                                                    @Html.DropDownListFor(m => m.Order.CustomerAddress.AddressType, ViewBag.ListAddressType as SelectList,
+                                                string.Format(Resource.SelectPlaceHolder, Resource.AddressType),
+                                                new { @class = "form-control", v_model = "customerAddress.AddressType" })
+                                                    @Html.ValidationMessageFor(m => m.Order.CustomerAddress.AddressType)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-offset-4 col-sm-offset-5 col-md-8 col-sm-7 col-xs-12">
+                                                    <button type="button" class="btn btn-primary" v-on:click="ChooseNewAddress()">
+                                                        Giao đến địa chỉ này
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        using (Html.BeginForm())
+                                        {
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-xs-12" v-for="item in listAddress">
+                                                        <div class="panel panel-info">
+                                                            <div class="panel-body" style="padding:10px;">
+                                                                <p style="font-size:larger;font-family: Myriad-Condensed;text-transform:uppercase;" class="name">{{item.CustomerName}}</p>
+                                                                <p class="address">
+                                                                    @Resource.Address: {{item.Address}}
+                                                                </p>
+                                                                <p class="phone">@Resource.Phone: {{item.Phone}}</p>
+                                                                <p class="action">
+                                                                    <button type="button" class="btn btn-primary" v-on:click="SelectAddress(item)">
+                                                                        Giao đến địa chỉ này
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default" v-on:click="EditAddress(item.Id)">@Resource.Edit</button>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        <p>Bạn muốn giao hàng đến địa chỉ khác? <a v-on:click="AddAddress" style="cursor:pointer;color:#c82333;font-weight:bold;">Thêm địa chỉ giao hàng mới</a></p>
+                                        <transition name="fade">
+                                            <div id="edit_address" v-show="isEditAddress">
+
+                                            </div>
+                                        </transition>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-if="isOnStep(3)" style="margin-top:10px;">
+                            <div class="panel panel-default row">
+                                <div class="col-md-5 p2-checkout" id="paymentDiv" style="padding-right: 0">
+                                    <div class="tabs">
+                                        <ul id="checkoutList3" class="nav nav-tabs" role="tablist">
+                                            <li class="active">
+                                                <a href="#cashForm" role="tab" data-toggle="tab" onclick="ChangePaymentType(0)">
+                                                    <div class="text-center checkout-title">
+                                                        <p>TIỀN MẶT KHI NHẬN HÀNG</p>
+                                                        <span>Thanh toán trực tiếp khi bạn nhận được hàng</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li role="presentation" id="bankTransfer">
+                                                <a href="#bankAccountForm" role="tab" data-toggle="tab" onclick="ChangePaymentType(1)">
+                                                    <div class="text-center checkout-title">
+                                                        <p>CHUYỂN KHOẢN NGÂN HÀNG</p>
+                                                        <span>Quý khách chuyển khoản trước, nhận hàng sau</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body tab-content col-md-7 table-checkout">
+                                    <div id="cashForm" role="tabpanel" class="tab-pane active">
+                                        @using (Html.BeginForm("Checkout", "ShoppingCart", FormMethod.Post))
+                                        {
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="panel panel-info">
+                                                            <div class="panel-body" style="padding: 10px;">
+                                                                @Html.AntiForgeryToken()
+                                                                @if (User.Identity.IsAuthenticated)
+                                                                {
+                                                                    <input type="hidden" name="@Html.NameFor(m => m.Order.CustomerAddressId)" id="@Html.IdFor(m => m.Order.CustomerAddressId)" v-model="shippingAddress.Id" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="hidden" name="@Html.NameFor(m => m.Order.Email)" id="@Html.IdFor(m => m.Order.Email)" v-model="email" />
+                                                                    <input type="hidden" v-for="data in customerAddressFormData" v-bind:name="data.name" v-bind:value="data.value" />
+                                                                }
+                                                                <div class="form-choice" style="display:none;">
+                                                                    @*@foreach (var type in Model.ListShippingMethod)
+                                                                        {
+                                                                            <div class="radio">
+                                                                                <label>@Html.RadioButtonFor(m => m.Order.ShippingMethod, type.Value)@type.Text</label>
+                                                                            </div>
+                                                                        }*@
+                                                                    <p style="margin-left:20px"> @Model.DeliviryMethod</p>
+                                                                </div>
+                                                                @*<div class="form-title">@Html.DisplayNameFor(m => m.Order.PaymentType)</div>*@
+                                                                <div class="form-choice" style="display:none;" id="directPayment">
+                                                                    @foreach (var type in Model.ListPaymentType)
+                                                                    {
+                                                                        if (type.Value == "0")
+                                                                        {
+                                                                            <div class="radio">
+                                                                                <label>@Html.RadioButtonFor(m => m.Order.PaymentType, type.Value)@type.Text</label>
+                                                                            </div>
+                                                                        }
+
+                                                                    }
+                                                                </div>
+                                                                @*<div class="form-title" style="font-size: larger; font-family: Myriad-Condensed; text-transform: uppercase;">@Resource.Receiver</div>*@
+                                                                <div class="form-horizontal" style="display:none;">
+                                                                    <p><span class="name">{{shippingAddress.CustomerName}}</span></p>
+                                                                    <p>@Resource.Phone: {{shippingAddress.Phone}}</p>
+                                                                    <p>@Resource.Address: {{shippingAddress.Address}}</p>
+                                                                    <div class="checkbox" style="display:none;">
+                                                                        <label><input type="checkbox" name="@Html.NameFor(m => m.Order.UseNameOnAddress)" value="true" v-model="useNameOnAddress">@Resource.UseNameAndPhoneOnShippingAddress</label>
+                                                                        <input name="@Html.NameFor(m => m.Order.UseNameOnAddress)" value="false" type="hidden">
+                                                                    </div>
+                                                                    <div class="panel" v-show="!useNameOnAddress" style="display:none;">
+                                                                        <div class="form-group">
+                                                                            <span class="col-md-4 col-sm-6 col-xs-12 control-label">@Html.DisplayNameFor(m => m.Order.ReceiverName)</span>
+                                                                            <div class="col-md-12 col-sm-6 col-xs-12">
+                                                                                @Html.TextBoxFor(model => model.Order.ReceiverName, new { @class = "form-control" })
+                                                                                @Html.ValidationMessageFor(model => model.Order.ReceiverName)
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <span class="col-md-4 col-sm-6 col-xs-12 control-label">@Html.DisplayNameFor(m => m.Order.ReceiverPhone)</span>
+                                                                            <div class="col-md-12 col-sm-6 col-xs-12">
+                                                                                @Html.TextBoxFor(model => model.Order.ReceiverPhone, new { @class = "form-control" })
+                                                                                @Html.ValidationMessageFor(model => model.Order.ReceiverPhone)
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <p><strong style="font-size: 18px;">@Model.DirectPayment.ParaValue</strong></p>
+                                                                    @Html.Raw(Model.DirectPayment.Description)
+                                                                    <br />
+                                                                    <br />
+                                                                </div>
+                                                                <div>
+                                                                    <button class="btn btn-danger submit-style" style="background: #d50606;">@Resource.Checkout</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div id="bankAccountForm" role="tabpanel" class="tab-pane">
+                                        @using (Html.BeginForm("Checkout", "ShoppingCart", FormMethod.Post))
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    @Html.AntiForgeryToken()
+
+                                                    @if (User.Identity.IsAuthenticated)
                 {
-                    <ul class="nav nav-tabs row mx-0" id="myTab" role="tablist">
-                        <li class="nav-item card-head-2 col-md-6">
-                            <div class="mm text-center active show" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
-                                <h4 class="toUpper mb-0">@Resource.Login</h4>
-                                <small>Đăng nhập hoặc đăng kí tài khoản</small>
-                            </div>
-                        </li>
-                        <li class="nav-item card-head-2 col-md-6">
-                            <div class="mm text-center" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
-                                <h4 class="toUpper mb-0">@Resource.Customer</h4>
-                                <small>Mua hàng không cần tài khoản</small>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="card-main-2 tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="dangky-main m-auto col-md-7 no-pd" v-show="checkoutWithoutLogin === 0">
-                                @{Html.RenderAction("LoginPartial", "Account");}
-                            </div>
-                        </div>
-                        <div class="card-main-2 tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <div class="dathoa-form-2 m-auto col-md-7 no-pd">
-                                <div class="form-group">
-                                    <p class="text-center" style="font-weight: normal; font-family: 'Proxima-R'">Vui lòng nhập email</p>
-                                    @Html.TextBoxFor(m => m.Order.Email, new { @class = "form-control", v_model = "email", placeholder = "Email" })
-                                </div>
-                                <div class="row mx-0">
-                                    <div class="btn-buy">
-                                        <button type="button" class="btn-ds-2 toUpper" v-on:click="ProceedWithoutLogin">@Resource.Continue</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step row space-between" style="padding-left: 1rem; padding-right: 0px;">
-                        <div class="back">
-                            <a href="/ShoppingCart/List" class="c-gray">Quay lại giỏ hàng</a>
-                        </div>
-                    </div>
-                }
-            </div>
-            <div v-if="isOnStep(2)">
-                <div class="card-head-2 row">
-                    <div class="col-md-12">
-                        <h4 class="toUpper mb-0">Địa chỉ giao hàng</h4>
-                        <small>Chọn địa chỉ giao hàng hoặc tạo mới địa chỉ</small>
-                    </div>
-                </div>
-                <div id="shipping_address" class="card-main-2">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a v-on:click="AddAddress" class="addadress">Thêm địa chỉ giao hàng mới</a>
-
-                        <div class="dathoa-form" v-for="item in listAddress">
-                            <div class="list-address">
-                                <div class="name-customer">
-                                    <p>{{item.CustomerName}} <i class="fas fa-edit" style="padding-left: 5px; cursor: pointer; outline: none;" v-on:click="EditAddress(item.Id)"></i></p>
-                                </div>
-                                <div class="phone">
-                                    <p>Số điện thoại: {{item.Phone}}</p>
-                                </div>
-                                <div class="address">
-                                    <p>Địa chỉ: {{item.Address}}</p>
-                                </div>
-                                <div class="btn-buy mt-3">
-                                    <button type="button" v-on:click="SelectAddress(item)" class="btn-ds-2 toUpper">Chọn địa chỉ</button>
-                                </div>
-                            </div>
-                        </div>
-                        <transition name="fade">
-                            <div id="edit_address" v-show="isEditAddress">
-                            </div>
-                        </transition>
-                        <div class="clearfix"></div>
-                        <div class="step row space-between" style="padding-left: 0;padding-right: 0;">
-                            <div class="back">
-                                <a href="/ShoppingCart/List" class="c-gray">Quay lại giỏ hàng</a>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <form class="dathoa-form-2 form-horizontal" id="newAddressForm">
-                            <div class="row">
-                                <div class="col-md-6 no-pd">
-                                    <label for="" class="require">@Resource.Fullname</label>
-                                    <div class="col-md-12 input-group">
-                                        @Html.TextBoxFor(m => m.Order.CustomerAddress.CustomerName, new { @class = "form-control", placeholder = Resource.Fullname })
-                                        @Html.ValidationMessageFor(m => m.Order.CustomerAddress.CustomerName)
-                                    </div>
-                                </div>
-                                <div class="col-md-6 no-pd">
-                                    <label for="" class="require">@Resource.Phone</label>
-                                    <div class="col-md-12 input-group">
-                                        @Html.TextBoxFor(m => m.Order.CustomerAddress.Phone, new { @class = "form-control", placeholder = Resource.Phone })
-                                        @Html.ValidationMessageFor(m => m.Order.CustomerAddress.Phone)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 no-pd">
-                                    <label for="" class="require">Tỉnh / Thành phố</label>
-                                    <div class="col-md-12 input-group">
-                                        @Html.DropDownListFor(m => m.Order.CustomerAddress.Province, ViewBag.ListCity as SelectList,
-                                        string.Format(Resource.SelectPlaceHolder, Resource.City),
-                                        new { @class = "form-control select-search", onChange = string.Format("ChangeSelectedCity(this,'#{0}','{1}')", Html.IdFor(m => m.Order.CustomerAddress.District), string.Format(Resource.SelectPlaceHolder, Resource.District)) })
-                                        @Html.ValidationMessageFor(m => m.Order.CustomerAddress.Province)
-                                    </div>
-                                </div>
-                                <div class="col-md-6 no-pd">
-                                    <label for="" class="require">Quận / Huyện</label>
-                                    <div class="col-md-12 input-group">
-                                        @Html.DropDownListFor(m => m.Order.CustomerAddress.District, ViewBag.ListDistrict as SelectList,
-                                        string.Format(Resource.SelectPlaceHolder, Resource.District),
-                                        new { @class = "form-control select-search", onChange = string.Format("ChangeSelectedDistrict(this,'#{0}','{1}')", Html.IdFor(m => m.Order.CustomerAddress.Ward), string.Format(Resource.SelectPlaceHolder, Resource.Ward)) })
-                                        @Html.ValidationMessageFor(m => m.Order.CustomerAddress.District)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 no-pd">
-                                    <label for="" class="require">Phường / Xã</label>
-                                    <div class="col-md-12 input-group">
-                                        @Html.DropDownListFor(m => m.Order.CustomerAddress.Ward, ViewBag.ListWard as SelectList,
-                                        string.Format(Resource.SelectPlaceHolder, Resource.Ward), new { @class = "form-control select-search" })
-                                        @Html.ValidationMessageFor(m => m.Order.CustomerAddress.Ward)
-                                    </div>
-                                </div>
-                                <div class="col-md-6 no-pd">
-                                    <label for="" class="require">Loại địa chỉ</label>
-                                    <div class="col-md-12 input-group">
-                                        @Html.DropDownListFor(m => m.Order.CustomerAddress.AddressType, ViewBag.ListAddressType as SelectList,
-                                        string.Format(Resource.SelectPlaceHolder, Resource.AddressType),
-                                        new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Order.CustomerAddress.AddressType)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 no-pd">
-                                    <label for="" class="require">@Resource.Address</label>
-                                    <div class="col-md-12 input-group">
-                                        @Html.TextBoxFor(m => m.Order.CustomerAddress.Address, new { @class = "form-control", placeholder = Resource.Address })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mx-0 mt-3">
-                                <div class="btn-buy">
-                                    <button class="btn-ds toUpper" type="button" v-on:click="ChooseNewAddress()">Giao đến địa chỉ này</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="clearfix"></div>
-                        <div class="step row space-between" style="padding-left: 0;padding-right: 0;">
-                            <div class="back">
-                                <a href="/ShoppingCart/List" class="c-gray">Quay lại giỏ hàng</a>
-                            </div>
-                        </div>
-                    }
-
-                    @*<div class="row fb-info">
-                        <span>Lấy thông tin liên lạc từ: </span>
-                        <a href="#" class="btn-fb c-white"><i class="fab fa-facebook-f"></i></a>
-                        <span>Facebook</span>
-                    </div>*@
-                </div>
-            </div>
-            <div v-if="isOnStep(3)">
-                <div class="card-head-2 row">
-                    <div class="col-md-12">
-                        <h4 class="toUpper mb-0">Phương thức thanh toán</h4>
-                        <small>Thanh toán khi nhận hàng hoặc qua ngân hàng</small>
-                    </div>
-                </div>
-                <div id="cashForm" class="card-main-2">
-                    @using (Html.BeginForm("Checkout", "ShoppingCart", FormMethod.Post))
-                    {
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel panel-info">
-                                    <div class="panel-body" style="padding: 10px;">
-                                        @Html.AntiForgeryToken()
-                                        @if (User.Identity.IsAuthenticated)
-                                        {
-                                        <input type="hidden" name="@Html.NameFor(m => m.Order.CustomerAddressId)" id="@Html.IdFor(m => m.Order.CustomerAddressId)" v-model="shippingAddress.Id" />
-                                        }
-                                        else
-                                        {
-                                        <input type="hidden" name="@Html.NameFor(m => m.Order.Email)" id="@Html.IdFor(m => m.Order.Email)" v-model="email" />
-                                        <input type="hidden" v-for="data in customerAddressFormData" v-bind:name="data.name" v-bind:value="data.value" />
-                                        }
-                                        <div class="form-choice" style="display:none;">
-                                            @*@foreach (var type in Model.ListShippingMethod)
-                                            {
-                                            <div class="radio">
-                                                <label>@Html.RadioButtonFor(m => m.Order.ShippingMethod, type.Value)@type.Text</label>
-                                            </div>
-                                            }*@
-                                            <p style="margin-left:20px"> @Model.DeliviryMethod</p>
-                                        </div>
-                                        @*<div class="form-title">@Html.DisplayNameFor(m => m.Order.PaymentType)</div>*@
-                                        <div class="form-choice" style="display:none;" id="directPayment">
-                                            @foreach (var type in Model.ListPaymentType)
-                                            {
-                                            if (type.Value == "0")
-                                            {
-                                            <div class="radio">
-                                                <label>@Html.RadioButtonFor(m => m.Order.PaymentType, type.Value)@type.Text</label>
-                                            </div>
-                                            }
-
-                                            }
-                                        </div>
-                                        @*<div class="form-title" style="font-size: larger; font-family: Myriad-Condensed; text-transform: uppercase;">@Resource.Receiver</div>*@
-                                        <div class="form-horizontal" style="display:none;">
-                                            <p><span class="name">{{shippingAddress.CustomerName}}</span></p>
-                                            <p>@Resource.Phone: {{shippingAddress.Phone}}</p>
-                                            <p>@Resource.Address: {{shippingAddress.Address}}</p>
-                                            <div class="checkbox" style="display:none;">
-                                                <label><input type="checkbox" name="@Html.NameFor(m => m.Order.UseNameOnAddress)" value="true" v-model="useNameOnAddress">@Resource.UseNameAndPhoneOnShippingAddress</label>
-                                                <input name="@Html.NameFor(m => m.Order.UseNameOnAddress)" value="false" type="hidden">
-                                            </div>
-                                            <div class="panel" v-show="!useNameOnAddress" style="display:none;">
-                                                <div class="form-group">
-                                                    <span class="col-md-4 col-sm-6 col-xs-12 control-label">@Html.DisplayNameFor(m => m.Order.ReceiverName)</span>
-                                                    <div class="col-md-12 col-sm-6 col-xs-12">
-                                                        @Html.TextBoxFor(model => model.Order.ReceiverName, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(model => model.Order.ReceiverName)
+                                                        <input type="hidden" name="@Html.NameFor(m => m.Order.CustomerAddressId)" id="@Html.IdFor(m => m.Order.CustomerAddressId)" v-model="shippingAddress.Id" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="hidden" name="@Html.NameFor(m => m.Order.Email)" id="@Html.IdFor(m => m.Order.Email)" v-model="email" />
+                                                        <input type="hidden" v-for="data in customerAddressFormData" v-bind:name="data.name" v-bind:value="data.value" />
+                                                    }
+                                                    <div class="form-choice" id="bankPayment" style="display:none;">
+                                                        @foreach (var type in Model.ListPaymentType)
+                                                        {
+                                                            if (type.Value == "1")
+                                                            {
+                                                                <div class="radio">
+                                                                    <label>@Html.RadioButtonFor(m => m.Order.PaymentType, type.Value)@type.Text</label>
+                                                                </div>
+                                                            }
+                                                        }
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <span class="col-md-4 col-sm-6 col-xs-12 control-label">@Html.DisplayNameFor(m => m.Order.ReceiverPhone)</span>
-                                                    <div class="col-md-12 col-sm-6 col-xs-12">
-                                                        @Html.TextBoxFor(model => model.Order.ReceiverPhone, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(model => model.Order.ReceiverPhone)
+                                                    <div style="padding:10px;">
+                                                        <p><strong style="font-size: 18px;">@Model.Banking.ParaValue</strong></p>
+                                                        @Html.Raw(Model.Banking.Description)
+
+                                                        @foreach (var bank in Model.ListBankAccount)
+                                                        {
+                                                            <span><strong>@bank.Alias</strong></span><br>
+                                                            <div class="bank">
+                                                                <span>@bank.BankName</span><br>
+                                                                <span>Tên tài khoản: @bank.AccountName</span><br>
+                                                                <span>Số tài khoản: @bank.AccountNumber</span><br>
+                                                                <span>Chi nhánh: @bank.AgencyName</span><br>
+                                                                <span>Tỉnh/Thành: @bank.DistrictName, @bank.CityName</span>
+                                                            </div>
+                                                        }
+
+                                                        Cập nhật chi tiết các khu vực liên quan, có thể xem thêm trong <a class="text-decoratant" href="html/info-page.html">Chính sách bán hàng Online</a>
+                                                    </div>
+                                                    <div class="form-horizontal" style="display:none;">
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" name="@Html.NameFor(m => m.Order.UseNameOnAddress)" value="true" v-model="useNameOnAddress">@Resource.UseNameAndPhoneOnShippingAddress</label>
+                                                            <input name="@Html.NameFor(m => m.Order.UseNameOnAddress)" value="false" type="hidden">
+                                                        </div>
+                                                        <div class="panel" v-show="!useNameOnAddress">
+                                                            <div class="form-group">
+                                                                <span class="col-md-4 col-sm-6 col-xs-12 control-label">@Html.DisplayNameFor(m => m.Order.ReceiverName)</span>
+                                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                                    @Html.TextBoxFor(model => model.Order.ReceiverName, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.Order.ReceiverName)
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <span class="col-md-4 col-sm-6 col-xs-12 control-label">@Html.DisplayNameFor(m => m.Order.ReceiverPhone)</span>
+                                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                                    @Html.TextBoxFor(model => model.Order.ReceiverPhone, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.Order.ReceiverPhone)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="float:left;width:100%;margin: 20px 0px;">
+                                                        <div>
+                                                            <button type="submit" class="btn btn-danger submit-style" style="background: #d50606;">@Resource.Checkout</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div>
-                                            <p><strong style="font-size: 18px;">@Model.DirectPayment.ParaValue</strong></p>
-                                            @Html.Raw(Model.DirectPayment.Description)
-                                            <br />
-                                            <br />
-                                        </div>
-                                        <div class="btn-buy">
-                                            <button type="submit" class="btn-ds-2 toUpper">@Resource.Checkout</button>
-                                        </div>
+                                        }
                                     </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    }
+                    </transition>
                 </div>
-            </div>
-            @*<div class="step row space-between" style="padding-left: 0;padding-right: 0;">
-                <div class="back">
-                    <a href="#" class="c-gray">Quay lại giỏ hàng</a>
-                </div>
-                <div class="btn-buy">
-                    <a href="#" class="btn-ds toUpper">Tiếp tục</a>
-                </div>
-            </div>*@
-        </section>
+                <div class="col-md-4 col-xs-12 padding-row" style="margin-top:10px;">
+                    <div class="payment">
+                        <p class="title-payment">
+                            THÔNG TIN GIỎ HÀNG CỦA BẠN
+                            @Html.ActionLink(Resource.Edit, "List", "ShoppingCart", null, new { @class = "pull-right btn-default" })
+                        </p>
+                        <div class="detail-payment">
+                            @{Html.RenderAction("OrderSummary");}
 
-        <section class="card right">
-            @{Html.RenderAction("OrderSummary");}
-        </section>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="panel panel-default payment" v-if="isOnStep(3)">
+                        <p class="panel-heading">
+                        <p class="title-payment" style="text-transform:uppercase;">
+                            @Resource.ShippingAddress
+                            <button class="btn btn-default pull-right" v-on:click="currentStep = 2" style="border: none;padding: 0;font-family: Myriad;background:none;">@Resource.Edit</button>
+                        </p>
+                        <div class="panel-body detail-payment">
+                            <p><span class="name">{{shippingAddress.CustomerName}}</span></p>
+                            <p>@Resource.Phone: {{shippingAddress.Phone}}</p>
+                            <p>@Resource.Address: {{shippingAddress.Address}}</p>
+                        </div>
+                    </div>
+                    <p class="detail" style="margin-top: 1rem;">
+                        @Html.Raw(Model.ShippingNote.Description)
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
     </div>
-</main>
+</div>
 
-@section js{
+
+
+
+
+@section scripts{
     <script>
         function EditAddressFail(data){
             ShowAlertDialog(data.errorMsg);
@@ -370,7 +524,7 @@
                 useNameOnAddress:true,
                 shippingAddress:@Html.Raw(Json.Encode(new Frontend.Models.CustomerAddressOverviewViewModel())),
                 checkoutWithoutLogin:0,
-                email:@Html.Raw(Json.Encode(ViewBag.Email)),
+                email:null,
                 customerAddress:@Html.Raw(Json.Encode(new Frontend.Models.CustomerAddressViewModel())),
                 customerAddressFormData:null,
             },

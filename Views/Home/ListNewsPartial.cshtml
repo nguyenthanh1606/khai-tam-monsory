@@ -1,42 +1,48 @@
 ﻿@model Frontend.Models.HomePageGroupViewModel
-@{
-    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
-    int count = 0;
-}
 
-@if (Model.ListItem.Any())
-{
-    <section class="news">
-        <div class="news-desc text-b">
-            <p>@Model.Group.Description.RemoveHtml().Truncate(400)</p>
-        </div>
-
-        <div class="swiper sw-Blogs news-list">
-            <div class="swiper-wrapper">
-                @foreach (var item in Model.ListItem)
+<div class="content-list">
+    <div class="title">
+        @if (Model.DefaultName != "")
+            {
+            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, Model.Group.GroupID)"><span>@Model.DefaultName</span></a>
+        }
+        else
+        {
+            <a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, Model.Group.GroupID)">
+                <span>@Model.Group.Title</span>
+            </a>
+        }
+        <ul>
+            @if (@Model.Group.ListGroup.Any())
+            {
+                foreach (var group in @Model.Group.ListGroup)
                 {
-                    <div class="swiper-slide news-item">
-                        <a href="@item.Url" class="thumnails-template hover-ef-1">
-                            <div class="thumnails-content thumb-img">
-                                <img src="@item.PictureUrl" class="w-100 img-fluid" alt="@item.Headline">
-                            </div>
-                        </a>
-                        <div class="news-item--content">
-                            <h4>
-                                <a href="@item.Url" class="headline">@item.Headline</a>
-                            </h4>
-                            <div class="desc">@item.Summary.RemoveHtml().Truncate(400)</div>
-                            <a href="@item.Url"
-                               class="link link-active text-decoration text-uppercase text-bold small">
-                                Xem
-                                tiếp
-                            </a>
-                        </div>
-                    </div>
+                    <li><a href="@Url.CustomAction(Store.Service.SystemService.RoutingType.Group, @group.GroupID)">@group.Title</a></li>
                 }
-            </div>
-            <div class="swiper-button-next sw-Blogs-button-next"></div>
-            <div class="swiper-button-prev sw-Blogs-button-prev"></div>
-        </div>
-    </section>
-}
+            }
+        </ul>
+    </div>
+    <div class="row" style="margin: 0;">
+        @if (Model.ListItem.Any())
+        {
+            foreach (var item in Model.ListItem)
+            {
+                <div class="content col-md-3">
+                    <div class="img-content">
+                        <a href="@item.Url">
+                            <figure>
+                                <img src="@item.PictureUrl" class="mx-auto d-block" width="100%" alt="content 1">
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="detail-content">
+                        <a href="@item.Url"><h5>@item.Headline</h5></a>
+                        <span class="user-create">@item.AuthorName</span>
+                        <span class="date-create">@item.PublishDate.Value.ToShortDateString()</span>
+                        <p class="detail">@item.Summary.RemoveHtml().Truncate(140)</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

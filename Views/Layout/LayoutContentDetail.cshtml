@@ -3,121 +3,129 @@
 @using Frontend.Infrastructure.Utility;
 @{
     ViewBag.Title = Model.Content.Headline;
-    ViewBag.Description = Model.Content.Summary.RemoveHtml();
-    if (!Model.Content.CustomizeTitle.IsEmpty())
-    {
-        ViewBag.Title = Model.Content.CustomizeTitle;
-    }
-    //if (!Model.Content.CustomizeDescription.IsEmpty())
-    //{
-    //    ViewBag.Description = Model.Content.CustomizeDescription.RemoveHtml();
-    //}
-    if (Model.Content.PictureUrl != "")
-    {
-        ViewBag.Image = Model.Content.PictureUrl;
-    }
-
-    string ComponentViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Component/{0}.cshtml";
-    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
 }
-@{ string bannerUrl = Model.Group.BannerUrl;}
-@if (!Model.Content.BannerImages.IsEmpty())
-{
-    bannerUrl = Model.Content.BannerImages;
-}
+<link href="~/Themes/AnhNhan/css/info.css" rel="stylesheet" />
+<link href="~/Themes/AnhNhan/css/User.css" rel="stylesheet" />
 
-<main class="pagenews">
-    @if (bannerUrl == null)
-    {
-        <div class="box-banner">
-        </div>
-    }
-    else
-    {
-        <div class="banner-page">
-            <div class="picture-page">
-                <img class="img-fluid w-100" src="bannerUrl" alt="@Model.Content.Headline" />
-            </div>
-            <div class="wrapper">
-                <div class="banner-page--content">
-                    <img src="~/Themes/MNShop/Images/MN_Fine_Arrt_Prints-white.png" alt="MN Shop">
-                    <h2 class="title">In lại các tác phẩm nghệ thuật đẹp như bản gốc</h2>
-                </div>
+<div class="container-fluid wrap-page pd-left pd-right">
+    <div class="title-link">
+        @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Group, Model.Group.GroupID, new { @class = "breadcrumb" })
+    </div>
+
+    <!-- main content -->
+    <div class="row" style="margin: 0; margin-top: 20px;">
+        <div class="col-md-3 list-nav" style="padding-left: 0; padding-right: 0">
+            <div class="title-nav">
+                @{Html.RenderAction(MVC.Component.GetChildGroup(0, "ListGroupMenuAll", null, false));
+                }
             </div>
         </div>
-    }
-        @{Html.RenderAction(MVC.Component.Display(5, "AvsNotify"));}
-        <div class="wrapper breadcrumb-ds">
-            @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Group, Model.Group.GroupID, new { @class = "breadcrumb" })
-        </div>
-        <div class="wrapper">
-            <div class="row">
-                <div class="col-md-12 pagenews-head">
-                    <h1 class="pagenews-title color-active">@Model.Content.Headline</h1>
-                    <div class="pagenews-desc mw-70">
-                        @Html.Raw(Model.Content.Summary)
-                    </div>
+        <div class="col-md-9 pd-an">
+            <div class="detail-content-page" style="border: 1px solid #ccc">
+
+                <div class="title-form">
+                    <span style="text-transform:uppercase;">@Model.Content.Headline</span>
                 </div>
-                <div class="col-md-9 g-left">
-                    <div class="pagenews-detail">
-                        <div class="pagenews-detail--info">
-                            <p class="author color-active">MN Shop Team</p>
-                            <p class="dateSave">14/06/2022 - 09:25 am</p>
-                        </div>
-                        <div class="pagenews-detail--body">
-                            @Html.Raw(Model.Content.Body)
-                        </div>
-                    </div>
+                <div class="detail-page" style="padding: 5px 10px">
+                    @Html.Raw(@Model.Content.Body)
+                    @if (Model.Content.ListDownload.Count > 0)
+                    {
+                        foreach (var item in Model.Content.ListDownload)
+                        {
+                            var dataFile = Server.MapPath("~" + @item.Url);
+                            FileInfo file = new FileInfo(dataFile);
+                            long FileInBytes = file.Length;
+                            string sizestr = "";
+                            if (FileInBytes < 1024)
+                            {
+                                sizestr = FileInBytes.ToString() + "B";
+                            }
+                            else if (FileInBytes < 1048576)
+                            {
+                                float FileInKBytes = FileInBytes;
+                                FileInKBytes /= 1024;
+                                sizestr = FileInKBytes.ToString("#.00") + "KB";
+                            }
+                            else
+                            {
+                                float FileInMBytes = FileInBytes;
+                                FileInMBytes /= 1048576;
+                                sizestr = FileInMBytes.ToString("#.##") + "MB";
+                            }
+
+                            <div class="btn_download">
+                                <a class="download col-lg-6 col-md-8 col-xs-6 col-sm-6 df-color" target="_blank" href="@item.Url">
+                                    <svg class="tcom-icon tcom-icon-download df-color text-left" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="-276.2 767.6 32 32"> <path d="M-250.3 777.6v15.9h-20v-15.9h6.4v1h-5.4v13.9h18v-13.9h-5.3v-1h6.3zm-14.3 7.2l4.5 4.5 4.5-4.5-.7-.7-3.3 3.3v-15.1h-1v15.1l-3.3-3.2-.7.6z"></path></svg>
+                                    <span>  @item.Name</span>
+                                </a>
+                                <span class="col-lg-2 col-md-2 col-xs-3 col-sm-1">@Ext(@item.Url.Trim())</span>
+                                <span class="col-lg-2 sizeDownload hidden-md col-sm-2 hidden-xs">@sizestr</span>
+                                <a class="btnDownload btn bg-white upper df-color col-lg-2 col-md-2 col-xs-3 col-sm-3" href="@Url.Action(MVC.Layout.DownloadAttached(item.DownloadID))">@Resource.Download</a>
+                            </div>
+                        }
+                    }
                 </div>
-                <div class="col-md-3 g-right border-left">
-                    @{Html.RenderAction(MVC.Component.Display(7, "Reviews"));}
-                    @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "ListNewsPartial2"), ThemeConfig.GetComponent("GroupBlogs2"), Store.Service.Service.DistributionOrder.Lastest, true, ""));}
-                </div>
+
+
             </div>
         </div>
-    </main>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:page href="https://plus.google.com/{pageId}"></g:page>
-<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+    </div>
+</div>
+
 
 @helper Ext(string url)
 {
-    string ext = "";
-    if (url.EndsWith(".pdf"))
-    {
-        ext = "PDF";
-    }
-    else if (url.EndsWith(".doc"))
-    {
-        ext = "DOC";
-    }
-    else if (url.EndsWith(".docx"))
-    {
-        ext = "DOCX";
-    }
-    else if (url.EndsWith(".xls"))
-    {
-        ext = "XLS";
-    }
-    else if (url.EndsWith(".xlsx"))
-    {
-        ext = "XLSX";
-    }
-    else if (url.EndsWith(".ppt"))
-    {
-        ext = "PPT";
-    }
-    else if (url.EndsWith(".zip"))
-    {
-        ext = "ZIP";
-    }
-    else if (url.EndsWith(".rar"))
-    {
-        ext = "RAR";
-    }
-    else if (url.EndsWith(".txt"))
-    {
-        ext = "TXT";
-    }
+string ext = "";
+if (url.EndsWith(".pdf"))
+{
+    ext = "PDF";
+}
+else if (url.EndsWith(".doc"))
+{
+    ext = "DOC";
+}
+else if (url.EndsWith(".docx"))
+{
+    ext = "DOCX";
+}
+else if (url.EndsWith(".xls"))
+{
+    ext = "XLS";
+}
+else if (url.EndsWith(".xlsx"))
+{
+    ext = "XLSX";
+}
+else if (url.EndsWith(".ppt"))
+{
+    ext = "PPT";
+}
+else if (url.EndsWith(".zip"))
+{
+    ext = "ZIP";
+}
+else if (url.EndsWith(".rar"))
+{
+    ext = "RAR";
+}
+else if (url.EndsWith(".txt"))
+{
+    ext = "TXT";
+}
     <p>@ext</p>
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var url = window.location;
+            // Will only work if string in href matches with location
+            $('.cat-child ul a[href="' + url + '"]').parents('li').addClass('active');
+
+            // Will also work for relative and absolute hrefs
+            $('.cat-child ul a').filter(function () {
+                return this.href == url;
+            }).parents('li').addClass('active');
+
+        });
+    </script>
 }

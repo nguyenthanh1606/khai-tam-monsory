@@ -6,27 +6,34 @@
     string classCurrentView = isGrid ?
          "product-layout product-grid product col-md-3 col-sm-12" : "product col-md-3 col-sm-12";
 }
-<div>
+
+<div class="pr-body--list">
     @foreach (var product in Model.ListProduct)
     {
         @Html.DisplayFor(m => product, "ProductBox")
     }
+
+    
 </div>
-@{
-    var parameters = new Dictionary<string, string>();
-    if (!string.IsNullOrEmpty(@Request.QueryString["order"]))
-    {
-        parameters.Add("order", @Request.QueryString["order"]);
-    }
-
-
-    if (!string.IsNullOrEmpty(@Request.QueryString["itemPerPage"]))
-    {
-        parameters.Add("itemPerPage", @Request.QueryString["itemPerPage"]);
-    }
-}
-<div class="pagination text-center" style="margin: auto">
-    <nav>
-        @Html.GetPageListCustom(Model.ListProduct.PageNumber, Model.ListProduct.PageSize, Model.ListProduct.TotalItemCount, parameters)
+<div class="pr-body--footer">
+    <div>
+        <strong>1-15 </strong> <span>trong số @Model.ListProduct.Count sản phẩm</span>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
     </nav>
 </div>

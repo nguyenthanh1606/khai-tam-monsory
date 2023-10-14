@@ -6,513 +6,88 @@
 @{
     ViewBag.Title = Model.Title;
     ViewBag.Description = Model.Summary.RemoveHtml();
-    ViewBag.Image = Model.ListImages[0];
-    //if (!string.IsNullOrEmpty(Model.DefaultImageUrls))
-    //{
-    //    ViewBag.Image = Url.Content(Model.DefaultImageUrls, true);
-    //}
+    if (!string.IsNullOrEmpty(Model.DefaultImageUrls))
+    {
+        ViewBag.Image = Url.Content(Model.DefaultImageUrls, true);
+    }
 
     string themeComponentViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Component/{0}.cshtml";
-    string themeHomeViewPath = "~/Themes/" + TabWeb.GetCurrentTheme() + "/Views/Home/{0}.cshtml";
 }
 
-<main class="product-detail">
-    <div class="banner-page">
-        <div class="picture-page">
-            <img class="img-fluid w-100" src="@Model.ProductGroup.BannerUrl" alt="@Model.ProductGroup.Title" />
-        </div>
-        <div class="wrapper">
-            <div class="banner-page--content">
-                <img src="~/Themes/MNShop/Images/MN_Fine_Arrt_Prints-white.png" alt="MN Shop">
-                <h2 class="title">In lại các tác phẩm nghệ thuật đẹp như bản gốc</h2>
-            </div>
-        </div>
-    </div>
-    @{Html.RenderAction(MVC.Component.Display(5, "AvsNotify"));}
-    <div class="wrapper breadcrumb-ds">
-        @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.ProductGroup, Model.ProductGroup.GroupID, new { @class = "breadcrumb" })
-    </div>
-    <div class="wrapper mb-5">
-        <div class="row">
-            <div class="col-md-8 g-left">
-                <section class="banner-section product-list">
-                    <div class="container">
-                        <div class="vehicle-detail-banner banner-content clearfix">
-                            <div class="banner-slider">
-                                <div class="slider slider-nav thumb-image">
-                                    @for (int i = 0; i < Model.ListImages.Count(); i++)
-                                    {
-                                        <div class="thumbnail-image">
-                                            <div class="thumnails-template">
-                                                <div class="thumnails-content">
-                                                    <img src="@Model.ListImages[i]" class="img-fluid" alt="MN Shop">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                                <div class="slider slider-for gallery-main">
-                                    @for (int i = 0; i < Model.ListImages.Count(); i++)
-                                    {
-                                        <div class="slider-banner-image">
-                                            <div class="thumnails-template">
-                                                <div class="thumnails-content">
-                                                    <img src="@Model.ListImages[i]" class="img-fluid" alt="MN Shop">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <div class="product-buy only-mb">
-                    <h3 class="title">@Model.Title</h3>
-                    <div class="product-info">
-                        @Html.Raw(Model.Specification)
-                        @*<ul>
-                            <li><span>Kích thước tranh gốc:</span><span>60cm x 90cm</span></li>
-                            <li><span>Chất liệu tranh gốc:</span><span>Ghép gốm</span></li>
-                            <li><span>Năm sáng tác:</span><span>2004</span></li>
-                            <li><span>Tác giả:</span><span>@Model.Value1</span></li>
-                        </ul>*@
-                    </div>
-                    <div class="product-type">
-                        <h3 class="title">Các tùy chọn in sẵn có</h3>
-                        <div class="product-type--item">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Chọn kiểu in</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>In trên bố chuyên dùng, cuộn tròn</option>
-                                    <option>In trên bố chuyên dùng, căng và đóng khung</option>
-                                    <option>In giấy chuyên dùng, lồng khung kính PVC</option>
-                                    <option>In HD mờ, khung nổi</option>
-                                    <option>In HD bóng, khung nổi</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="product-type--item">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Chọn kích thước</label>
-                                <p class="sub">
-                                    Bức tranh gốc sẽ được đặt vừa theo một cạnh và cắt cúp theo cạnh còn
-                                    lại cho vừa theo các quy cách này. Kích thước trên là phủ bì
-                                </p>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>25cm x 35cm</option>
-                                    <option>30cm x 45cm</option>
-                                    <option>40cm x 60cm</option>
-                                    <option>50cm x 70cm</option>
-                                    <option>60cm x 90cm</option>
-                                    <option>70cm x 105cm</option>
-                                    <option>80cm x 120cm</option>
-                                    <option>100cm x 150cm</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="product-type--item">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Chọn khung</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Khung màu trắng</option>
-                                    <option>Khung màu đen</option>
-                                    <option>Khung màu gỗ</option>
-                                    <option>Khung màu nhũ bạc</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <button type="submit" class="text-uppercase btn btn-1">
-                            Gửi cho chúng tôi <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="27" viewBox="0 0 28 27">
-                                <image id="booking" width="26" height="26" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAbCAYAAABvCO8sAAACLklEQVRIib2WT2xNQRTGf695ykuVWFjYsBKRINKNlKgQCfEnYUlEuhTbxroLO9EUjQ0JK2KnTf1bkeiWJiIiFSWlO4LXFlX0yJFz5bhm3p1L60tu7sx3zsw359w5M7ciIjisBQ4Aa4AFwG/GEqgA34DnQD/w+NdQFbTnrMwfLmQ6mdi1eRTLMKhamlJN4fWEbH0H7ll7B9CUMOYzUHP9To1uKGF1t0Sk5tKv7dsFY46Y75jjhpWYLBj41AmdEZFe1x9xPpfdmGNm3ywidcdPKfmlQPCoDX7ouAfGdVq/z/pdItJt7X2BuabV8KRAsMMmyEO5bcbNiMhhF/meyFyjVeAScLrBh19k7ylgsbUnczat2SvAtD03I3NdzVb0rEGEu8xnwnF143YXZMdjXESas629BXgUWdXCBtE3snmMAJuAmaqRb4CNwHHgILDK1dn7SM01mW00IjILvAYGgHMZmT9LY1gCjAOtZv8ALEuM7o9VpqCS89FUHgLaygqnRrjU0tMasb8D3gKvgB7gTnQmVzv5Z6uIrDSuRU+JEjtyQ2zeUEqbgbvAfeAlsBf4CHxKTRuwP2YICbYD2539BnAKqJcQ/BozVAPciwB3ooQYdpUFEYpQN0eHO77mFLGyGALW2wnxXwQVY8A6+4ZlsTzmn1qHXcAKO66KoIfEoO3yvxacM4R2aQgt9n9ZS/DVCM//vPsCSBXUC3ZniSiH/1VwAjgJrC74G9fotOgvBq3ADzd/kfmnrPd+AAAAAElFTkSuQmCC" />
-                            </svg>
-
-                        </button>
-                    </div>
-                    <div class="product-plugin">
-                        <ul>
-                            <li>
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="29" height="29" viewBox="0 0 29 29">
-                                        <image id="frame_1_" data-name="frame (1)" width="29" height="29" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAABkUlEQVRIie2WOUsEQRCFv1kHvFZBFsHIxEAQDAxNjTwwk13wBxj7L4xNNDDQxEhMPDEwVwwU1EDYSAMFERUVVLwoqIG2XGZ2Z3uM9sHQ9aa76vVRPVNBqVjEwSiw5vApYI/asQ+MqNcZMOhGCE24FiBveBq0OT7t1t+KfifwajEcN05Ex4EA2AaeTf+LthM1it4D745GQW3RuQxVTJADro3zrbZb6RZcEZs587bJcNvvAw826FcC94HO6ExzmkQ9Jmi3trWe6aM50y615Uyv5MWuMzhvnKN03/G5VLu9Hwm8WsgkX/U5sj72nvqCbGezxirYmFlkJ+a+P/2XaCwaog3RTEQ7ErgX2I/DMTCv3+FAeeaiF8BsFkJWdANoVV6pPAmqjCXj1oFFEyeyS8CM/GBEdLLOibu4UdFKGNIK8c139sb9lT6jMbLSA6dkrGd7BecxfWXgFDgJk8rFlHAnGtnL+vzJ3l5g2rkyq1Je+J6RFR0D5hx+ByyliNvn2P1JonK+Kw4/TCEoWAAG1P69U8APZ3BDtzngjXcAAAAASUVORK5CYII=" />
-                                    </svg>
-                                </div>
-                                <span>Tranh luôn chuẩn bị sẵn khung (nếu có chọn khung) & móc khi giao</span>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="43" height="25" viewBox="0 0 43 25">
-                                        <image id="free-shipping" width="43" height="25" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAAZCAYAAACo79dmAAADpUlEQVRYhc2XeYhOYRTGf2bsS8JkyS5LQhlEylKWLCH7liiSJiERIsq+/TFFsmcrFFmyL2UpS7YJkVHImn3fmaEzPR+n67vf983UaJ56u/ee973nfe55z3YLDRo4EIcmQC+gCJBF4igE/NJqe7ewZNnAT41vwBfgs65PgJO52CNHaQQpwJWALL9xChgEPEtknyR3n/yfiRraAycSXezJ2dc1A7roCLNk7QlA0fzhmoOGQA/ghlzpA/AqHllDhoaH+VZ6PpI17IvCYyOwzAsTOfaUwLMFyn0FTw2gJJCpIGrk1j0C3ui+sU7rpk6sNFDbrf0gfcmaS9XopvGHbDFgrkjMBGoB00SinI4ogo9AXZGwqN+gINmk9YbLwC5gMlBRLrQDmARcB4rLV7dq/Vd99FtnnMHAcqArMAuYYxOWuqYD87WwHZAGDAmx8j6ltiwFp7lIVZEw61XQxz0E6gGr9Z4FUQfgPVAmoPOODBDEcBnBUAV4ahtec4seA+dDiEasYGgJrAfK6/kscFw5tKNkm4H6+pA6kjWVQbKdzkche22WXsNa5Ab7gTYicldOfVnHamQWOv/K0DG1AKrLV03HPFlzriwyBlgK1JTV0qUjXa7lU+bDGMYZCdzSaTWIBNiZwCL/bIGzU/drVOVW6bmffPABUFbpzyz1VUTN/18DB1S16sr6HxVIhosxyGbqBEeZIeJlg1LAUPfcF2jtnlOdvy2R/5nVWgETgR86qanAbEV2SblMabdHqrKFh7lKCbOoZD0twKYAY3WcvwKLy0tZQcAXI7i4gJCJh9tJCo6XwDvlTz9y03n9F7JWCCppVHajkvLbwQJA1HAjEmDZqmBBvFA0do8yZ8F0GHiuAtAnj/5t7x8C7slQlqaqxSIbRD1FtZXLBVHmxyiNeUSi3GeLeJgRRX+aDDQyID+XFBAY+aPmH0rGp13qiKCXiA5QGb2ktGT5s63yaiIYLaL2zl4VopV6z/LqVafDeDwOWtaajs4xNlqv/mC2GowImisnTlE9nxiH7BFgnUitc/JmMk4HVc7tjjzBfzBDbzUyyVE2GaHc+yDK3HtVMVO4JQ7ZBupDvofMl1PRWKSynWPlaD67RyMM40Pkn3S19vBYHLKWFvvHmC+lsj3MC/Pyz3UvRL5CV+sl3oSs8XgZIt8tq/+DYIAlgh1quD22uZ44UdhvuOnyOKeuLSryYlmrap2AcSoaF1xXlluYf1tWsL7XMpAFm+9P/gL4DTST1vayGVB3AAAAAElFTkSuQmCC" />
-                                    </svg>
-
-                                </div>
-                                <span>Miễn phí giao hàng trong phạm vi Đồng Nai & Tp. Hồ Chí Minh</span>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="34" viewBox="0 0 35 34">
-                                        <image id="package" width="35" height="34" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAiCAYAAADVhWD8AAADtklEQVRYhb3YeYhWZRQG8J+jVmq2SUkKuWaW9keQCWXQTtoepSUZQVKUFWXZXtAe7VSEkYJU1PwhbZZtQoUaUREVRCuV2B8WaZsV0cobzwdfn99yZ3J8YLhz55733Oee9zznnHf6zZo5Uy+xHS7B6fgdD+D+/N4rdPVi0QDMx2e4BqMwHnfhU5wfmx6jJ2S2xdl54Z3YuYlNIXZvbOb1FZmyJU9iIUZXsB+dLfsY51Yl03/ypEntnu+B9fgNb+MX7FfWVfQ/DEfhlPh4p51xq8gcgBX4CCtxGD7EpdgN91UkU8NEPBQfc6uS2RvdWIVD87dpeBnPYF+swwWYgMd7SeoDnNaKzHQ8hfcxq4WjY/AWHovTkqSzsQ+e7iGpvfAIPsFVGFlPpkTkuIqOTk24y1YNx7s4HofglR6S2j2qG1ZP5rZI9/okaRWchy9wK4aESCF0At6ssL7k4okYkR35V00v4vvs46t4EAMxFf06OByYnDonhW5lkn4RPsfk2lfX4fVE44rYFtyOg0tkjsAyvID9I+X5qRULK0ZpR9yItUluyYkJqTPrIuvpUeqy2CzImtJWppTe9COG1jleGsfv5X5Cyv4m2d8Ga7AkX/wztk6dkWiXj70Yu9a5WNzVZCtOSlI+HCIl4+ck5EsrkhmVQjcy94XIVrg8UbqjgUhBV7t2MCflvJT1Mcmpk5Mjz7ZZ93y2fmI+pIazcAt2abWwSm+al2S8O8m4OjXn8AYpL8dBmJEiOShjxQ153kkMPeraFyYXbo6UV0TKpe4cmx70WkpEIfBVVDYi6zvOOT2dZ4ZEkkUBV6ZhdkcdQ5L4hcTV2Clr1ub6ayfnvRqCIuWbUuCmYHBI7NDEdvtcB/cVmRrG5TqwBZGCM1M6ZnRy1mybSn24qO6+tIfLsCdearBdn+tf+WmGoSHUKOVN0Cwy1+FLjE2dOSO1oeDbTg7/D5pFpjY4lbJ+ZIhMjVxn9zWZxhHy6PQoUUjpT29k2utL9B+Q4tSIJzJszWqTmJsbg7rSrRsxPMeSLUWkYHlX+k33FnxpI9ZkSF9SyGxMSZ/WIkp9hXWZZ8ppdLEGNa3O8FMSeFUfkvgmR57xGSX+qD1oJu3ncGDd4L258F1OAuPqhq7/oF2j7M6RYm4G795iQ5rrmHT8ja38VOnai3OkWJAQ1+PvNus2ZJQYmxPED51eVHWE+DP7W0JcXlA7ztT+E1FI1Xz9lFGi2F5bhURPydRQQlxeUCL1aF2ktsHXuCckygBfjj/VgX8ARUHEVPkwWNsAAAAASUVORK5CYII=" />
-                                    </svg>
-
-                                </div>
-                                <span>Tranh được đóng góp cẩn thận theo tiểu chuẩn & kích thước in</span>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="34" height="36" viewBox="0 0 34 36">
-                                        <image id="warranty" width="34" height="36" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAkCAYAAADsHujfAAAFAklEQVRYhb2YeWxVRRTGfzyfVgUbIwaXxLhFUWOqEQVRXMCooFCtVlqj1q0uqIHg8gfukgBxwwUDURRFGrWCFK3SJlBxLS4FFRFL3aIkWkQDdaENVDBHvjHH6b2vtFW/5GXunDvL986cbW6vktGj6QEGA7OAj4ELe7JQpgdzJwL1wGFAKfA5MOz/JDJcGrgjkhuhOuARYN//gkhW7XXA+0ANcJRkLwOHAqOAnyUbC3wN3A/s828RGQAs0XN/YKCev9Pm52oNI7cnMFnv84Cbga+AqcCR3SViWjhchjgEeAwYJxu4ATgYeBV4DmgE2oEy4DagLzBH6+wCjAc+BRYBVwKHJG1oXpMPHA285eR2xsuBvZzsWeBS1x8JVEfrfQuUA4vVvxu4EdgtGrdS+y0FVtjPiNTIAL8A1gAN2nRHoAo4AKgALtHxnAWcABwH7J+iUVv8TtmQ4XRgDFCUMn5UVnaAVGa/z3S2bdLAfSJhC01PWShGAbAAaAYeAh7X0RhO1rpXuDkDMjpHpJEdZPUXSQtvA8fLM7aXhMfewL3ABtnSBOAH2cr5blwfI9JbnUeBLcBW4EmRGaJ3Y7pBIkZ/eVWT/tR8oMUT6aXOr45UwKlqB3Vz89Uy6C2R/Ai1gUied1/z/a3RBIsbB+nMu4oXFW0LgX7AOjc/EAj7ZzwR08amaLORMtxYU51hHlACXCuttMkpNmveRrV91LYbkbC5xYz2bvzzGC8BF8jGZsjQGxQaVmnsWrW7q201IuvVCRHvxxybrKej1jwWAsVyzQonD8Z+oFrT0s7ufYsR+V6dkA8aUza5FdhDtvR6wnuLpmdLE085uRn8GyoZ8iVbEQXDtUbkS3VMhYZ3EzaZBEyR+9lGpwG1kSYsep4TacIM9U0RGezky6N+k0XWT3Smhnyd8QQ3yI7idkXYWyT7HRgh0hlpokixwZOoVukw0MnNY1qBoZ5YVokn4DzgmUgbwbP8uCqRP1F9q9Ced++LRaImIoFCP8pvyBTWZXR2wZ3Gq/U2kFWmrIrq0rmKFZURiRJpdYHbzGOKbK2fZIvDv20Tc0OBjHFsNPkkjXlBWgswrfjq+3KRq5W9xNggj5ns5JU4tc92Lx5UBm6OFhmutG6auSxhk6t1rKaJMxPeowBnldw16luoeMcTqXYh+Hq1SfeMQhnkbLdYIDFT8iRNoOOvFJGAh8ODD/FWTQXMVQlQn7BgkdT/hAJXuUhUqlxMQ9Bio4prVM/+hfiCtdHVJ2btH9IxEQbMc24/P0f1hWrYMlV29fqTbYo9HTRiGOee69Qem7J4sZLYpk5ILBWJu5TJUcgv94NiIjPFFhW8FuyWuXgRI6vaNg0fSQv36AZQoVSxUoV2KhF0X2nVc4FCdL2K5c2pW3bEEs2xcnEn4BRdRSbJe/6BJCItrjJDxe4ypfK8hCtEjD/kecP03KyUYXekaRpr5cHTugOlasTwAXCG6x8D/CZShUp6qxPmzdFxTVdQLNMdqa8KrIB2Xbr+LimyCYsFLFJie02EeyuLWnS9WGXgIKWFb/R1oFVzZulIAq7SkaySh1mkfs9v1tndt1YX7gYnK9U/miq1l0r1Q2VLCyMSMyRDUXlETIKEOJILDwA3JbxfI9XvGsmb9AWhLvey29CV7yN2u7eY8kok3y8i8ZM0FL6XbBdy2UgSzHssl9gZmyFaQRQqcftiZNHWrpe/dGlV4E8U0CYEbJImXQAAAABJRU5ErkJggg==" />
-                                    </svg>
-
-                                </div>
-                                <span>Sản phẩm tranh được bảo hành và đổi trả, hoàn tiền trong 30 ngày</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="product-policy text-center">
-                        <p>Tìm hiểu thêm về</p>
-                        <a href="#!">Chính sách bán hàng</a>
-                    </div>
-                </div>
-
-                <div class="product-detail--content border-bot">
-                    <h3 class="title">@Model.Title</h3>
-                    <div class="desc">
-                        @Html.Raw(Model.Summary)
-                    </div>
-                    @*<div class="content">
-                        @Html.Raw(Model.Body)
-                    </div>*@
-                </div>
-                @{Html.RenderAction(MVC.Component.GetContentForGroupID(string.Format(themeHomeViewPath, "ListCamNang"), ThemeConfig.GetComponent("GroupCamNang"), Store.Service.Service.DistributionOrder.Lastest, true, ""));}
-                @{Html.RenderAction("ListProductSameGroup", new { id = Model.ProductID });}
-            </div>
-            <div class="col-md-4 g-right">
-                <div class="product-buy only-pc">
-                    <h3 class="title">@Model.Title</h3>
-                    <div class="product-info">
-                        @Html.Raw(Model.Specification)
-                    </div>
-                    <div class="product-type">
-                        <h3 class="title">Các tùy chọn in sẵn có</h3>
-                        <div class="product-type--item">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Chọn kiểu in</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>In trên bố chuyên dùng, cuộn tròn</option>
-                                    <option>In trên bố chuyên dùng, căng và đóng khung</option>
-                                    <option>In giấy chuyên dùng, lồng khung kính PVC</option>
-                                    <option>In HD mờ, khung nổi</option>
-                                    <option>In HD bóng, khung nổi</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="product-type--item">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Chọn kích thước</label>
-                                <p class="sub">
-                                    Bức tranh gốc sẽ được đặt vừa theo một cạnh và cắt cúp theo cạnh còn
-                                    lại cho vừa theo các quy cách này. Kích thước trên là phủ bì
-                                </p>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>25cm x 35cm</option>
-                                    <option>30cm x 45cm</option>
-                                    <option>40cm x 60cm</option>
-                                    <option>50cm x 70cm</option>
-                                    <option>60cm x 90cm</option>
-                                    <option>70cm x 105cm</option>
-                                    <option>80cm x 120cm</option>
-                                    <option>100cm x 150cm</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="product-type--item">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Chọn khung</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Khung màu trắng</option>
-                                    <option>Khung màu đen</option>
-                                    <option>Khung màu gỗ</option>
-                                    <option>Khung màu nhũ bạc</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <button class="text-uppercase btn btn-1" id="mySizeChart">
-                            Nhận báo giá sản phẩm <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="27" viewBox="0 0 28 27">
-                                <image id="booking" width="26" height="26" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAbCAYAAABvCO8sAAACLklEQVRIib2WT2xNQRTGf695ykuVWFjYsBKRINKNlKgQCfEnYUlEuhTbxroLO9EUjQ0JK2KnTf1bkeiWJiIiFSWlO4LXFlX0yJFz5bhm3p1L60tu7sx3zsw359w5M7ciIjisBQ4Aa4AFwG/GEqgA34DnQD/w+NdQFbTnrMwfLmQ6mdi1eRTLMKhamlJN4fWEbH0H7ll7B9CUMOYzUHP9To1uKGF1t0Sk5tKv7dsFY46Y75jjhpWYLBj41AmdEZFe1x9xPpfdmGNm3ywidcdPKfmlQPCoDX7ouAfGdVq/z/pdItJt7X2BuabV8KRAsMMmyEO5bcbNiMhhF/meyFyjVeAScLrBh19k7ylgsbUnczat2SvAtD03I3NdzVb0rEGEu8xnwnF143YXZMdjXESas629BXgUWdXCBtE3snmMAJuAmaqRb4CNwHHgILDK1dn7SM01mW00IjILvAYGgHMZmT9LY1gCjAOtZv8ALEuM7o9VpqCS89FUHgLaygqnRrjU0tMasb8D3gKvgB7gTnQmVzv5Z6uIrDSuRU+JEjtyQ2zeUEqbgbvAfeAlsBf4CHxKTRuwP2YICbYD2539BnAKqJcQ/BozVAPciwB3ooQYdpUFEYpQN0eHO77mFLGyGALW2wnxXwQVY8A6+4ZlsTzmn1qHXcAKO66KoIfEoO3yvxacM4R2aQgt9n9ZS/DVCM//vPsCSBXUC3ZniSiH/1VwAjgJrC74G9fotOgvBq3ADzd/kfmnrPd+AAAAAElFTkSuQmCC" />
-                            </svg>
-
-                        </button>
-                    </div>
-                    <div class="product-plugin">
-                        <ul>
-                            <li>
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="29" height="29" viewBox="0 0 29 29">
-                                        <image id="frame_1_" data-name="frame (1)" width="29" height="29" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAABkUlEQVRIie2WOUsEQRCFv1kHvFZBFsHIxEAQDAxNjTwwk13wBxj7L4xNNDDQxEhMPDEwVwwU1EDYSAMFERUVVLwoqIG2XGZ2Z3uM9sHQ9aa76vVRPVNBqVjEwSiw5vApYI/asQ+MqNcZMOhGCE24FiBveBq0OT7t1t+KfifwajEcN05Ex4EA2AaeTf+LthM1it4D745GQW3RuQxVTJADro3zrbZb6RZcEZs587bJcNvvAw826FcC94HO6ExzmkQ9Jmi3trWe6aM50y615Uyv5MWuMzhvnKN03/G5VLu9Hwm8WsgkX/U5sj72nvqCbGezxirYmFlkJ+a+P/2XaCwaog3RTEQ7ErgX2I/DMTCv3+FAeeaiF8BsFkJWdANoVV6pPAmqjCXj1oFFEyeyS8CM/GBEdLLOibu4UdFKGNIK8c139sb9lT6jMbLSA6dkrGd7BecxfWXgFDgJk8rFlHAnGtnL+vzJ3l5g2rkyq1Je+J6RFR0D5hx+ByyliNvn2P1JonK+Kw4/TCEoWAAG1P69U8APZ3BDtzngjXcAAAAASUVORK5CYII=" />
-                                    </svg>
-                                </div>
-                                <span>Tranh luôn chuẩn bị sẵn khung (nếu có chọn khung) & móc khi giao</span>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="43" height="25" viewBox="0 0 43 25">
-                                        <image id="free-shipping" width="43" height="25" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAAZCAYAAACo79dmAAADpUlEQVRYhc2XeYhOYRTGf2bsS8JkyS5LQhlEylKWLCH7liiSJiERIsq+/TFFsmcrFFmyL2UpS7YJkVHImn3fmaEzPR+n67vf983UaJ56u/ee973nfe55z3YLDRo4EIcmQC+gCJBF4igE/NJqe7ewZNnAT41vwBfgs65PgJO52CNHaQQpwJWALL9xChgEPEtknyR3n/yfiRraAycSXezJ2dc1A7roCLNk7QlA0fzhmoOGQA/ghlzpA/AqHllDhoaH+VZ6PpI17IvCYyOwzAsTOfaUwLMFyn0FTw2gJJCpIGrk1j0C3ui+sU7rpk6sNFDbrf0gfcmaS9XopvGHbDFgrkjMBGoB00SinI4ogo9AXZGwqN+gINmk9YbLwC5gMlBRLrQDmARcB4rLV7dq/Vd99FtnnMHAcqArMAuYYxOWuqYD87WwHZAGDAmx8j6ltiwFp7lIVZEw61XQxz0E6gGr9Z4FUQfgPVAmoPOODBDEcBnBUAV4ahtec4seA+dDiEasYGgJrAfK6/kscFw5tKNkm4H6+pA6kjWVQbKdzkche22WXsNa5Ab7gTYicldOfVnHamQWOv/K0DG1AKrLV03HPFlzriwyBlgK1JTV0qUjXa7lU+bDGMYZCdzSaTWIBNiZwCL/bIGzU/drVOVW6bmffPABUFbpzyz1VUTN/18DB1S16sr6HxVIhosxyGbqBEeZIeJlg1LAUPfcF2jtnlOdvy2R/5nVWgETgR86qanAbEV2SblMabdHqrKFh7lKCbOoZD0twKYAY3WcvwKLy0tZQcAXI7i4gJCJh9tJCo6XwDvlTz9y03n9F7JWCCppVHajkvLbwQJA1HAjEmDZqmBBvFA0do8yZ8F0GHiuAtAnj/5t7x8C7slQlqaqxSIbRD1FtZXLBVHmxyiNeUSi3GeLeJgRRX+aDDQyID+XFBAY+aPmH0rGp13qiKCXiA5QGb2ktGT5s63yaiIYLaL2zl4VopV6z/LqVafDeDwOWtaajs4xNlqv/mC2GowImisnTlE9nxiH7BFgnUitc/JmMk4HVc7tjjzBfzBDbzUyyVE2GaHc+yDK3HtVMVO4JQ7ZBupDvofMl1PRWKSynWPlaD67RyMM40Pkn3S19vBYHLKWFvvHmC+lsj3MC/Pyz3UvRL5CV+sl3oSs8XgZIt8tq/+DYIAlgh1quD22uZ44UdhvuOnyOKeuLSryYlmrap2AcSoaF1xXlluYf1tWsL7XMpAFm+9P/gL4DTST1vayGVB3AAAAAElFTkSuQmCC" />
-                                    </svg>
-
-                                </div>
-                                <span>Miễn phí giao hàng trong phạm vi Đồng Nai & Tp. Hồ Chí Minh</span>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="34" viewBox="0 0 35 34">
-                                        <image id="package" width="35" height="34" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAiCAYAAADVhWD8AAADtklEQVRYhb3YeYhWZRQG8J+jVmq2SUkKuWaW9keQCWXQTtoepSUZQVKUFWXZXtAe7VSEkYJU1PwhbZZtQoUaUREVRCuV2B8WaZsV0cobzwdfn99yZ3J8YLhz55733Oee9zznnHf6zZo5Uy+xHS7B6fgdD+D+/N4rdPVi0QDMx2e4BqMwHnfhU5wfmx6jJ2S2xdl54Z3YuYlNIXZvbOb1FZmyJU9iIUZXsB+dLfsY51Yl03/ypEntnu+B9fgNb+MX7FfWVfQ/DEfhlPh4p51xq8gcgBX4CCtxGD7EpdgN91UkU8NEPBQfc6uS2RvdWIVD87dpeBnPYF+swwWYgMd7SeoDnNaKzHQ8hfcxq4WjY/AWHovTkqSzsQ+e7iGpvfAIPsFVGFlPpkTkuIqOTk24y1YNx7s4HofglR6S2j2qG1ZP5rZI9/okaRWchy9wK4aESCF0At6ssL7k4okYkR35V00v4vvs46t4EAMxFf06OByYnDonhW5lkn4RPsfk2lfX4fVE44rYFtyOg0tkjsAyvID9I+X5qRULK0ZpR9yItUluyYkJqTPrIuvpUeqy2CzImtJWppTe9COG1jleGsfv5X5Cyv4m2d8Ga7AkX/wztk6dkWiXj70Yu9a5WNzVZCtOSlI+HCIl4+ck5EsrkhmVQjcy94XIVrg8UbqjgUhBV7t2MCflvJT1Mcmpk5Mjz7ZZ93y2fmI+pIazcAt2abWwSm+al2S8O8m4OjXn8AYpL8dBmJEiOShjxQ153kkMPeraFyYXbo6UV0TKpe4cmx70WkpEIfBVVDYi6zvOOT2dZ4ZEkkUBV6ZhdkcdQ5L4hcTV2Clr1ub6ayfnvRqCIuWbUuCmYHBI7NDEdvtcB/cVmRrG5TqwBZGCM1M6ZnRy1mybSn24qO6+tIfLsCdearBdn+tf+WmGoSHUKOVN0Cwy1+FLjE2dOSO1oeDbTg7/D5pFpjY4lbJ+ZIhMjVxn9zWZxhHy6PQoUUjpT29k2utL9B+Q4tSIJzJszWqTmJsbg7rSrRsxPMeSLUWkYHlX+k33FnxpI9ZkSF9SyGxMSZ/WIkp9hXWZZ8ppdLEGNa3O8FMSeFUfkvgmR57xGSX+qD1oJu3ncGDd4L258F1OAuPqhq7/oF2j7M6RYm4G795iQ5rrmHT8ja38VOnai3OkWJAQ1+PvNus2ZJQYmxPED51eVHWE+DP7W0JcXlA7ztT+E1FI1Xz9lFGi2F5bhURPydRQQlxeUCL1aF2ktsHXuCckygBfjj/VgX8ARUHEVPkwWNsAAAAASUVORK5CYII=" />
-                                    </svg>
-
-                                </div>
-                                <span>Tranh được đóng góp cẩn thận theo tiểu chuẩn & kích thước in</span>
-                            </li>
-                            <li>
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="34" height="36" viewBox="0 0 34 36">
-                                        <image id="warranty" width="34" height="36" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAkCAYAAADsHujfAAAFAklEQVRYhb2YeWxVRRTGfzyfVgUbIwaXxLhFUWOqEQVRXMCooFCtVlqj1q0uqIHg8gfukgBxwwUDURRFGrWCFK3SJlBxLS4FFRFL3aIkWkQDdaENVDBHvjHH6b2vtFW/5GXunDvL986cbW6vktGj6QEGA7OAj4ELe7JQpgdzJwL1wGFAKfA5MOz/JDJcGrgjkhuhOuARYN//gkhW7XXA+0ANcJRkLwOHAqOAnyUbC3wN3A/s828RGQAs0XN/YKCev9Pm52oNI7cnMFnv84Cbga+AqcCR3SViWjhchjgEeAwYJxu4ATgYeBV4DmgE2oEy4DagLzBH6+wCjAc+BRYBVwKHJG1oXpMPHA285eR2xsuBvZzsWeBS1x8JVEfrfQuUA4vVvxu4EdgtGrdS+y0FVtjPiNTIAL8A1gAN2nRHoAo4AKgALtHxnAWcABwH7J+iUVv8TtmQ4XRgDFCUMn5UVnaAVGa/z3S2bdLAfSJhC01PWShGAbAAaAYeAh7X0RhO1rpXuDkDMjpHpJEdZPUXSQtvA8fLM7aXhMfewL3ABtnSBOAH2cr5blwfI9JbnUeBLcBW4EmRGaJ3Y7pBIkZ/eVWT/tR8oMUT6aXOr45UwKlqB3Vz89Uy6C2R/Ai1gUied1/z/a3RBIsbB+nMu4oXFW0LgX7AOjc/EAj7ZzwR08amaLORMtxYU51hHlACXCuttMkpNmveRrV91LYbkbC5xYz2bvzzGC8BF8jGZsjQGxQaVmnsWrW7q201IuvVCRHvxxybrKej1jwWAsVyzQonD8Z+oFrT0s7ufYsR+V6dkA8aUza5FdhDtvR6wnuLpmdLE085uRn8GyoZ8iVbEQXDtUbkS3VMhYZ3EzaZBEyR+9lGpwG1kSYsep4TacIM9U0RGezky6N+k0XWT3Smhnyd8QQ3yI7idkXYWyT7HRgh0hlpokixwZOoVukw0MnNY1qBoZ5YVokn4DzgmUgbwbP8uCqRP1F9q9Ced++LRaImIoFCP8pvyBTWZXR2wZ3Gq/U2kFWmrIrq0rmKFZURiRJpdYHbzGOKbK2fZIvDv20Tc0OBjHFsNPkkjXlBWgswrfjq+3KRq5W9xNggj5ns5JU4tc92Lx5UBm6OFhmutG6auSxhk6t1rKaJMxPeowBnldw16luoeMcTqXYh+Hq1SfeMQhnkbLdYIDFT8iRNoOOvFJGAh8ODD/FWTQXMVQlQn7BgkdT/hAJXuUhUqlxMQ9Bio4prVM/+hfiCtdHVJ2btH9IxEQbMc24/P0f1hWrYMlV29fqTbYo9HTRiGOee69Qem7J4sZLYpk5ILBWJu5TJUcgv94NiIjPFFhW8FuyWuXgRI6vaNg0fSQv36AZQoVSxUoV2KhF0X2nVc4FCdL2K5c2pW3bEEs2xcnEn4BRdRSbJe/6BJCItrjJDxe4ypfK8hCtEjD/kecP03KyUYXekaRpr5cHTugOlasTwAXCG6x8D/CZShUp6qxPmzdFxTVdQLNMdqa8KrIB2Xbr+LimyCYsFLFJie02EeyuLWnS9WGXgIKWFb/R1oFVzZulIAq7SkaySh1mkfs9v1tndt1YX7gYnK9U/miq1l0r1Q2VLCyMSMyRDUXlETIKEOJILDwA3JbxfI9XvGsmb9AWhLvey29CV7yN2u7eY8kok3y8i8ZM0FL6XbBdy2UgSzHssl9gZmyFaQRQqcftiZNHWrpe/dGlV4E8U0CYEbJImXQAAAABJRU5ErkJggg==" />
-                                    </svg>
-
-                                </div>
-                                <span>Sản phẩm tranh được bảo hành và đổi trả, hoàn tiền trong 30 ngày</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="product-policy text-center">
-                        <p>Tìm hiểu thêm về</p>
-                        <a href="#!">Chính sách bán hàng</a>
-                    </div>
-                </div>
-                <section class="aboutUs border-left">
-                    <h3 class="title draw-botLeft">
-                        Tại sao bạn nên chọn tranh in với bản quyền và chữ ký tác giả?
-                    </h3>
-                    <div class="desc">
-                        <p>
-                            Nullam semper dolor et tortor luctus, id euismod ante consectetur. Sed sagittis, neque
-                            eget vulputate maximus, nisi mauris gravida magna, in euismod sapien magna ac ligula.
-                            Vivamus imperdiet pretium consequat. Nunc est sem, sollicitudin nec eros vitae, feugiat
-                            tempus turpis. Curabitur dictum, tellus quis iaculis finibus, neque nunc congue eros,
-                            rhoncus suscipit urna augue at turpis. Aenean non dapibus nisi, at tincidunt leo.
-                            Vestibulum rhoncus arcu a velit ornare sollicitudin a id sem. Integer eros enim,
-                            bibendum vel sapien ac, ultricies accumsan nisi. In eget nisl tristique nisl cursus
-                            sagittis vitae ac tortor. In sit amet condimentum sapien, ut lacinia eros. Ut at blandit
-                            risus.
-                            In hac habitasse platea dictumst. Mauris non est sit amet arcu gravida tempus ut in
-                            lorem. In fringilla vulputate purus, et posuere ante aliquam in. Aliquam at neque vel
-                            erat sollicitudin finibus. Aenean vehicula lacus erat, eu viverra nibh dictum vitae.
-                            Quisque eget leo lacus. In rutrum imperdiet odio non pretium. Curabitur ac felis et
-                            dolor finibus convallis id ac ipsum.
-                        </p>
-                    </div>
-                </section>
-                <section class="news border-left">
-                    <h3 class="title draw-botLeft">Báo chí viết về chúng tôi</h3>
-                    <div class="news-list">
-                        <div class="news-item">
-                            <a href="#!" class="thumnails-template hover-ef-1">
-                                <div class="thumnails-content thumb-img">
-                                    <img src="~/Themes/MNShop/Images/news-1.png" class="w-100 img-fluid" alt="">
-                                </div>
-                            </a>
-                            <div class="news-item--content">
-                                <h4>
-                                    <a href="#!" class="headline">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing
-                                        elit
-                                    </a>
-                                </h4>
-                                <div class="desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                    suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                    facilisis.
-                                </div>
-                                <a href="#!"
-                                   class="link link-active text-decoration text-uppercase text-bold small">
-                                    Xem
-                                    tiếp
-                                </a>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <a href="#!" class="thumnails-template hover-ef-1">
-                                <div class="thumnails-content thumb-img">
-                                    <img src="~/Themes/MNShop/Images/news-1.png" class="w-100 img-fluid" alt="">
-                                </div>
-                            </a>
-                            <div class="news-item--content">
-                                <h4>
-                                    <a href="#!" class="headline">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing
-                                        elit
-                                    </a>
-                                </h4>
-                                <div class="desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                    suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                    facilisis.
-                                </div>
-                                <a href="#!"
-                                   class="link link-active text-decoration text-uppercase text-bold small">
-                                    Xem
-                                    tiếp
-                                </a>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <a href="#!" class="thumnails-template hover-ef-1">
-                                <div class="thumnails-content thumb-img">
-                                    <img src="~/Themes/MNShop/Images/news-1.png" class="w-100 img-fluid" alt="">
-                                </div>
-                            </a>
-                            <div class="news-item--content">
-                                <h4>
-                                    <a href="#!" class="headline">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing
-                                        elit
-                                    </a>
-                                </h4>
-                                <div class="desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                    suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                                    facilisis.
-                                </div>
-                                <a href="#!"
-                                   class="link link-active text-decoration text-uppercase text-bold small">
-                                    Xem
-                                    tiếp
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-
-        <!-- Modal -->
-        <div id="mySizeChartModal" class="ebcf_modal">
-            <div class="ebcf_modal-content">
-                <div class="modal-header">
-                    <h3 class="text-center text-uppercase">Thông tin đặt hàng</h3>
-                    <span class="modal-close">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="26" viewBox="0 0 25 26">
-                            <image id="cancel" width="25" height="26" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAaCAYAAABCfffNAAAC7UlEQVRIiZ2Wa2iPURzHP/6ZF2RutWFhhGYaQ8ul5bJiLqW9ICLCC8kLl6Ehi2hDue6NLHNpLjWyeGEtL/DGG/cIr1xnNKxRaq7pt75nnZ49z7M/33o6z/k9v/P7nud3fud7TpdTVSfpBPnAHGASkAWkA9+BV8BD4BZwFfgQFaZrTPwFwFZgQsi37kC2niXAcaAS2A28S4bEApwDitT/A9QAN4HnQLPGDdIE5qldDawA1gJVcSR9gTvAMPUrgDKgKWQyD5SmnUAhsB8YC5wAMoFS55jwBnUD7oqgBZgOrI8gCKIeyAUOy75Dqe5AYrMaKoIxWtB/RbEIDHuBqT7JfP2yoQB4+x8EDpbei3qv8UmOqq1Qrh22A9eAgTFBtyldIz3bUuCbyn1lQrm3hfoBlAQCLNMeMeLBEQTlwCxglGf/CezT+0YjWajOZaA1EKRQmywNuA9kBP6yXO9WWVcCYyvV5hhJnjr1ITN9A4wH3gP9gHtqlyv3hgN+JXlocipgJCNkfxbiiAhyRWg5fgmc0TeroC0R45DstJH0lqElxtlmNQRoBHrKVqaUxaHZkfyWU5yOoYrp5fWneBOMQoojcYKWEeO8CTgL9ACOKA0zgCdA/5hxmY7ksQx5EY4lWlzDQStJYJpSmKHyHhAxNteR3JBhUYhTsVfvtlE36/2rlPeT/sT+bHhgbL7S1ZqQrBtygIkBxzVqD0ksfTQA47S4aRrvw6lwbUK1fF6G0wHH2cBcrUkYGhTcfGq97wVSAcMep10b1GYp7w4vgLoIAofGgE+qR1ht+8+RfNQuRutQ2jFWUkjXoZcq8lUEzpNqndGovaBcJ4siqYap8RdgMvArSIKOUreLFwOvgV0hleOQIhGtU4r6SHacDLUh6ko0U5su27PZLO0iYam14CYzVsa+CtitZZ2OjXZEScl1YLRuH/bY5rPzwj8zHD4Dl4BjwKOwYJ3plZW0PbZ/bNZ2ybAbjR1KtrBPgdthd612AH8BEA+ao0l9gggAAAAASUVORK5CYII=" />
+<main class="page-product">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li class="breadcrumb-home">
+                    <a href="#" class="breadcrumb-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+                            <g clip-path="url(#clip0_165_109)">
+                                <path d="M11.5447 3.02196L7.94593 0.156331C7.8192 0.0554279 7.66199 0.000488281 7.49999 0.000488281C7.338 0.000488281 7.18079 0.0554279 7.05406 0.156331L3.45531 3.02196L0.687493 5.22602C0.594848 5.29972 0.527419 5.40041 0.494547 5.51413C0.461675 5.62786 0.464988 5.749 0.504027 5.86076C0.543066 5.97252 0.615898 6.06937 0.712432 6.13789C0.808966 6.20642 0.924423 6.24322 1.04281 6.24321H1.19249V14.2845C1.19249 14.3785 1.21101 14.4715 1.247 14.5584C1.28298 14.6452 1.33572 14.7241 1.40221 14.7906C1.46869 14.857 1.54762 14.9098 1.63448 14.9457C1.72134 14.9816 1.81443 15.0001 1.90843 15.0001H4.79062C4.88458 15.0001 4.97762 14.9816 5.06443 14.9456C5.15123 14.9096 5.2301 14.8569 5.29653 14.7905C5.36296 14.724 5.41564 14.6451 5.45157 14.5583C5.4875 14.4715 5.50597 14.3784 5.50593 14.2845V9.97633C5.50601 9.78659 5.58145 9.60465 5.71564 9.47051C5.84984 9.33637 6.03181 9.26102 6.22156 9.26102H8.96874C9.06271 9.26098 9.15576 9.27945 9.24258 9.31538C9.3294 9.35131 9.40829 9.40399 9.47475 9.47042C9.5412 9.53685 9.59392 9.61571 9.62989 9.70252C9.66586 9.78933 9.68437 9.88237 9.68437 9.97633V14.2845C9.68437 14.3785 9.7029 14.4716 9.7389 14.5585C9.7749 14.6453 9.82767 14.7242 9.89419 14.7907C9.96071 14.8572 10.0397 14.9099 10.1266 14.9458C10.2135 14.9817 10.3066 15.0002 10.4006 15.0001H13.2412C13.431 15.0001 13.6131 14.9247 13.7473 14.7905C13.8815 14.6563 13.9569 14.4743 13.9569 14.2845V6.24321C14.0753 6.24329 14.1908 6.20653 14.2874 6.13803C14.3839 6.06953 14.4568 5.97268 14.4959 5.8609C14.535 5.74913 14.5383 5.62796 14.5055 5.51421C14.4726 5.40045 14.4052 5.29973 14.3125 5.22602L11.5447 3.02196Z" fill="#D3D1D1" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_165_109">
+                                    <rect width="15" height="15" fill="white" />
+                                </clipPath>
+                            </defs>
                         </svg>
-                    </span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="" class="breadcrumb-link">
+                        CỬA HÀNG ONLINE
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="page-product--top">
+            <div class="pr-top_thumbnail">
+                <img src="@Model.DefaultImageUrls" />
+            </div>
+            <div class="pr-top_content">
+                <p class="pr-top_content__category">Học cụ cho trẻ 0-3</p>
+                <h3 class="pr-top_content__title">@Model.Title</h3>
+                <div class="pr-top_content__sku">
+                    <span>Mã sản phẩm: </span>
+                    <strong>HCM1001</strong>
                 </div>
-                <div class="modal-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. </p>
-                    <form action="" class="fContactHome">
-                        <div class="form-group">
-                            <label>Họ tên người nhận: </label>
-                            <input type="text" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Số điện thoại</label>
-                            <input type="text" class="form-control"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Địa chỉ nhận hàng</label>
-                            <input type="text" class="form-control" />
-                        </div>
-                        <div class="text-center">
-                            <button type="" class="text-uppercase btn btn-1">Đặt hàng</button>
-                        </div>
-                    </form>
+                <div class="pr-top_content__desc">
+                    @Html.Raw(Model.Summary)
+                </div>
+                <div class="pr-top_content__info">
+                    <span>Độ tuổi:</span>
+                    <strong>0-1 tuổi</strong>
+                </div>
+                <div class="pr-top_content__price">
+                    <div class="pr_price__sale">
+                        <h3>@string.Format("{0:n0}", @Model.DefaultPrice) VNĐ</h3>
+                    </div>
+                    <div class="pr_price__old">
+                        <h3>@string.Format("{0:n0}", @Model.OriginalPrice) VNĐ</h3>
+                        <div class="label">-30%</div>
+                    </div>
+                </div>
+                <div class="pr-top_content__action">
+                    <input type="number" id="productTotal" class="form-control">
+                    <button class="btn btn-default">CHO VÀO GIỎ HÀNG</button>
                 </div>
             </div>
-
+        </div>
+        <div class="page-product--detail">
+            <h3 class="page-product--detail_title">Mô tả chi tiết</h3>
+           @Html.Raw(Model.Body)
+        </div>
+        <div class="page-product--detail">
+            <h3 class="page-product--detail_title">Thông số kỹ thuật</h3>
+            @Html.Raw(Model.Specification)
         </div>
     </div>
 </main>
-@section css{
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" rel="stylesheet" />
-}
-@section js {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-    <script>
-        $('.slider-for').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-            fade: true,
-            asNavFor: '.slider-nav'
-        });
-        $('.slider-nav').slick({
-            slidesToShow: 4,
-            slidesToScroll: 1,
-            vertical: true,
-            asNavFor: '.slider-for',
-            dots: false,
-            focusOnSelect: true,
-            verticalSwiping: true,
-            responsive: [
-                {
-                    breakpoint: 992,
-                    settings: {
-                        vertical: true,
-                    }
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        vertical: false,
-                        slidesToShow: 4,
-                    }
-                },
-                {
-                    breakpoint: 580,
-                    settings: {
-                        vertical: false,
-                        slidesToShow: 4,
-                    }
-                },
-                {
-                    breakpoint: 380,
-                    settings: {
-                        vertical: false,
-                        slidesToShow: 4,
-                    }
-                }
-            ]
-        });
-    </script>
-    <script>
-            // Get the modal
-            var ebModal = document.getElementById('mySizeChartModal');
 
-            // Get the button that opens the modal
-            var ebBtn = document.getElementById("mySizeChart");
+<div class="product--other container">
+    <h3 class="text-center product--other_title">Sản phẩm khác</h3>
+    @{ Html.RenderAction("ListProductSameGroup", new { id = Model.ProductID });}
 
-            // Get the <span> element that closes the modal
-        var ebSpan = document.getElementsByClassName("modal-close")[0];
+</div>
 
-            // When the user clicks the button, open the modal 
-            ebBtn.onclick = function () {
-                ebModal.style.display = "block";
-            }
-
-            // When the user clicks on <span> (x), close the modal
-            ebSpan.onclick = function () {
-                ebModal.style.display = "none";
-            }
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-                if (event.target == ebModal) {
-                    ebModal.style.display = "none";
-                }
-            }
-    </script>
+@section scripts{
 }

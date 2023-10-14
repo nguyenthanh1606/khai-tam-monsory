@@ -1,57 +1,29 @@
+/*
+font
+font-size
+background
+color
+*/
+
 :root {
-    font-family: 'Muli';
-    font-size: 16px;
-    line-height: 1.2;
-    background-color: #ffffff;
-    color: #0a0a0a;
-    --swiper-theme-color: #b0b2ac;
-    --swiper-navigation-color: #b0b2ac;
-    --swiper-navigation-size: 24px;
-    --swiper-div-navigation-size: 40px;
+  font-family: $font-default;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  color: #000000;
 }
-.swiper-button-next, .swiper-button-prev {
-    width: 40px;
-    height: 40px;
-    padding: 10px;
-    border-radius: 50%;
-    border: 2px solid var(--swiper-navigation-color);
-    transition: all 0.4s ease-in-out;
-
-    &:after {
-        transition: all 0.4s ease-in-out;
-    }
-
-    &:hover {
-        border-color: #dc0606;
-
-        &:after {
-            color: #dc0606;
-        }
-    }
-}
-
 body {
-    font-family: 'Muli';
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.2;
-    background-color: #ffffff;
-    color: #0a0a0a;
+  font-family: $font-default;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  color: #000000;
+  background-color: #f9f9f9;
 }
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-.wrapper {
-    max-width: 1200px;
-    margin: auto;
-}
-
-@media screen and (min-width: 1500px) {
-    .wrapper {
-        max-width: 1480px;
-    }
+.container {
+  max-width: 1220px;
+  margin: auto;
+  padding: 0;
 }

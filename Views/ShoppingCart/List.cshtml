@@ -3,142 +3,181 @@
 @{
     ViewBag.Title = Resource.ShoppingCart;
 }
+<link href="~/Themes/AnhNhan/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+<link href="~/Themes/AnhNhan/css/checkout.css" rel="stylesheet" />
+<link href="~/Themes/AnhNhan/css/User.css" rel="stylesheet" />
 
+<div class="container-fluid wrap-page pd-left pd-right">
 
-@section css{
-
-    <link rel="stylesheet" href="~/Themes/CoffeeBean/css/process-bar.css">
-
-}
-
-<script>
-    function UpdateCartSuccessful(data) {
-        if (data.result === "ok") {
-            vmCart.GetCart();
-            UpdateCartNumber();
-            location.reload();
-
-        }
-        else {
-            location.reload();
-        }
-    }
-</script>
-
-<section class="banner">
-    @Html.BannerImage(4, Request.Cookies["lang"].Value, new { alt = "Coffee Bean", title = "Coffee Bean", @class = "w-100 img-fluid" })
-</section>
-
-<div class="progress-payment justify-content-md-center wrapper">
-    <div id="step-title-checkout" class="checkout-wrap col-md-8">
-        <ul class="checkout-bar wizard_steps anchor">
-            <li class="first active"> <a href="javascript:void(0)" v-bind:class="classStep(1)"> Giỏ hàng</a> </li>
-
-            <li> <a href="javascript:void(0)" v-bind:class="classStep(2)">THông tin giao hàng</a> </li>
-
-            <li> <a href="javascript:void(0)" v-bind:class="classStep(3)">Thanh toán</a> </li>
-        </ul>
+    <div class="title-link">
+        @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Custom, htmlAttributes: new { @class = "breadcrumb" }, customMenuName: Resource.ShoppingCart, customUrl: Url.Action("List", "ShoppingCart"))
     </div>
-</div>
 
-<main class="not-home">
-    <section class="card wrapper" id="cartPage">
+    <!-- main checkout -->
+    <div class="row" id="cartPage" style="margin: 0">
+        <div class="col-md-8 table-checkout" style="padding: 0">
+            <div class="title-form">
+                <span>GIỎ HÀNG CỦA BẠN</span>
+                <div class="sub-checkout float-right">
+                    <ul>
+                        <li><a href="#" onclick="window.history.back()">Tiếp tục mua hàng</a></li>
+                        <li>
+                            @Html.ActionLink("Xóa toàn bộ giỏ hàng", "DeleteAllCart", "ShoppingCart")
+                        </li>
+                        <li><a href="#">Cập nhật giỏ hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-main table-responsive">
 
-        @using (Ajax.BeginForm("UpdateCart", "ShoppingCart", new AjaxOptions
+                @using (Ajax.BeginForm("UpdateCart", "ShoppingCart", new AjaxOptions
             {
                 HttpMethod = "POST",
                 OnFailure = "ShowAlertMessage()",
                 OnSuccess = "UpdateCartSuccessful"
             }))
             {
-            @*@Html.ActionLink("Xóa toàn bộ giỏ hàng", "DeleteAllCart", "ShoppingCart")*@
-            @Html.AntiForgeryToken()
-            <div class="card-head row">
-                <div class="col-md-6 left row">
-                    <div class="col-md-6">
-                        <p class="toUpper h4">Giỏ hàng</p>
-                    </div>
-                </div>
-                <div class="col-md-6 row right">
-                    <div class="col-md-4">
-                        <p class="toUpper h4">@Resource.Price</p>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="toUpper h4">@Resource.Quantity</p>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="toUpper h4">@Resource.Total</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-main ">
-                <div class="list ">
-                    <div class="item row" v-for="(item, index) in cart">
-                        <div class="col-md-6 left row">
-                            <div class="col-md-6">
-                                <div class="img-product">
-                                    <a v-bind:href="'/' + item.Url">
-                                        <img v-bind:src="item.ImageUrl" class="img-fluid m-auto d-block" />
+                    @Html.AntiForgeryToken()
+                    <div class="table-responsive table-main">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="img-product-checkout"></th>
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col">Đơn giá / Số lượng</th>
+                                    <th scope="col">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in cart">
+                                    <td class="img-product-checkout">
+                                        <img v-bind:src="item.ImageUrl" class="rounded mx-auto d-block" />
                                         <input type="hidden" v-bind:value="item.ProductVersionID" v-bind:name="'ListItems[' + index + '].ProductVersionID'" />
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 name-product">
-                                <div class="masp">
-                                    <p class="toUpper c-black">@Resource.IDProduct: #{{item.Id}}</p>
-                                </div>
-                                <div class="namesp">
-                                    <a v-bind:href="'/' + item.Url" class="toUpper c-black">{{item.Title}}</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 row right">
-                            <div class="price col-md-4">
-                                <p class="toUpper c-black">{{item.Price |formatMoney }} đ</p>
-                            </div>
-                            <div class="amount col-md-4">
-                                <div style="width: 120px; margin: auto;">
-                                    <div class="quantity">
-                                        <input v-model="item.Quantity" v-bind:value="item.Quantity" v-bind:name="'ListItems[' + index + '].Quantity'" class="form-control input-qty" type="number" min="1" max="100">
-                                    </div>
-                                    <div class="btnUpdateAndDelete" style="width: 100%; margin: auto;">
-                                        <span class="input-group-btn text-center" style="width: 100%; margin: auto; padding-top:10px;float:left;">
-                                            <button type="submit" data-toggle="tooltip" title="@Resource.Update" class="btn btn-primary"><i class="fas fa-sync-alt"></i></button>
-                                            <button type="submit" data-toggle="tooltip" title="Loại bỏ" class="btn btn-danger" name="deleteBtn" v-bind:value="item.ProductVersionID"><i class="fas fa-trash-alt"></i></button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="total col-md-4">
-                                <p class="toUpper c-black">{{item.Price * item.Quantity |formatMoney }} đ</p>
-                            </div>
-                        </div>
+                                    </td>
+                                    <td class="text-left">
+                                        <div class="name-product">
+                                            <a v-bind:href="'/' + item.Url"><p>{{item.Title}}</p></a>
+                                        </div>
+                                        <div class="list-detal">
+                                           <div v-html="item.Summary"></div>
+                                        </div>
+                                    </td>
+                                    <td class="price-checkout">
+                                        <p class="price text-center">{{item.Price |formatMoney }} đ</p>
+
+
+                                        <div style="width: 50%; margin: auto;" class="countProduct">
+                                            <input v-model="item.Quantity" v-bind:value="item.Quantity" class="form-control" v-bind:name="'ListItems[' + index + '].Quantity'" />
+                                        </div>
+                                        <div class="btnUpdateAndDelete" style="width: 100%; margin: auto;">
+                                            <span class="input-group-btn text-center" style="width: 100%; margin: auto; padding-top:10px;float:left;">
+                                                <button type="submit" data-toggle="tooltip" title="@Resource.Update" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                                                <button type="submit" data-toggle="tooltip" title="Loại bỏ" class="btn btn-danger" name="deleteBtn" v-bind:value="item.ProductVersionID"><i class="fa fa-trash"></i></button>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="price-total text-center">{{item.Price * item.Quantity |formatMoney }} đ</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            </div>
-        }
-        <div class="card-bot row space-between">
-            <div class="text">
-                <p class="toUpper">@Resource.Total</p>
-            </div>
-            <div class="number">
-                <p class="color-main toUpper">
-                    {{getTotalPrice | formatMoney}} đ
+                }
+
+                <hr />
+                <p class="text-right" style="padding-right: 30px; color: #084e90">
+                    Bạn gặp khó khăn trong quá trình đặt hàng?<br>
+                    Liên hệ để được hỗ trợ: <a href="tel:@Model.Hotline.ParaValue" style="color: #9e1a1a; font-family: Myriad-Bold">@Model.Hotline.ParaValue</a>
                 </p>
             </div>
+            <br />
         </div>
-        <div class="step row space-between">
-            <div class="back">
-                <a href="#" onclick="window.history.back()" class="c-gray">@Resource.Continue @Resource.AddToCart</a>
+        <div class="col-md-4 pay">
+            <div class="payment">
+                <p class="title-payment">GIÁ TRỊ ĐƠN HÀNG CỦA BẠN TẠM TÍNH</p>
+                <div class="detail-payment">
+                    <div class="row">
+                        <div class="col-md-6" style="font-family: Roboto">
+                            Tổng giá trị hàng hóa trong giỏ hàng
+                        </div>
+                        <div class="col-md-6 text-right price">
+                            {{sumMoney | formatMoney}} đ
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="detail">
+                        @Html.Raw(Model.ShippingNote.Description)
+                    </p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6" style="font-family: Roboto">
+                            <span style="font-size: large;">Giảm giá</span><br>
+                            <span><i>tạm tính</i></span>
+                        </div>
+                        <div class="col-md-6 text-right price">
+                           {{discountValue | formatMoney}} đ
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row total-payment">
+                        <div class="col-md-6" style="font-family: Roboto">
+                            <span style="font-size: large; color: #0154a1;">TỔNG CỘNG:</span><br>
+                            <span><i>tạm tính</i></span>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <span class="price" style="font-size: 22px;">{{getTotalPrice | formatMoney}} đ</span><br>
+                            <span>(Chưa bao gồm VAT)</span>
+                        </div>
+                    </div>
+                    @Html.ActionLink(Resource.Checkout, "Checkout", "ShoppingCart", null, new { @class = "btn btn-danger payment-btn" })
+                </div>
             </div>
-            <div class="btn-buy">
-                <a href="@Url.Action("Checkout","ShoppingCart")" class="btn-ds toUpper">@Resource.Payment</a>
-            </div>
-        </div>
-    </section>
-</main>
 
-@section js{
+            <br/>
+            <div class="panel-group payment" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title title-payment" style="text-transform:uppercase;"><a href="#collapse-coupon" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">Sử dụng Mã giảm Giá</a></h4>
+                    </div>
+                    <div id="collapse-coupon" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @using (Ajax.BeginForm("ApplyCoupon", "ShoppingCart", new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                OnBegin = "return checkCouponCode($(this))",
+                            }))
+                            {
+                                <div class="input-group">
+
+                                    @Html.TextBoxFor(m => m.CouponCode, new { @class = "form-control", placehoder = @Resource.Inputvoucher })
+                                    <span class="input-group-btn">
+                                        <input type="submit" value="@Resource.Acccept" id="checkCouponCode" class="btn btn-primary" />
+                                    </span>
+                                </div>
+                                <br/>
+                                @Html.ValidationMessageFor(model => model.CouponCode, null, new { id = "couponCodeMessage", @class = "alert-danger couponCodeMessage" })
+                                <br/>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end main checkout -->
+</div>
+
+@section scripts{
+
+    <script src="~/Themes/AnhNhan/scripts/jquery.bootstrap-touchspin.min.js"></script>
+    <script>
+
+        $(".countProduct input").TouchSpin({
+        });
+    </script>
+
     <script>
         var vmCart = new Vue({
             mixins: [vmShoppingCart],
@@ -168,41 +207,7 @@
         }
 
     </script>
-    @*<script>
-            $(document).ready(function(){
-                jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
 
-                jQuery('.quantity').each(function () {
-                    var spinner = jQuery(this),
-                      input = spinner.find('input[type="number"]'),
-                      btnUp = spinner.find('.quantity-up'),
-                      btnDown = spinner.find('.quantity-down'),
-                      min = input.attr('min'),
-                      max = input.attr('max');
 
-                    btnUp.click(function () {
-                        var oldValue = parseFloat(input.val());
-                        if (oldValue >= max) {
-                            var newVal = oldValue;
-                        } else {
-                            var newVal = oldValue + 1;
-                        }
-                        spinner.find("input").val(newVal);
-                        spinner.find("input").trigger("change");
-                    });
 
-                    btnDown.click(function () {
-                        var oldValue = parseFloat(input.val());
-                        if (oldValue <= min) {
-                            var newVal = oldValue;
-                        } else {
-                            var newVal = oldValue - 1;
-                        }
-                        spinner.find("input").val(newVal);
-                        spinner.find("input").trigger("change");
-                    });
-
-                });
-            });
-        </script>*@
 }

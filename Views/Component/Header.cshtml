@@ -1,153 +1,60 @@
-﻿@using Store.Service.Models
-@model Frontend.Models.HeaderViewModel
+﻿@model Frontend.Models.HeaderViewModel
+@using Store.Service.Models
 
-<div class="avs-top text-center small">
-    <span>Liên hệ đặt hàng & hỗ trợ nhanh: <a href="tel:@Model.Hotline.Replace(",","")">@Model.Hotline</a></span>
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23" height="21"
-         viewBox="0 0 23 21">
-        <image id="phone" width="23" height="21"
-               xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAVCAYAAACt4nWrAAAByklEQVQ4jZ3VT4hOURjH8c9Mg7Ihio3NpISNUKMwU5Jko0TyJ1lgYSmysLAgK6XJSjZTmqamZGFDmo0/2VGE12TDQkoi0ZSxoKfOrevMea/7zrdu59zzPOd3n/ucc57TN93paMkCHMdmLCpM+Y3XmMCXGBhoKbwRd7Gqhe8VHA3/NpEvx6cUeS9sqiI/gZWp/we38DG9X5yHcHAtxCdxMDOsxsnU35nZzmAIh3EKV/EWY7iBvuQ31F8QDvbW+nnUDzGd+g/wK6VtKvMbiJx/w9LCB4bxBLex/z8pKPEmIn/fxXgutZfnIRxcCvFXXYzV37zA6R6FYx0mQ/xewRg75VjtPRZqC8bxM/PtpCeCvIM9OB+GyHmctu/ZqYsddKhLVFO1HTSCx93C70+rPZqNxw7a0WXOcGq3NwlXkUe7GD/SxypmsQYfsjlH8BX3m4TVxGZSUaqzEM+xPhufaCMsi3Q8PXWWpYU6gCW4mcrDM1zAuibxUuF6VMtrnZmUvpyn2IfPTZFXjKRjnVMSDramWjSHkniwO6pa0y9nzPYiHpzFLrxsIV7UaRIP4sBsSDdLrEWJ2MJVlfyHXu7QYBDbsBYr0gG8jndzPPEXhslgTgdgXxsAAAAASUVORK5CYII=" />
-    </svg>
-</div>
-<header>
-    <div class="header-top">
-        @{Html.RenderAction(MVC.Component.Display(4, "AdsLogoTop"));}
-
-
-        <div class="wrapper">
-            <div class="row justify-end">
-                <div class="col top-menu">
-                    @if (Model.TopMenu.GetAllChilds().Count() > 0)
-                    {
-                        <ul>
-                            @foreach (var item in Model.TopMenu.GetAllChilds())
-                            {
-                                <li><a href="@item.Value.Url" class="text-uppercase small">@item.Value.MenuName</a></li>
-
-                            }
-                        </ul>
-                    }
-
-                </div>
-                <div class="col lang">
-                    <ul>
-                        <li class="active"><a href="#!" class="text-uppercase small">Vie</a></li>
-                        <li><a href="#!" class="text-uppercase small">Eng</a></li>
-                    </ul>
-                </div>
-                @*<div class="col barket">
-                    <a href="#!">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                             width="27" height="31" viewBox="0 0 27 31">
-                            <image id="add-to-basket" width="27" height="31"
-                                   xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAfCAYAAAAWRbZDAAAB40lEQVRIie2XzytEURTHP5gpUialKUs/FlYWFqTJwgYbK6ysUAorpeytTNn4B8aGBSUNG7KwFLKSDbHxqxQLkl9ldOvc6TS9mXl35j0r33rd+84953zvfffce87DJ6qAKWAXuAVepd0DpoGIX0fF0A9cAZkCzzUwUC7RWA7BEbAIzEp7lDM+VipRu3JiPttIHr1hGbe67aWQXYrxN9BSRLdF9DJi54SEmum4T8MJZZNwIUuK0Y3jJG/ELuk1GJFvPAfUKnmPtFFgDaj2QfQh+kigtKqxN2DJdDaKhHVQz4ZZ2aewvwAH0u8G4sADcOzwGTuBRuAROBRZL1BneVIy81NllBbZqgMRop8Re4tTkaUqlTCq+naPahzJrL7e46xfTVah+rU5rV942WX9VuZx8iXtuyOZ1f/yGsx3W88Ao8CKI5k5QudyXDxhA+TM0bFfnHkFSOj4JysHMbGN/QXZnbQXgRUqBTAkd+32X5DdA5uEvGcdQJsWhLWyJpVFYpK+QltZs+rHbSfolQ0C80CDkm0BT8AC6m48CYDssEAJkY6ofNPoULZZ/AD76ixNSsYwe9YnMpO1zX/BsnnZKbOgefaYhIlEO15vhWZl60CXpHLXgDHOzJ9NLkyhZFZrSjhTKQPwC2Nun5OVPFKLAAAAAElFTkSuQmCC" />
+<aside class="line-top d-flex flex-column flex-center flex-middle">
+    Đơn vị sản xuất học cụ Montessori bám sát tiêu chuẩn quốc tế tại Việt Nam
+</aside>
+<header class="header">
+    <div class="container">
+        <div class="header-top">
+            <div class="header-search">
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M8.13813 16.9191L3.5286 21.5285L2.58577 20.5857L7.19533 15.9762L8.13813 16.9191Z" fill="black" />
+                        <path d="M0 22.1144L4.61773 17.4966L6.33333 17.3766L6.66667 17.7099L6.4748 19.4109L1.88562 24L0 22.1144Z"
+                              fill="black" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M14 18.6667C18.7865 18.6667 22.6667 14.7865 22.6667 10C22.6667 5.21355 18.7865 1.33334 14 1.33334C9.21353 1.33334 5.33333 5.21355 5.33333 10C5.33333 14.7865 9.21353 18.6667 14 18.6667ZM14 20.0001C19.5229 20.0001 24 15.5229 24 10C24 4.47715 19.5229 0 14 0C8.47713 0 4 4.47715 4 10C4 15.5229 8.47713 20.0001 14 20.0001Z"
+                              fill="black" />
+                    </svg>
+                </a>
+            </div>
+            <div class="header-logo">
+                <a href="/" class="logo">
+                    <img src="http://placehold.it/190x80" alt="">
+                </a>
+            </div>
+            <div class="header-action">
+                <div class="header-cart">
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="30" viewBox="0 0 32 30" fill="none">
+                            <path d="M24.5348 0.559998C20.5651 0.559998 17.3098 3.67499 17.0835 7.58903H15.933V5.51408C15.933 2.78239 13.7106 0.559998 10.9789 0.559998C8.2472 0.559998 6.02487 2.78239 6.02487 5.51402V7.58897H0.93748C0.419741 7.58897 0 8.00871 0 8.52645V31.6218C0 32.1395 0.419741 32.5592 0.93748 32.5592H21.0204C21.5381 32.5592 21.9578 32.1395 21.9578 31.6218V15.0301C26.7088 16.8602 32.0742 13.1312 31.9993 8.02427C31.9993 3.90849 28.6508 0.559998 24.5348 0.559998ZM7.89983 5.51402C8.05514 1.43404 13.904 1.43654 14.058 5.51408C14.058 5.51402 14.058 7.58903 14.058 7.58903H7.89983V5.51402ZM20.0829 30.6844H1.87496V9.46393H6.02487V11.5389C6.02487 12.0566 6.44461 12.4764 6.96235 12.4764C7.48009 12.4764 7.89983 12.0566 7.89983 11.5389V9.46393H14.058V11.5389C14.058 12.0566 14.4778 12.4764 14.9955 12.4764C15.5132 12.4764 15.933 12.0566 15.933 11.5389V9.46393H17.2106C17.5686 11.2709 18.5966 12.9059 20.0828 14.0145V30.6844H20.0829ZM24.5348 13.6138C21.4529 13.6138 18.9454 11.1064 18.9454 8.02434C19.2265 0.619372 29.8445 0.621434 30.1244 8.02446C30.1244 11.1065 27.6169 13.6138 24.5348 13.6138Z"
+                                  fill="black" />
                         </svg>
                     </a>
-                </div>*@
-            </div>
-        </div>
-    </div>
-    <div class="header">
-        <div class="logo">
-            <a href="/" title="@Model.SiteTitle">
-                @Html.BannerImage(1, Request.Cookies["lang"].Value, new { id = "site-logo", @alt = "MNShop" })
-            </a>
-        </div>
-        <div class="wrapper">
-            <div class="row justify-end">
-                <div class="main-menu">
-                    @if (Model.MainMenu.GetAllChilds().Any())
-                    {
-                        <ul class="mn-1">
-                            @foreach (var item in Model.MainMenu.GetAllChilds())
-                            {
-                                <li>
-                                    <a href="@item.Value.Url" class="text-uppercase">@item.Value.MenuName</a>
-                                    @if (item.GetAllChilds().Any())
-                                    {
-                                        <ul class="mn-2">
-                                            @foreach (var item2 in item.GetAllChilds())
-                                            {
-                                                <li>
-                                                    <a href="@item2.Value.Url" class="text-uppercase small">@item2.Value.MenuName</a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    }
-                                </li>
-                            }
-                        </ul>
-                    }
-
                 </div>
-                <div class="form-search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm tranh">
-                        <button type="button" id="searchProduct" type="button" class="btn submit-search">
-                            <i class="far fa-search"></i>
-                        </button>
-                    </div>
+                <div class="header-language">
+                    <img src="http://placehold.it/29x29" alt="">
+                    <a href="/">TIẾNG VIỆT</a>
                 </div>
             </div>
         </div>
+        <nav class="main-menu">
+            <ul>
+                <li>
+                    <a href="/">CHÚNG TÔI LÀ AI?</a>
+                    <ul class="sub-menu">
+                        <li><a href="">Khát vọng của Khai Tâm</a></li>
+                        <li><a href="">Chất lượng sản xuất</a></li>
+                        <li><a href="">Nghiên cứu & Phát triển</a></li>
+                    </ul>
+                </li>
+                <li><a href="/">CHÚNG TÔI LÀM GÌ?</a></li>
+                <li><a href="/hoc-cu-cho-tre-0-3">CỬA HÀNG ONLINE</a></li>
+                <li><a href="/">ĐỒNG HÀNH CÙNG CHÚNG TÔI</a></li>
+                <li><a href="/">HIỂU VỀ MONTESSORI</a></li>
+            </ul>
+        </nav>
     </div>
 </header>
-@*<header class="header">
-        <div class="container main-header">
-            <div class="menu-wrapper">
-                @if (Model.MainMenu.GetAllChilds().Count() > 0)
-                {
-                    <ul class="menu">
-                        @foreach (var item in Model.MainMenu.GetAllChilds())
-                        {
-                            if (!item.Value.SelectedCss.IsEmpty())
-                            {
-                                <li class="@item.Value.SelectedCss">
-                                    <a href="@item.Value.Url"><img src="@item.Value.NormalCss" class="img-fluid" /></a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li>
-                                    <a href="@item.Value.Url">@item.Value.MenuName</a>
-                                </li>
-                            }
-                        }
-
-                        <li class="icon">
-                            <a class="icon-cart" href="@Url.Action("List", "ShoppingCart")">
-                                <i class="fal fa-shopping-cart"></i>
-                                <div class="shopping-cart" id="cart">
-                                    <span class="ammout" id="cart_count_number">{{totalItems}}</span>
-                                </div>
-                            </a>
-                            @if (!User.Identity.IsAuthenticated)
-                            {
-                                <a href="@Url.Action("Login", "Account")"><i class="fal fa-user"></i></a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("Info", "Account")"><i class="fal fa-user"></i></a>
-                            }
-                        </li>
-                    </ul>
-                }
-                <div class="btn-menu">
-                    <a href="#menu" class="btn-click"><span></span></a>
-                </div>
-            </div>
-        </div>
-    </header>
-    <nav id="menu">
-        @if (Model.MainMenu.GetAllChilds().Count > 0)
-        {
-            <ul>
-                @foreach (var item1 in Model.MainMenu.GetAllChilds().OrderByDescending(m => m.Value.Priority))
-                {
-                    <li>
-                        <a href="@item1.Value.Url">@item1.Value.MenuName</a>
-                    </li>
-                }
-            </ul>
-        }
-    </nav>*@

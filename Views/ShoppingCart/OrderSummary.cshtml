@@ -1,42 +1,60 @@
 ﻿@model Frontend.Models.ShoppingCartViewModel
-@{var total = 0;
-  var quantity = 0;}
-@foreach(var item in Model.ListItems)
+
+
+@{var total = 0;}
+@foreach (var item in Model.ListItems)
 {
-    quantity = quantity + item.Quantity;
-    total = total + item.Price * item.Quantity;
+    <div class="row">
+        <div class="col-md-12" style="padding: 0"><a href="@item.Url"><p style="padding-left: 15px;color: #0366a5; font-family: Roboto">@item.Title</p></a></div>
+        <div class="col-md-6" style="font-family: Roboto; font-size: 14px">
+            <p>@string.Format("{0:n0}", @item.Price)đ</p>
+        </div>
+        <div class="col-md-2 text-center">
+            <p>x @item.Quantity</p>
+        </div>
+        <div class="col-md-4 text-right price" style="line-height: 14px;">
+            <p style="font-size: 18px;">@string.Format("{0:n0}", @item.Price * @item.Quantity)đ</p>
+        </div>
+    </div>
+    total = total + @item.Price * @item.Quantity;
 }
-<div class="card-head-3 row">
-    <div class="col-md-12">
-        <h4 class="toUpper float-left">@Resource.Total</h4>
-        <p class="float-right m-0">@Html.ActionLink(Resource.Edit, "List", "ShoppingCart", null, new { @class = "pull-right btn-default" })</p>
+<hr />
+<div class="row">
+    <div class="col-md-6" style="font-family: Roboto-Bold">
+        <span style="font-size: large;">Tổng giá trị</span><br>
+    </div>
+    <div class="col-md-6 text-right price">
+       @string.Format("{0:n0}", @total)đ
     </div>
 </div>
-<div class="card-main-2">
-    <div class="row space-between">
-        <p>@Resource.Quantity</p>
-        <p>@quantity</p>
+<div class="row">
+    <div class="col-md-6" style="font-family: Roboto">
+        <span>
+            Giảm giá<br>
+        </span>
     </div>
-    <div class="row space-between">
-        <p>Tổng Tạm tính</p>
-        <p>@string.Format("{0:n0}", @total) đ</p>
-    </div>
-    <div class="row space-between">
-        <p>@Resource.Discount</p>
-        <p>@string.Format("{0:n0}", @Model.DiscountValue) đ</p>
-    </div>
-    <div class="row space-between">
-        <p>Phí giao hàng (?)</p>
-        <p>0 đ</p>
-    </div>
-    @*<div class="row space-between">
-        <p>Điểm sử dụng</p>
-        <p>0 đ</p>
-    </div>*@
-</div>
-<div class="card-bot-2">
-    <div class="row space-between">
-        <p>Tổng cộng</p>
-        <p class="color-main h4 total">@string.Format("{0:n0}", @total - @Model.DiscountValue) đ</p>
+    <div class="col-md-6 text-right price">
+        @string.Format("{0:n0}", @Model.DiscountValue)đ
     </div>
 </div>
+<div class="row">
+    <div class="col-md-6" style="font-family: Roboto">
+        <span>
+            Phí giao hàng<br>
+        </span>
+    </div>
+    <div class="col-md-6 text-right price">
+        Chưa tính
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-6" style="font-family: Roboto">
+        <span style="font-size: large; color: #0154a1;">TỔNG CỘNG:</span><br>
+    </div>
+    <div class="col-md-6 text-right">
+        <span class="price" style="font-size: 22px;">@string.Format("{0:n0}", @total - @Model.DiscountValue)đ</span><br>
+        <span>(đã bao gồm VAT)</span>
+    </div>
+</div>
+

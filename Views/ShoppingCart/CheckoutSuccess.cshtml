@@ -2,32 +2,67 @@
 @{
     ViewBag.Title = Resource.Checkout;
 }
-<link rel="stylesheet" href="~/Themes/NganHoa/css/process-bar.css">
-<link rel="stylesheet" href="~/Themes/NganHoa/css/jquery.bootstrap-touchspin.min.css">
 
-
-<div class="progress-payment justify-content-md-center wrapper">
-    <div id="step-title-checkout" class="checkout-wrap col-md-8">
-        <ul class="checkout-bar wizard_steps anchor">
-            <li class="first visited"> <a href='@Url.Action("List","ShoppingCart")' v-bind:class="classStep(1)"> Giỏ hàng</a> </li>
-
-            <li class="visited"><a href="javascript:void(0)" v-bind:class="classStep(2)">THông tin giao hàng</a> </li>
-
-            <li class="active"> <a href="javascript:void(0)" v-bind:class="classStep(3)">Thanh toán</a> </li>
-        </ul>
+<link href="~/Themes/AnhNhan/css/User.css" rel="stylesheet" />
+<link href="~/Themes/AnhNhan/css/checkout.css" rel="stylesheet" />
+<div class="breadcum_main">
+    <div class="container">
+        @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Custom, htmlAttributes: new { @class = "breadcrumb" }, customMenuName: Resource.Checkout, customUrl: Url.Action("Checkout", "ShoppingCart"))
     </div>
 </div>
-    
-<div class="cartlayout py-5" id="checkout_page" style="min-height: 600px">
+
+
+<div class="cartlayout" id=checkout_page>
     <div class="form_wizard wizard_horizontal">
-        <div class="row m-0 wrap-page pd-left pd-right" style="margin-top: 10px">
+        @*<ul class="wizard_steps anchor">
+                <li>
+                    <a href="javascript:void(0)" v-bind:class="classStep(1)">
+                        <span class="step_no">1</span>
+                        <span class="step_descr">
+                            @Resource.Login
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" v-bind:class="classStep(2)">
+                        <span class="step_no">2</span>
+                        <span class="step_descr">
+                            @Resource.ShippingAddress
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" v-bind:class="classStep(3)">
+                        <span class="step_no">3</span>
+                        <span class="step_descr">
+                            @Resource.Payment
+                        </span>
+                    </a>
+                </li>
+            </ul>*@
+
+        <div class="bread">
+            <div id="step-title-checkout" class="wrap-page pd-left pd-right">
+                <ul class="wizard_steps anchor">
+                    <li><a href="javascript:void(0)"><span class="rounded-circle circle">1</span><span>Đăng nhập</span></a></li>
+                    <li><a href="javascript:void(0)"><span class="rounded-circle circle">2</span><span>Thông tin giao hàng</span></a></li>
+                    <li><a href="javascript:void(0)"><span class="rounded-circle circle">3</span><span>Phương thức thanh toán</span></a></li>
+                    <li class="active"><a href="javascript:void(0)"><span class="rounded-circle circle">4</span><span>Hoàn tất đơn hàng</span></a></li>
+                    <li class="step-title-checkout-none"><a href="#"></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="row wrap-page pd-left pd-right" style="margin-top: 10px">
             <div class="col-md-3 p1-checkout" style="padding-right: 0">
             </div>
-            <div class="col-md-6 text-center table-checkout" style="padding: 0">
+            <div class="col-md-5 table-checkout" style="padding: 0">
                 <div class="form-style" style="border: 0;">
                     <div class="main-form">
                         <div class="img">
-                            <img src="~/Themes/NganHoa/Images/success.png" class="rounded mx-auto d-block" alt="">
+                            <img src="~/Themes/AnhNhan/Images/success.png" class="rounded mx-auto d-block" alt="">
                         </div>
                         <p class="text-center"><strong style="font-size: 18px;">
                             @Model.CheckoutSuccess.ParaName</strong></p>
@@ -35,10 +70,12 @@
                     </div>
                     <div class="main-form">
                         <div>
-                            <button onclick="window.location.href='/'" type="button" style="cursor: pointer" class="btn-ds toUpper" v-on:click="SelectAddress(item)">Tiếp tục mua hàng</button>
+                            <input type="submit" class="btn btn-danger submit-style" style="background: #d50606;" onclick="window.location.href='/'" value="TIẾP TỤC MUA HÀNG">
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-4">
             </div>
         </div>
 
@@ -50,7 +87,7 @@
 
 
 
-@section js{
+@section scripts{
     <script>
         function EditAddressFail(data){
             ShowAlertDialog(data.errorMsg);

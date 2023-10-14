@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="./css/main.min.css" />
+</head>
+
+<body>
+  <aside class="line-top d-flex flex-column flex-center flex-middle">
+    Đơn vị sản xuất học cụ Montessori bám sát tiêu chuẩn quốc tế tại Việt Nam
+  </aside>
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div class="header-search">
+          <a href="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M8.13813 16.9191L3.5286 21.5285L2.58577 20.5857L7.19533 15.9762L8.13813 16.9191Z" fill="black" />
+              <path d="M0 22.1144L4.61773 17.4966L6.33333 17.3766L6.66667 17.7099L6.4748 19.4109L1.88562 24L0 22.1144Z"
+                fill="black" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M14 18.6667C18.7865 18.6667 22.6667 14.7865 22.6667 10C22.6667 5.21355 18.7865 1.33334 14 1.33334C9.21353 1.33334 5.33333 5.21355 5.33333 10C5.33333 14.7865 9.21353 18.6667 14 18.6667ZM14 20.0001C19.5229 20.0001 24 15.5229 24 10C24 4.47715 19.5229 0 14 0C8.47713 0 4 4.47715 4 10C4 15.5229 8.47713 20.0001 14 20.0001Z"
+                fill="black" />
+            </svg>
+          </a>
+        </div>
+        <div class="header-logo">
+          <a href="/" class="logo">
+            <img src="http://placehold.it/190x80" alt="">
+          </a>
+        </div>
+        <div class="header-action">
+          <div class="header-cart">
+            <a href="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="30" viewBox="0 0 32 30" fill="none">
+                <path
+                  d="M24.5348 0.559998C20.5651 0.559998 17.3098 3.67499 17.0835 7.58903H15.933V5.51408C15.933 2.78239 13.7106 0.559998 10.9789 0.559998C8.2472 0.559998 6.02487 2.78239 6.02487 5.51402V7.58897H0.93748C0.419741 7.58897 0 8.00871 0 8.52645V31.6218C0 32.1395 0.419741 32.5592 0.93748 32.5592H21.0204C21.5381 32.5592 21.9578 32.1395 21.9578 31.6218V15.0301C26.7088 16.8602 32.0742 13.1312 31.9993 8.02427C31.9993 3.90849 28.6508 0.559998 24.5348 0.559998ZM7.89983 5.51402C8.05514 1.43404 13.904 1.43654 14.058 5.51408C14.058 5.51402 14.058 7.58903 14.058 7.58903H7.89983V5.51402ZM20.0829 30.6844H1.87496V9.46393H6.02487V11.5389C6.02487 12.0566 6.44461 12.4764 6.96235 12.4764C7.48009 12.4764 7.89983 12.0566 7.89983 11.5389V9.46393H14.058V11.5389C14.058 12.0566 14.4778 12.4764 14.9955 12.4764C15.5132 12.4764 15.933 12.0566 15.933 11.5389V9.46393H17.2106C17.5686 11.2709 18.5966 12.9059 20.0828 14.0145V30.6844H20.0829ZM24.5348 13.6138C21.4529 13.6138 18.9454 11.1064 18.9454 8.02434C19.2265 0.619372 29.8445 0.621434 30.1244 8.02446C30.1244 11.1065 27.6169 13.6138 24.5348 13.6138Z"
+                  fill="black" />
+              </svg>
+            </a>
+          </div>
+          <div class="header-language">
+            <img src="http://placehold.it/29x29" alt="">
+            <a href="/">TIẾNG VIỆT</a>
+          </div>
+        </div>
+      </div>
+      <nav class="main-menu">
+        <ul>
+          <li>
+            <a href="/">CHÚNG TÔI LÀ AI?</a>
+            <ul class="sub-menu">
+              <li><a href="">Khát vọng của Khai Tâm</a></li>
+              <li><a href="">Chất lượng sản xuất</a></li>
+              <li><a href="">Nghiên cứu & Phát triển</a></li>
+            </ul>
+          </li>
+          <li><a href="/">CHÚNG TÔI LÀM GÌ?</a></li>
+          <li><a href="/">CỬA HÀNG ONLINE</a></li>
+          <li><a href="/">ĐỒNG HÀNH CÙNG CHÚNG TÔI</a></li>
+          <li><a href="/">HIỂU VỀ MONTESSORI</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <section class="banner-page">
+    <div class="banner-item">
+      <a href="/"><img src="https://placehold.co/1440x432" alt="Khai Tâm Montessori" loading="lazy" /></a>
+    </div>
+  </section>
+  <main class="page-category container">
+    <div class="breadcrumb">
+      <ul>
+        <li class="breadcrumb-home">
+          <a href="#" class="breadcrumb-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+              <g clip-path="url(#clip0_165_109)">
+                <path d="M11.5447 3.02196L7.94593 0.156331C7.8192 0.0554279 7.66199 0.000488281 7.49999 0.000488281C7.338 0.000488281 7.18079 0.0554279 7.05406 0.156331L3.45531 3.02196L0.687493 5.22602C0.594848 5.29972 0.527419 5.40041 0.494547 5.51413C0.461675 5.62786 0.464988 5.749 0.504027 5.86076C0.543066 5.97252 0.615898 6.06937 0.712432 6.13789C0.808966 6.20642 0.924423 6.24322 1.04281 6.24321H1.19249V14.2845C1.19249 14.3785 1.21101 14.4715 1.247 14.5584C1.28298 14.6452 1.33572 14.7241 1.40221 14.7906C1.46869 14.857 1.54762 14.9098 1.63448 14.9457C1.72134 14.9816 1.81443 15.0001 1.90843 15.0001H4.79062C4.88458 15.0001 4.97762 14.9816 5.06443 14.9456C5.15123 14.9096 5.2301 14.8569 5.29653 14.7905C5.36296 14.724 5.41564 14.6451 5.45157 14.5583C5.4875 14.4715 5.50597 14.3784 5.50593 14.2845V9.97633C5.50601 9.78659 5.58145 9.60465 5.71564 9.47051C5.84984 9.33637 6.03181 9.26102 6.22156 9.26102H8.96874C9.06271 9.26098 9.15576 9.27945 9.24258 9.31538C9.3294 9.35131 9.40829 9.40399 9.47475 9.47042C9.5412 9.53685 9.59392 9.61571 9.62989 9.70252C9.66586 9.78933 9.68437 9.88237 9.68437 9.97633V14.2845C9.68437 14.3785 9.7029 14.4716 9.7389 14.5585C9.7749 14.6453 9.82767 14.7242 9.89419 14.7907C9.96071 14.8572 10.0397 14.9099 10.1266 14.9458C10.2135 14.9817 10.3066 15.0002 10.4006 15.0001H13.2412C13.431 15.0001 13.6131 14.9247 13.7473 14.7905C13.8815 14.6563 13.9569 14.4743 13.9569 14.2845V6.24321C14.0753 6.24329 14.1908 6.20653 14.2874 6.13803C14.3839 6.06953 14.4568 5.97268 14.4959 5.8609C14.535 5.74913 14.5383 5.62796 14.5055 5.51421C14.4726 5.40045 14.4052 5.29973 14.3125 5.22602L11.5447 3.02196Z" fill="#D3D1D1"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_165_109">
+                  <rect width="15" height="15" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
+          </a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="" class="breadcrumb-link">
+            CỬA HÀNG ONLINE
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="pr-category">
+      <div class="pr-sidebar">
+        <div class="pr-sidebar--category">
+          <div class="pr-sidebar--category_title">
+            <h3>Danh mục sản phẩm</h3>
+          </div>
+          <div class="pr-sidebar--category_body">
+            <div class="pr-sidebar--category_item --active">
+              <a href="#">Học cụ cho trẻ 0-3</a>
+              <i>(16)</i>
+            </div>
+            <div class="pr-sidebar--category_item">
+              <a href="#">Học cụ cảm quan </a>
+              <i>(16)</i>
+            </div>
+            <div class="pr-sidebar--category_item">
+              <a href="#">Học cụ ngôn ngữ</a>
+              <i>(16)</i>
+            </div>
+            <div class="pr-sidebar--category_item">
+              <a href="#">Học cụ toán học</a>
+              <i>(16)</i>
+            </div>
+            <div class="pr-sidebar--category_item">
+              <a href="#">Học cụ bổ sung khác</a>
+              <i>(16)</i>
+            </div>
+          </div>
+        </div>
+        <div class="pr-sidebar--filter">
+          <div class="pr-sidebar--filter_title">
+            <h3>Lọc theo độ tuổi:</h3>
+          </div>
+          <div class="pr-sidebar--filter_body">
+            <div class="pr-sidebar--filter_item">
+              <label for="filer-0">
+                Từ 0 - 1 tuổi
+                <input type="checkbox" checked="checked" id="filer-0">
+              </label>
+            </div>
+            <div class="pr-sidebar--filter_item">
+              <label for="filer-1">
+                Từ 0 - 1 tuổi
+                <input type="checkbox" id="filer-1">
+              </label>
+            </div>
+            <div class="pr-sidebar--filter_item">
+              <label for="filer-2">
+                Từ 0 - 1 tuổi
+                <input type="checkbox" id="filer-2">
+              </label>
+            </div>
+            <div class="pr-sidebar--filter_item">
+              <label for="filer-3">
+                Từ 0 - 1 tuổi
+                <input type="checkbox" id="filer-3">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pr-body">
+        <div class="pr-body--action">
+            <select class="form-select action-sort" aria-label="Default select example">
+              <option selected value="volvo">Sắp xếp theo</option>
+              <option value="volvo">Moi nhat</option>
+              <option value="saab">Mua nhieu</option>
+              <option value="opel">Tu A toi Z</option>
+              <option value="audi">Tu Z toi A</option>
+            </select>
+          <div class="pr-total">
+            <span>135 sản phẩm</span>
+          </div>
+        </div>
+        <div class="pr-body--list">
+          <div class="pr-body_item card_two">
+            <div class="card_two__thumbnail">
+              <a href="/"><img src="https://placehold.co/289x231" alt="" loading="lazy" /></a>
+            </div>
+            <div class="card_two__content">
+              <span class="card_two__label">Học cụ cho trẻ 0-3</span>
+              <a href="/" class="card_two__title">
+                <h3 class="card_two__title">ROLL-OUT BALLS IMBUCARE BOX</h3>
+              </a>
+              <div class="card_two__desc">
+                <span>Độ tuổi: </span>
+                <strong>0-1 tuổi</strong>
+              </div>
+              <div class="card_two__price">
+                <span class="price">752.000</span>
+              </div>
+            </div>
+          </div>
+          <div class="pr-body_item card_two">
+            <div class="card_two__thumbnail">
+              <a href="/"><img src="https://placehold.co/289x231" alt="" loading="lazy" /></a>
+            </div>
+            <div class="card_two__content">
+              <span class="card_two__label">Học cụ cho trẻ 0-3</span>
+              <a href="/" class="card_two__title">
+                <h3 class="card_two__title">ROLL-OUT BALLS IMBUCARE BOX</h3>
+              </a>
+              <div class="card_two__desc">
+                <span>Độ tuổi: </span>
+                <strong>0-1 tuổi</strong>
+              </div>
+              <div class="card_two__price">
+                <span class="price">752.000</span>
+              </div>
+            </div>
+          </div>
+          <div class="pr-body_item card_two">
+            <div class="card_two__thumbnail">
+              <a href="/"><img src="https://placehold.co/289x231" alt="" loading="lazy" /></a>
+            </div>
+            <div class="card_two__content">
+              <span class="card_two__label">Học cụ cho trẻ 0-3</span>
+              <a href="/" class="card_two__title">
+                <h3 class="card_two__title">ROLL-OUT BALLS IMBUCARE BOX</h3>
+              </a>
+              <div class="card_two__desc">
+                <span>Độ tuổi: </span>
+                <strong>0-1 tuổi</strong>
+              </div>
+              <div class="card_two__price">
+                <span class="price">752.000</span>
+              </div>
+            </div>
+          </div>
+          <div class="pr-body_item card_two">
+            <div class="card_two__thumbnail">
+              <a href="/"><img src="https://placehold.co/289x231" alt="" loading="lazy" /></a>
+            </div>
+            <div class="card_two__content">
+              <span class="card_two__label">Học cụ cho trẻ 0-3</span>
+              <a href="/" class="card_two__title">
+                <h3 class="card_two__title">ROLL-OUT BALLS IMBUCARE BOX</h3>
+              </a>
+              <div class="card_two__desc">
+                <span>Độ tuổi: </span>
+                <strong>0-1 tuổi</strong>
+              </div>
+              <div class="card_two__price">
+                <span class="price">752.000</span>
+              </div>
+            </div>
+          </div>
+          <div class="pr-body_item card_two">
+            <div class="card_two__thumbnail">
+              <a href="/"><img src="https://placehold.co/289x231" alt="" loading="lazy" /></a>
+            </div>
+            <div class="card_two__content">
+              <span class="card_two__label">Học cụ cho trẻ 0-3</span>
+              <a href="/" class="card_two__title">
+                <h3 class="card_two__title">ROLL-OUT BALLS IMBUCARE BOX</h3>
+              </a>
+              <div class="card_two__desc">
+                <span>Độ tuổi: </span>
+                <strong>0-1 tuổi</strong>
+              </div>
+              <div class="card_two__price">
+                <span class="price">752.000</span>
+              </div>
+            </div>
+          </div>
+          <div class="pr-body_item card_two">
+            <div class="card_two__thumbnail">
+              <a href="/"><img src="https://placehold.co/289x231" alt="" loading="lazy" /></a>
+            </div>
+            <div class="card_two__content">
+              <span class="card_two__label">Học cụ cho trẻ 0-3</span>
+              <a href="/" class="card_two__title">
+                <h3 class="card_two__title">ROLL-OUT BALLS IMBUCARE BOX</h3>
+              </a>
+              <div class="card_two__desc">
+                <span>Độ tuổi: </span>
+                <strong>0-1 tuổi</strong>
+              </div>
+              <div class="card_two__price">
+                <span class="price">752.000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pr-body--footer">
+          <div>
+            <strong>1-15 </strong> <span>trong số 65 sản phẩm</span>
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+  <section class="home-follow">
+    <div class="container home-follow_body">
+      <div class="home-follow__item">
+        <p>
+          Đăng ký newsletter để nhận những thông tin mới nhất từ chúng tôi
+        </p>
+      </div>
+      <div class="home-follow__item">
+        <form action="/" method="post" class="form-container">
+          <div class="input-container">
+            <input type="text" placeholder="Email của bạn" />
+          </div>
+        </form>
+      </div>
+      <div class="home-follow__item">
+        <div>
+          <p>Theo dõi chúng tôi qua các kênh mạng xã hội khác</p>
+        </div>
+        <div class="follow-list">
+          <ul>
+            <li>
+              <a href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                  <path
+                    d="M17.4791 0C19.8987 0 22.1722 0.45888 24.2998 1.37664C26.4273 2.2944 28.2837 3.54589 29.8689 5.13111C31.4541 6.71633 32.7056 8.56575 33.6234 10.6794C34.5411 12.793 35 15.0596 35 17.4791C35 19.8987 34.5411 22.1722 33.6234 24.2998C32.7056 26.4273 31.4541 28.2837 29.8689 29.8689C28.2837 31.4541 26.4273 32.7056 24.2998 33.6234C22.1722 34.5411 19.8987 35 17.4791 35C15.0596 35 12.793 34.5411 10.6794 33.6234C8.56575 32.7056 6.71633 31.4541 5.13111 29.8689C3.54589 28.2837 2.2944 26.4273 1.37664 24.2998C0.45888 22.1722 0 19.8987 0 17.4791C0 15.0596 0.45888 12.793 1.37664 10.6794C2.2944 8.56575 3.54589 6.71633 5.13111 5.13111C6.71633 3.54589 8.56575 2.2944 10.6794 1.37664C12.793 0.45888 15.0596 0 17.4791 0ZM24.0703 7.63409H20.3576C19.6345 7.63409 18.967 7.75924 18.3552 8.00953C17.7433 8.25983 17.208 8.59356 16.7491 9.01073C16.2902 9.42789 15.9356 9.90068 15.6853 10.4291C15.435 10.9575 15.3099 11.4859 15.3099 12.0143V14.2253H12.0143V18.5638H15.3099V27.3242H19.6901V18.5638H22.944V14.2253H19.6901V13.0989C19.6901 12.7652 19.8222 12.501 20.0864 12.3063C20.3506 12.1116 20.5801 12.0143 20.7747 12.0143H24.0703V7.63409Z"
+                    fill="white" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                  <path
+                    d="M17.3118 21.368C16.7822 21.368 16.2873 21.2704 15.8274 21.0753C15.3674 20.8801 14.9632 20.6083 14.6147 20.2599C14.2662 19.9114 13.9944 19.5002 13.7993 19.0263C13.6041 18.5524 13.5066 18.0506 13.5066 17.5209C13.5066 16.9912 13.6041 16.4964 13.7993 16.0364C13.9944 15.5765 14.2662 15.1722 14.6147 14.8238C14.9632 14.4753 15.3674 14.2035 15.8274 14.0084C16.2873 13.8132 16.7822 13.7157 17.3118 13.7157C18.3712 13.7157 19.2702 14.085 20.009 14.8238C20.7477 15.5625 21.1171 16.4616 21.1171 17.5209C21.1171 18.0506 21.0195 18.5524 20.8244 19.0263C20.6292 19.5002 20.3574 19.9114 20.009 20.2599C19.6605 20.6083 19.2563 20.8801 18.7963 21.0753C18.3363 21.2704 17.8415 21.368 17.3118 21.368ZM23.417 17.5209C23.417 17.27 23.403 17.0121 23.3752 16.7473C23.3473 16.4825 23.3055 16.2386 23.2497 16.0155H24.9642V24.4206C24.9642 24.6436 24.8945 24.8248 24.7551 24.9642C24.6157 25.1035 24.4345 25.1732 24.2115 25.1732H10.4122C10.1892 25.1732 10.008 25.1035 9.86858 24.9642C9.72919 24.8248 9.6595 24.6436 9.6595 24.4206V16.0155H11.374C11.3182 16.2386 11.2764 16.4825 11.2485 16.7473C11.2206 17.0121 11.2067 17.27 11.2067 17.5209C11.2067 18.3572 11.367 19.1517 11.6876 19.9044C12.0082 20.6571 12.4403 21.3122 12.9839 21.8698C13.5275 22.4273 14.1756 22.8664 14.9283 23.187C15.681 23.5076 16.4755 23.6679 17.3118 23.6679C18.1481 23.6679 18.9427 23.5076 19.6953 23.187C20.448 22.8664 21.0962 22.4273 21.6398 21.8698C22.1834 21.3122 22.6155 20.6571 22.9361 19.9044C23.2567 19.1517 23.417 18.3572 23.417 17.5209ZM17.4791 0C19.9044 0 22.1764 0.459976 24.2951 1.37993C26.4138 2.29988 28.2676 3.54739 29.8566 5.12246C31.4456 6.69753 32.7001 8.5444 33.6201 10.6631C34.54 12.7818 35 15.0538 35 17.4791C35 19.9044 34.54 22.1764 33.6201 24.2951C32.7001 26.4138 31.4456 28.2676 29.8566 29.8566C28.2676 31.4456 26.4138 32.7001 24.2951 33.6201C22.1764 34.54 19.9044 35 17.4791 35C15.0538 35 12.7818 34.54 10.6631 33.6201C8.5444 32.7001 6.69753 31.4456 5.12246 29.8566C3.54739 28.2676 2.29988 26.4138 1.37993 24.2951C0.459976 22.1764 0 19.9044 0 17.4791C0 15.0538 0.459976 12.7818 1.37993 10.6631C2.29988 8.5444 3.54739 6.69753 5.12246 5.12246C6.69753 3.54739 8.5444 2.29988 10.6631 1.37993C12.7818 0.459976 15.0538 0 17.4791 0ZM27.264 9.86858C27.264 9.2274 27.041 8.68379 26.595 8.23775C26.1489 7.79172 25.6053 7.5687 24.9642 7.5687H9.6595C9.01832 7.5687 8.47471 7.79172 8.02867 8.23775C7.58264 8.68379 7.35962 9.2274 7.35962 9.86858V25.1732C7.35962 25.8144 7.58264 26.358 8.02867 26.8041C8.47471 27.2501 9.01832 27.4731 9.6595 27.4731H24.9642C25.6053 27.4731 26.1489 27.2501 26.595 26.8041C27.041 26.358 27.264 25.8144 27.264 25.1732V9.86858ZM24.2115 9.86858C24.4345 9.86858 24.6157 9.94524 24.7551 10.0986C24.8945 10.2519 24.9642 10.4401 24.9642 10.6631V12.963C24.9642 13.186 24.8945 13.3672 24.7551 13.5066C24.6157 13.646 24.4345 13.7157 24.2115 13.7157H21.9116C21.6886 13.7157 21.5004 13.646 21.3471 13.5066C21.1937 13.3672 21.1171 13.186 21.1171 12.963V10.6631C21.1171 10.4401 21.1937 10.2519 21.3471 10.0986C21.5004 9.94524 21.6886 9.86858 21.9116 9.86858H24.2115Z"
+                    fill="white" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                  <path
+                    d="M25.2569 21.368C25.4799 21.368 25.6332 21.4377 25.7168 21.5771C25.8284 21.6886 25.8841 21.8837 25.8841 22.1625V22.8734H24.6296V22.1625C24.6296 21.9116 24.6714 21.7164 24.7551 21.5771C24.8945 21.4377 25.0617 21.368 25.2569 21.368ZM20.3644 21.368C20.5595 21.368 20.6989 21.4237 20.7826 21.5352C20.8941 21.6468 20.9498 21.814 20.9498 22.037V25.5496C20.9498 25.7726 20.908 25.9259 20.8244 26.0096C20.7407 26.1211 20.6153 26.1768 20.448 26.1768C20.3365 26.1768 20.225 26.1489 20.1135 26.0932C19.9741 26.0374 19.8626 25.9538 19.779 25.8423V21.6189C19.8905 21.5074 19.9881 21.4377 20.0717 21.4098C20.1274 21.3819 20.225 21.368 20.3644 21.368ZM17.5209 0C19.9462 0 22.2182 0.459976 24.3369 1.37993C26.4556 2.29988 28.3025 3.54739 29.8775 5.12246C31.4526 6.69753 32.7001 8.5444 33.6201 10.6631C34.54 12.7818 35 15.0538 35 17.4791C35 19.9044 34.54 22.1764 33.6201 24.2951C32.7001 26.4138 31.4526 28.2676 29.8775 29.8566C28.3025 31.4456 26.4556 32.7001 24.3369 33.6201C22.2182 34.54 19.9462 35 17.5209 35C15.0956 35 12.8236 34.54 10.7049 33.6201C8.58622 32.7001 6.73238 31.4456 5.14337 29.8566C3.55436 28.2676 2.29988 26.4138 1.37993 24.2951C0.459976 22.1764 0 19.9044 0 17.4791C0 15.0538 0.459976 12.7818 1.37993 10.6631C2.29988 8.5444 3.55436 6.69753 5.14337 5.12246C6.73238 3.54739 8.58622 2.29988 10.7049 1.37993C12.8236 0.459976 15.0956 0 17.5209 0ZM12.5866 17.9391H7.65233V19.2772H9.32497V27.1386H10.914V19.2772H12.5866V17.9391ZM12.6284 13.5902L14.7192 7.65233H12.8793L11.7921 11.7085H11.6667L10.4958 7.65233H8.69773L10.8303 13.7575V17.7718H12.6284V13.5902ZM17.27 20.3644H15.8483V25.5078C15.7925 25.5914 15.7228 25.6611 15.6392 25.7168L15.3883 25.8841C15.221 25.9677 15.0956 26.0096 15.0119 26.0096C14.8726 26.0096 14.775 25.9817 14.7192 25.9259C14.6635 25.8702 14.6356 25.7447 14.6356 25.5496V20.3644H13.2139V26.0514C13.2139 26.4417 13.2975 26.7344 13.4648 26.9295C13.632 27.1525 13.869 27.264 14.1756 27.264C14.4265 27.264 14.7053 27.1804 15.0119 27.0131C15.2628 26.9016 15.5416 26.6926 15.8483 26.3859V27.1386H17.27V20.3644ZM17.1446 17.9391C17.8973 17.9391 18.4687 17.7579 18.859 17.3955C19.2772 17.0609 19.4863 16.5591 19.4863 15.8901V12.043C19.4863 11.5133 19.2772 11.0534 18.859 10.6631C18.4687 10.3007 17.9251 10.1195 17.2282 10.1195C16.5034 10.1195 15.9319 10.2867 15.5137 10.6213C15.0677 10.9558 14.8447 11.4158 14.8447 12.0012V15.8901C14.8447 16.5313 15.0538 17.0331 15.4719 17.3955C15.8622 17.7579 16.4198 17.9391 17.1446 17.9391ZM22.4134 21.9952C22.4134 21.4377 22.2879 21.0056 22.037 20.6989C21.8419 20.4202 21.5074 20.2808 21.0335 20.2808C20.7826 20.2808 20.5595 20.3365 20.3644 20.448C20.1414 20.5317 19.9462 20.685 19.779 20.908V17.9391H18.3154V27.1386H19.779V26.6368C19.8626 26.7483 19.9532 26.8389 20.0508 26.9086C20.1483 26.9783 20.2529 27.041 20.3644 27.0968C20.5595 27.1804 20.8104 27.2222 21.1171 27.2222C21.5352 27.2222 21.8558 27.0968 22.0789 26.8459C22.3019 26.5671 22.4134 26.2047 22.4134 25.7587V21.9952ZM21.9116 17.8554C22.2461 17.8554 22.5528 17.7857 22.8315 17.6464C23.1103 17.507 23.417 17.27 23.7515 16.9355V17.7718H25.3405V10.2867H23.7515V15.9737C23.64 16.1131 23.4727 16.2525 23.2497 16.3919C23.0824 16.4755 22.9431 16.5173 22.8315 16.5173C22.6364 16.5173 22.5249 16.4755 22.497 16.3919C22.4134 16.3082 22.3716 16.1828 22.3716 16.0155V10.2867H20.7826V16.5591C20.7826 17.0052 20.8801 17.3258 21.0753 17.5209C21.2147 17.7439 21.4934 17.8554 21.9116 17.8554ZM27.3477 22.2043C27.3477 21.5352 27.1665 21.0335 26.8041 20.6989C26.4695 20.3644 25.9677 20.1971 25.2987 20.1971C24.6575 20.1971 24.1418 20.3783 23.7515 20.7407C23.3612 21.131 23.1661 21.6189 23.1661 22.2043V25.2151C23.1661 25.8841 23.3473 26.3998 23.7097 26.7622C24.1 27.1525 24.6018 27.3477 25.2151 27.3477C25.912 27.3477 26.4417 27.1665 26.8041 26.8041C27.1665 26.4695 27.3477 25.9399 27.3477 25.2151V24.8805H25.8841V25.1732C25.8841 25.5914 25.8423 25.8562 25.7587 25.9677C25.6472 26.0793 25.4799 26.135 25.2569 26.135C24.9781 26.135 24.8108 26.0653 24.7551 25.9259C24.6714 25.8144 24.6296 25.5635 24.6296 25.1732V23.9188H27.3477V22.2043ZM17.1446 11.4158C17.3397 11.4158 17.5209 11.4576 17.6882 11.5412C17.7997 11.6527 17.8554 11.7921 17.8554 11.9594V16.0155C17.8554 16.2386 17.7997 16.3919 17.6882 16.4755C17.5767 16.587 17.3955 16.6428 17.1446 16.6428C16.9215 16.6428 16.7682 16.587 16.6846 16.4755C16.5452 16.3919 16.4755 16.2386 16.4755 16.0155V11.9594C16.4755 11.82 16.5452 11.6806 16.6846 11.5412C16.7961 11.4576 16.9494 11.4158 17.1446 11.4158Z"
+                    fill="white" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="container footer">
+    <div class="footer-left">
+      <a href="/"><img src="https://placehold.co/181x66" alt="" /></a>
+      <h4 class="company-name">CÔNG TY CỔ PHẦN KHAI TÂM MONTESSORI</h4>
+      <div class="company-info">
+        <p>Số 55B15 Đường Cây Keo, P. Tam Phú, TP Thủ Đức, TPHCM</p>
+      </div>
+      <div class="company-info">
+        <p>
+          Email:
+          <a href="mailto:thanhpham@khaitammontessori.com">thanhpham@khaitammontessori.com</a>
+        </p>
+      </div>
+      <div class="company-info">
+        <p>
+          Hotline: <a href="tel:+84904670316">+84904670316</a> (Mr. Thành)
+        </p>
+      </div>
+      <div class="company-info">
+        <p>
+          Website:
+          <a href="www.khaitammontessori.com">www.khaitammontessori.com</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-right">
+      <nav class="menu-footer">
+        <div class="menu-item">
+          <div class="menu-footer-lv1">
+            <a href="/">CHÚNG TÔI LÀ AI?</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Khát vọng của Khai Tâm</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Chất lượng sản xuất</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Nghiên cứu & Phát triển</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-footer-lv1">
+            <a href="/">CHÚNG TÔI LÀ AI?</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Khát vọng của Khai Tâm</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Chất lượng sản xuất</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Nghiên cứu & Phát triển</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-footer-lv1">
+            <a href="/">CHÚNG TÔI LÀ AI?</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Khát vọng của Khai Tâm</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Chất lượng sản xuất</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Nghiên cứu & Phát triển</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-footer-lv1">
+            <a href="/">CHÚNG TÔI LÀ AI?</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Khát vọng của Khai Tâm</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Chất lượng sản xuất</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Nghiên cứu & Phát triển</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-footer-lv1">
+            <a href="/">CHÚNG TÔI LÀ AI?</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Khát vọng của Khai Tâm</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Chất lượng sản xuất</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Nghiên cứu & Phát triển</a>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-footer-lv1">
+            <a href="/">CHÚNG TÔI LÀ AI?</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Khát vọng của Khai Tâm</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Chất lượng sản xuất</a>
+          </div>
+          <div class="menu-footer-lv2">
+            <a href="/">Nghiên cứu & Phát triển</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </footer>
+  <aside class="copyright container">
+    <span>© 2023 Khai Tâm Montessori. All rights reserved.</span>
+  </aside>
+  <aside class="line-bottom"></aside>
+
+   <!-- Option 1: Bootstrap Bundle with Popper -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>

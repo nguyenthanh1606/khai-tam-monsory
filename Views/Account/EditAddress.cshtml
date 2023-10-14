@@ -2,83 +2,32 @@
 @{
     ViewBag.Title = string.Format(Resource.UpdatePlaceholder, Resource.Address);
 }
-@section css{
-    <link href="~/Themes/NganHoa/css/userpage.css" rel="stylesheet" />
-}
-<div class="bg-gray" style="min-height: 500px;">
-    <div class="wrapper userpage" id="divAccountInfo">
-        <div class="userpage-sidebar">
-            <div class="userpage-brief">
-                <a class="userpage-brief__avatar none-hover" href="/Account/Info">
-                    <div class="avatar">
-                        <div class="avatar__placeholder">
-                            <img class="avatar__img" src="~/Themes/NganHoa/Images/logo.jpg" />
-                            @*<i class="far fa-user" style="font-size: 1.5rem; line-height: 44px"></i>*@
-                        </div>
-                    </div>
-                </a>
-                <div class="userpage-brief__right">
-                    <div class="userpage-brief__username">@User.Identity.Name</div>
-                    @*<div>
-                        <p class="userpage-brief__edit" v-show="!isEdited" v-on:click="StartEdit">
-                            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;"><path d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48" fill="#9B9B9B" fill-rule="evenodd"></path></svg>Sửa hồ sơ
-                        </p>
-                    </div>*@
-                </div>
-            </div>
-            <div class="userpage-sidebar-menu">
-                @Html.Partial("_AccountLayoutMenu")
-            </div>
-        </div>
-        <div class="userpage__content">
-            <div role="main">
-                <div class="myaccount__wrapper">
-                    <div class="myaccount-section" style="min-height: 400px">
-                        <div class="myaccount-section__header">
-                            <div class="myaccount-section__header-left">
-                                <div class="myaccount-section__header-title">Địa chỉ của tôi</div>
-                                @*<div class="myaccount-section__header-subtitle">Quản lý thông tin hồ sơ để bảo mật tài khoản</div>*@
-                            </div>
-                            <div class="myaccount-section__header-button">
-                                <button class="btn-button-solid btn-button-solid--primary btn-button-solid--address-tab ">
-                                    <div class="button-with-icon" onclick="window.location.href='/Account/AddAddress'">
-                                        <div class="button-with-icon__icon">
-                                            <svg class="shopee-svg-icon icon-plus-sign" enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"><polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5"></polygon></svg>
-                                        </div>
-                                        <div>@string.Format(Resource.CreatePlaceholder, Resource.Address)</div>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="myaccount-profile" style="flex-direction: column;" id="customerAddress">
-                            <div class="address-card">
-                                <div class="address-display__left">
-                                    @using (Html.BeginForm("EditAddress", "Account"))
-                                    {
-                                        <div class="form-horizontal dathoa-form-2">
-                                            @Html.AntiForgeryToken()
-                                            @Html.EditorForModel()
 
-                                            <div class="mt-3">
-                                                <button type="submit" value='@Resource.Save' class="btn btn-solid-primary btn--m btn--inline">@Resource.Save</button>
-                                                <button type="button" onclick="window.location.href = '/Account/Address'" value="@Resource.Skip" class="btn btn-solid-gray btn--m btn--inline">@Resource.Skip</button>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                                <div class="address-display__right">
-                                    <div class="address-card__button-group">
-                                        
-                                    </div>
-                                </div>
-                            </div>                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="breadcum_main">
+    <div class="container">
+        @Html.Breadcrumb(Frontend.Infrastructure.Utility.BreadcrumbType.Custom, customMenuName: Resource.AccountInformation, customUrl: Url.Action("Info", "Account"), htmlAttributes: new { @class = "breadcrumb" })
     </div>
-
 </div>
 
+<div class="container account-account">
+    <aside class="account-side-menu">
+        @Html.Partial("_AccountLayoutMenu")
+    </aside>
+    <button type="button" class="btn-toggle-menu" id="btn-toggle-menu" data-toggle="show"><i class="fa fa-chevron-right"></i></button>
 
+    <div class="account-body">
+        @using (Html.BeginForm("EditAddress", "Account"))
+        {
+            <div class="form-horizontal">
+                @Html.AntiForgeryToken()
+                @Html.EditorForModel()
+                <div class="form-group">
+                    <div class="pull-right">
+                        <input type="submit" value='@Resource.Save' class="btn btn-primary btn-danger submit-style" />
+                        @Html.ActionLink(Resource.Skip, "Info", null, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
