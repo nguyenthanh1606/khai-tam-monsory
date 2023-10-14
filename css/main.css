@@ -331,6 +331,11 @@ body {
   padding: 0;
 }
 
+input[type=number] {
+  position: relative;
+  border: 1px solid #D2D2D2;
+}
+
 .line-top {
   justify-content: center;
   align-items: center;
@@ -1464,13 +1469,57 @@ main.page-home {
   gap: 24px;
   display: flex;
   flex-direction: row;
+  margin-bottom: 2rem;
+}
+.page-product--top .pr-top_content__price .pr_price__sale {
+  height: 38px;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+.page-product--top .pr-top_content__price .pr_price__sale:before {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 2px;
+  background-color: #F12727;
+  left: 0;
+  bottom: 0;
+  border-radius: 8px;
+}
+.page-product--top .pr-top_content__price .pr_price__sale h3 {
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 .page-product--top .pr-top_content__price .pr_price__old {
+  height: 38px;
   justify-content: left;
   align-items: center;
   gap: 4px;
   display: flex;
   flex-direction: row;
+}
+.page-product--top .pr-top_content__price .pr_price__old h3 {
+  color: #828180;
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-decoration: line-through;
+}
+.page-product--top .pr-top_content__price .pr_price__old .label {
+  background-color: #FF5807;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: white;
+  padding: 4px 8px;
 }
 .page-product--top .pr-top_content__action {
   justify-content: left;
@@ -1478,6 +1527,16 @@ main.page-home {
   gap: 24px;
   display: flex;
   flex-direction: row;
+  height: 64px;
+}
+.page-product--top .pr-top_content__action input {
+  width: 103px;
+  height: 100%;
+  text-align: center;
+}
+.page-product--top .pr-top_content__action button {
+  height: 100%;
+  font-size: 1.25rem;
 }
 .page-product--detail_title {
   font-size: 1.875rem;
@@ -1536,4 +1595,9 @@ main.page-home {
 }
 .pr-table td {
   line-height: 1.5;
+}
+
+.page-cart {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }/*# sourceMappingURL=main.css.map */
